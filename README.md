@@ -46,12 +46,15 @@ npm start          # 或 Windows 下运行 scripts\start.cmd（自动拉起 MySQ
 
 | 地址 | 说明 |
 |---|---|
-| http://127.0.0.1:4500/ | 前台自助下单页 |
+| http://127.0.0.1:4500/ | 旧版前台自助下单页（稳定首页，保留回滚） |
+| http://127.0.0.1:4500/new/ | **Linear 风格 Vue 新前端预览**（验收通过，暂不替换首页） |
 | http://127.0.0.1:4500/admin | 管理后台（默认 admin / xicheng@2026，首次启动自动创建） |
 | http://127.0.0.1:4500/api/health | 健康检查 |
 
 - 无 MySQL 也能跑：数据库连不上会自动降级为**内存驱动**（数据落盘 `server/data/memory-db.json`）
-- 换前台页面版本：把对应文件复制为 `design/index.html` 即可
+- 新 Vue 前端源码在 `web/`，构建后由 Fastify 以 `/new/` 预览；正式切换前请先完成真实付款截图和移动端验收
+- 换旧前台页面版本：把对应文件复制为 `design/index.html` 即可
+- 新前端验收脚本：`node server/test/new-web-smoke.mjs http://127.0.0.1:4500`
 
 ## 核心业务规则
 

@@ -141,9 +141,19 @@ const STATIC_DIRS = [
 
 /** 付款截图存证目录：URL /uploads/xxx → server/uploads/xxx（直接映射，不走根目录拼接） */
 const UPLOADS_DIR = path.join(ROOT, 'uploads');
+const WEB_DIST_DIR = path.join(PROJECT_ROOT, 'web', 'dist');
 
 function resolveStatic(urlPath) {
-  const rel = decodeURIComponent(urlPath.split('?')[0]).replace(/^\/+/, '') || 'index.html';
+  const raw = decodeURIComponent(urlPath.split('?')[0]);
+  const isNew = raw === '/new' || raw.startsWith('/new/');
+  const rel = raw.replace(/^\/+/, '') || 'index.html';
+  if (isNew) {
+    const newRel = rel === 'new' ? 'index.html' : rel.slice('new/'.length);
+    const file = path.join(WEB_DIST_DIR, newRel || 'index.html');
+    if (!file.startsWith(WEB_DIST_DIR)) return null;
+    if (fs.existsSync(file) && fs.statSync(file).isFile()) return file;
+    return null;
+  }
   if (rel.startsWith('uploads/')) {
     const file = path.join(UPLOADS_DIR, rel.slice('uploads/'.length));
     if (!file.startsWith(UPLOADS_DIR)) return null;            // 目录穿越防护
@@ -159,6 +169,8 @@ function resolveStatic(urlPath) {
 }
 
 app.get('/', async (req, reply) => serveStatic('/index.html', req, reply));
+app.get('/new', async (req, reply) => serveStatic('/new/', req, reply));
+app.get('/new/*', async (req, reply) => serveStatic(req.url, req, reply));
 app.get('/admin', async (req, reply) => {
   const file = path.join(ROOT, 'public', 'admin.html');
   if (!fs.existsSync(file)) return reply.callNotFound();
@@ -181,7 +193,7 @@ async function serveStatic(urlPath, req, reply) {
 
   // HTML 注入 API 桥接脚本：把前端的本地存储调用换成真实接口
   // 带文件时间戳版本号，改桥接后浏览器缓存自动失效（否则 5 分钟缓存会吃到旧版）
-  if (ext === '.html') {
+  if (ext === '.html' && !file.startsWith(WEB_DIST_DIR)) {
     const bridge = path.join(ROOT, 'public', 'api-bridge.js');
     let html = body.toString('utf8');
     if (fs.existsSync(bridge)) {

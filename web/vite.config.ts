@@ -3,6 +3,8 @@ import vue from '@vitejs/plugin-vue';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
+  // 新前端由 Fastify 以 /new 预览路径托管
+  base: '/new/',
   plugins: [vue(), tailwindcss()],
   server: {
     port: 5200,
