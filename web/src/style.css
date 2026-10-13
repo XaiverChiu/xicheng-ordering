@@ -1,0 +1,242 @@
+@import "tailwindcss";
+
+/* ============================================================
+   XiCheng Web v2 · Linear 风格设计系统
+   Tailwind v4 CSS-first 配置（@theme 即 tokens）
+   ============================================================ */
+
+@theme {
+  /* —— 色板：Linear 式深色，单一紫罗兰主色 + 中性灰 —— */
+  --color-ink-950: #08090B;
+  --color-ink-900: #0B0C0F;
+  --color-ink-850: #101116;
+  --color-ink-800: #14161B;
+  --color-ink-700: #1B1E24;
+  --color-ink-600: #24272E;
+  --color-ink-500: #31353D;
+  --color-ink-400: #454A54;
+
+  --color-line: rgba(255, 255, 255, 0.08);
+  --color-line-strong: rgba(255, 255, 255, 0.14);
+
+  --color-primary-300: #C7BFFE;
+  --color-primary-400: #A99BFE;
+  --color-primary-500: #8B7BFF;
+  --color-primary-600: #6F5DF0;
+  --color-primary-700: #5A4AD1;
+
+  --color-accent: #8B7BFF;
+  --color-accent-soft: rgba(139, 123, 255, 0.12);
+  --color-accent-line: rgba(139, 123, 255, 0.35);
+
+  --color-success: #63E6BE;
+  --color-warning: #FFC078;
+  --color-danger: #FF8787;
+
+  --color-txt: #EDEFF3;
+  --color-txt-dim: #9BA1AC;
+  --color-txt-mute: #5E6470;
+
+  /* —— 字体 —— */
+  --font-sans: "HarmonyOS Sans SC", "MiSans", "PingFang SC", "Microsoft YaHei UI",
+    "Microsoft YaHei", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Bahnschrift", "DIN Alternate", "Rajdhani", "Arial Narrow",
+    "HarmonyOS Sans SC", "Microsoft YaHei UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas,
+    "Cascadia Mono", monospace;
+
+  /* —— 圆角 / 阴影 —— */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px -12px rgba(0, 0, 0, 0.5);
+  --shadow-lift: 0 2px 4px rgba(0, 0, 0, 0.4), 0 16px 40px -16px rgba(0, 0, 0, 0.65);
+  --shadow-glow: 0 0 0 1px rgba(139, 123, 255, 0.4), 0 8px 32px -8px rgba(139, 123, 255, 0.5);
+}
+
+/* —— 基础 —— */
+html {
+  scroll-behavior: smooth;
+}
+body {
+  background: var(--color-ink-950);
+  color: var(--color-txt);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+/* 背景氛围：顶部紫罗兰光晕 + 噪点 + 暗角 */
+.bg-scene::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(900px 480px at 72% -6%, rgba(139, 123, 255, 0.11), transparent 62%),
+    radial-gradient(700px 420px at 6% 14%, rgba(139, 123, 255, 0.05), transparent 58%),
+    radial-gradient(130% 130% at 50% 42%, transparent 55%, rgba(0, 0, 0, 0.5) 100%);
+}
+.bg-scene::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.45;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: #0b0c0f;
+}
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+*::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+*::-webkit-scrollbar-thumb {
+  background: #262a31;
+  border-radius: 20px;
+  border: 2px solid var(--color-ink-950);
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* —— 通用组件 —— */
+.glass {
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.012) 46%);
+  border: 1px solid var(--color-line);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.card {
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+.eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  font-weight: 700;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--color-line);
+  background: rgba(255, 255, 255, 0.03);
+  font-size: 12px;
+  color: var(--color-txt-dim);
+  white-space: nowrap;
+}
+.chip--accent {
+  border-color: var(--color-accent-line);
+  background: var(--color-accent-soft);
+  color: var(--color-primary-300);
+}
+
+/* —— 按钮 —— */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-line-strong);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--color-txt);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  white-space: nowrap;
+  user-select: none;
+}
+.btn:hover {
+  background: rgba(255, 255, 255, 0.09);
+  transform: translateY(-1px);
+}
+.btn:active {
+  transform: translateY(0);
+}
+.btn--primary {
+  background: linear-gradient(100deg, var(--color-primary-400), var(--color-primary-600));
+  color: #fff;
+  border-color: transparent;
+  font-weight: 700;
+  box-shadow: var(--shadow-glow);
+}
+.btn--primary:hover {
+  filter: brightness(1.08);
+  box-shadow: 0 0 0 1px rgba(139, 123, 255, 0.5), 0 12px 40px -8px rgba(139, 123, 255, 0.6);
+}
+.btn--ghost {
+  background: transparent;
+}
+.btn--sm {
+  padding: 7px 13px;
+  font-size: 13px;
+  border-radius: var(--radius-sm);
+}
+.btn[disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* —— 表单 —— */
+.input {
+  width: 100%;
+  padding: 11px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-line-strong);
+  background: rgba(0, 0, 0, 0.35);
+  color: var(--color-txt);
+  font-size: 14px;
+  transition: border-color 0.16s, box-shadow 0.16s;
+}
+.input:focus {
+  outline: none;
+  border-color: var(--color-accent-line);
+  box-shadow: 0 0 0 3px rgba(139, 123, 255, 0.14);
+}
+.input::placeholder {
+  color: #4c525c;
+}
+
+/* —— 滚动浮现 —— */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.55s ease, transform 0.55s cubic-bezier(0.2, 0.8, 0.25, 1);
+}
+.reveal.in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
