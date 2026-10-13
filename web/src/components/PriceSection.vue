@@ -2,6 +2,7 @@
 import { ref, computed } from 'vue';
 import type { Game, Quote, SiteConfig } from '../api/types';
 import { api, ApiError } from '../api/client';
+import AppSelect from './AppSelect.vue';
 
 const props = defineProps<{ config: SiteConfig }>();
 
@@ -126,10 +127,14 @@ function go(id: string) {
           <template v-else>
             <div class="flex items-center justify-between gap-3 pb-4 border-b" style="border-color:var(--color-line)">
               <span class="text-sm" style="color:var(--color-txt-mute)">{{ activeGame.title }}</span>
-              <select v-model="selPkg" class="input select max-w-[220px]! py-2" required @change="quote = null">
-                <option value="" disabled selected>选择规格</option>
-                <option v-for="p in activeGame.packages" :key="p.id" :value="p.id">{{ p.name }}</option>
-              </select>
+              <AppSelect
+                v-model="selPkg"
+                class="max-w-[220px]!"
+                aria-label="选择规格"
+                placeholder="选择规格"
+                :options="activeGame.packages.map((p) => ({ label: p.name, value: p.id }))"
+                @update:model-value="quote = null"
+              />
             </div>
 
             <div class="py-4 space-y-3">
