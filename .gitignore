@@ -1,0 +1,34 @@
+# ä¾èµ–
+node_modules/
+
+# ç¯å¢ƒå˜é‡ä¸å‡­æ®ï¼ˆå«æ•°æ®åº“å¯†ç ï¼Œç»å¯¹ä¸èƒ½æäº¤ï¼‰
+.env
+.env.local
+.env.*.local
+
+# è¿è¡Œæ—¶æ•°æ®
+server/data/
+*.log
+logs/
+npm-debug.log*
+node_modules/.cache/
+
+# ç¼–è¾‘å™¨ä¸ç³»ç»Ÿ
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# å¯¼å‡ºä¸ä¸´æ—¶æ–‡ä»¶
+*.csv
+!server/sql/*.sql
+.tmp/
+
+# ÉÏ´«µÄ¸¶¿î½ØÍ¼£¨º¬ÓÃ»§ÒşË½£¬²»Ìá½»£©
+server/uploads/
+
+# ´óĞÍä¯ÀÀÆ÷»º´æÄ¿Â¼£¨40MB+£©
+_ref/
+
+# ±¾µØ¿ª·¢¹¤¾ß¹¤×÷¼ÇÂ¼
+.workbuddy/

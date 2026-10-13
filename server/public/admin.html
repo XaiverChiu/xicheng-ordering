@@ -1,0 +1,1548 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>XiCheng · 订单管理后台</title>
+<link rel="icon" href="/log.jpg" />
+<style>
+:root{
+  --bg:#05070B; --panel:#0E1420; --panel2:#131B28; --line:rgba(255,255,255,.09);
+  --line2:rgba(255,255,255,.16); --txt:#EAF0F7; --dim:#98A6B8; --mute:#66748A;
+  --cyan:#22D3EE; --lime:#C4F82A; --pink:#FF3D7F; --amber:#FFB443; --ok:#34D399;
+  --font:"HarmonyOS Sans SC","MiSans","PingFang SC","Microsoft YaHei UI","Microsoft YaHei",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Consolas,"Cascadia Mono",monospace;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font-family:var(--font);font-size:14px;line-height:1.6;
+  background-image:radial-gradient(900px 500px at 12% -8%,rgba(34,211,238,.14),transparent 62%),radial-gradient(700px 420px at 92% 0%,rgba(255,61,127,.1),transparent 64%)}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.4;
+  background-image:linear-gradient(rgba(255,255,255,.026) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.026) 1px,transparent 1px);background-size:64px 64px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit;text-decoration:none}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.hide{display:none !important}
+.wrap{width:100%;max-width:1420px;margin:0 auto;padding:0 20px;position:relative;z-index:2}
+
+/* 登录 */
+.login-shell{min-height:100vh;display:grid;place-items:center;padding:24px;position:relative;z-index:2}
+.login-card{width:100%;max-width:400px;padding:30px;border-radius:22px;border:1px solid var(--line);
+  background:linear-gradient(168deg,rgba(255,255,255,.06),rgba(255,255,255,.012) 45%);backdrop-filter:blur(14px)}
+.login-card h1{margin:0 0 6px;font-size:21px}
+.login-card p.sub{margin:0 0 22px;color:var(--mute);font-size:13px}
+.f{display:block;margin-bottom:14px}
+.f > span{display:block;font-size:12.5px;font-weight:700;color:var(--dim);margin-bottom:7px}
+.input{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:rgba(0,0,0,.34);transition:.16s}
+.input:focus{outline:none;border-color:rgba(34,211,238,.6);box-shadow:0 0 0 3px rgba(34,211,238,.13)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 16px;border-radius:11px;
+  border:1px solid var(--line2);background:rgba(255,255,255,.045);cursor:pointer;font-weight:600;font-size:13.5px;transition:.16s;white-space:nowrap}
+.btn:hover{background:rgba(255,255,255,.1)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn--primary{background:linear-gradient(100deg,var(--cyan),#7DD3FC 55%,var(--lime));color:#04121A;border-color:transparent;font-weight:800}
+.btn--sm{padding:7px 12px;font-size:12.5px;border-radius:9px}
+.btn--danger{color:#FFB6CE;border-color:rgba(255,61,127,.4)}
+.btn--danger:hover{background:rgba(255,61,127,.14)}
+.msg{margin-top:14px;padding:10px 13px;border-radius:11px;font-size:12.5px;display:none}
+.msg.on{display:block}
+.msg.bad{background:rgba(255,61,127,.12);border:1px solid rgba(255,61,127,.35);color:#FFB6CE}
+
+/* 顶栏 */
+header.top{position:sticky;top:0;z-index:30;border-bottom:1px solid var(--line);background:rgba(5,7,11,.82);backdrop-filter:blur(14px)}
+.topbar{display:flex;align-items:center;gap:14px;height:64px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:16px}
+.brand img{width:32px;height:32px;border-radius:50%;object-fit:cover;border:1px solid rgba(34,211,238,.45)}
+.brand small{display:block;font-size:10px;letter-spacing:.18em;color:var(--mute);font-weight:600;text-transform:uppercase}
+.who{margin-left:auto;display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--dim)}
+
+/* 弹层（改密码 / 账号管理） */
+.overlay{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;padding:22px;background:rgba(3,5,8,.76);backdrop-filter:blur(8px)}
+.overlay.open{display:flex}
+.sheet{width:100%;max-width:640px;max-height:90vh;overflow:auto;border-radius:20px;border:1px solid var(--line2);
+  background:linear-gradient(175deg,#121A27,#080C13 62%);box-shadow:0 40px 90px -30px #000}
+.sheet header{display:flex;align-items:center;gap:12px;padding:18px 22px;border-bottom:1px solid var(--line)}
+.sheet header h3{margin:0;font-size:17px}
+.sheet header p{margin:3px 0 0;font-size:12px;color:var(--mute)}
+.sheet .body{padding:20px 22px}
+.sheet .foot{padding:16px 22px;border-top:1px solid var(--line);display:flex;gap:10px;justify-content:flex-end}
+.x{margin-left:auto;width:34px;height:34px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.05);cursor:pointer;font-size:15px}
+.x:hover{background:rgba(255,61,127,.16);border-color:rgba(255,61,127,.4)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.hint{margin-top:10px;font-size:12px;color:var(--mute)}
+table.accounts{width:100%;border-collapse:collapse;margin-top:4px}
+table.accounts th,table.accounts td{padding:10px;border-bottom:1px solid var(--line);font-size:13px;text-align:left}
+table.accounts th{font-size:11.5px;color:var(--mute);letter-spacing:.06em}
+table.accounts tr:last-child td{border-bottom:0}
+.role-tag{font-size:11px;font-weight:800;padding:2px 8px;border-radius:99px;white-space:nowrap}
+.role-admin{background:rgba(196,248,42,.14);color:#E4FF9B;border:1px solid rgba(196,248,42,.34)}
+.role-operator{background:rgba(34,211,238,.13);color:#A8EEFB;border:1px solid rgba(34,211,238,.32)}
+.state-on{color:#8CF0C8;font-weight:700}
+.state-off{color:var(--mute);font-weight:700}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:2px;border-radius:8px}
+
+/* 通用弹层（替换原生 prompt/confirm） */
+#modalSheet.wide{max-width:860px}
+.f-label{display:block;font-size:12.5px;font-weight:700;color:var(--dim);margin:4px 0 7px}
+.textarea{width:100%;padding:10px 12px;border-radius:11px;border:1px solid var(--line);background:rgba(0,0,0,.34);min-height:92px;resize:vertical;font-family:inherit;color:inherit}
+.textarea:focus{outline:none;border-color:rgba(34,211,238,.6);box-shadow:0 0 0 3px rgba(34,211,238,.13)}
+.modal-line{display:flex;justify-content:space-between;gap:10px;align-items:baseline;font-size:13px;border-bottom:1px solid var(--line);padding:7px 0}
+.modal-line b{text-align:right;font-weight:700;word-break:break-word}
+.detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 18px;margin-top:6px}
+.detail-item.full{grid-column:1 / -1}
+.timeline{list-style:none;margin:10px 0 0;padding:0;max-height:220px;overflow:auto}
+.timeline li{position:relative;padding:0 0 14px 20px;border-left:1px dashed var(--line2);margin-left:6px}
+.timeline li::before{content:"";position:absolute;left:-8px;top:5px;width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px rgba(34,211,238,.6)}
+.timeline li:last-child{border-left-color:transparent}
+.timeline li b{display:block;font-size:13px}
+.timeline li small{color:var(--mute);font-size:12px}
+@media (max-width:640px){ .detail-grid{grid-template-columns:1fr} }
+.tabs{display:flex;gap:6px;padding:14px 22px 0}
+.tabs button{padding:8px 14px;border-radius:10px;border:1px solid transparent;background:transparent;cursor:pointer;font-size:13px;font-weight:700;color:var(--dim)}
+.tabs button.on{background:rgba(34,211,238,.11);border-color:rgba(34,211,238,.34);color:var(--txt)}
+
+/* 统计卡 */
+.stats{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px;margin:20px 0}
+.stat{padding:15px;border-radius:16px;border:1px solid var(--line);background:var(--panel)}
+.stat span{display:block;font-size:11.5px;color:var(--mute);letter-spacing:.06em;margin-bottom:5px}
+.stat b{font-size:21px;font-weight:800;letter-spacing:-.02em}
+.stat em{font-style:normal;font-size:11.5px;color:var(--mute);margin-left:5px}
+.stat.hi b{color:var(--lime)}
+.stat.warn b{color:var(--amber)}
+
+/* 工具栏 */
+/* ---------- 工具栏 ---------- */
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding:14px;border-radius:16px;
+  border:1px solid var(--line);background:var(--panel);margin-bottom:14px}
+.toolbar-hint{margin-left:auto;font-size:12.5px;color:var(--mute);white-space:nowrap}
+
+/* 自定义下拉（原生 select 的面板样式无法统一） */
+.sel{position:relative;flex:0 0 auto}
+.sel-btn{
+  display:flex;align-items:center;gap:10px;min-width:150px;
+  padding:10px 13px;border-radius:12px;border:1px solid var(--line);
+  background:rgba(0,0,0,.34);cursor:pointer;font-size:13.5px;color:var(--txt);
+  transition:.16s;text-align:left;
+}
+.sel-btn:hover{border-color:var(--line2);background:rgba(255,255,255,.05)}
+.sel.open .sel-btn{border-color:rgba(34,211,238,.6);box-shadow:0 0 0 3px rgba(34,211,238,.13)}
+.sel-label{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sel-label.is-placeholder{color:var(--mute)}
+.sel-arrow{
+  flex:0 0 auto;width:8px;height:8px;border-right:1.6px solid var(--mute);border-bottom:1.6px solid var(--mute);
+  transform:rotate(45deg) translate(-1px,-1px);transition:.2s;
+}
+.sel.open .sel-arrow{transform:rotate(-135deg) translate(-2px,-2px);border-color:var(--cyan)}
+.sel-menu{
+  position:absolute;z-index:40;top:calc(100% + 6px);left:0;min-width:100%;
+  padding:6px;border-radius:14px;border:1px solid var(--line2);
+  background:linear-gradient(175deg,#131B28,#0B111A);
+  box-shadow:0 22px 44px -18px rgba(0,0,0,.9);
+  display:none;max-height:min(320px,60vh);overflow:auto;
+}
+.sel.open .sel-menu{display:block;animation:selIn .14s ease}
+@keyframes selIn{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:none}}
+.sel-opt{
+  display:flex;align-items:center;gap:9px;width:100%;padding:9px 11px;border:0;border-radius:9px;
+  background:transparent;cursor:pointer;font-size:13px;color:var(--dim);text-align:left;white-space:nowrap;
+  transition:.12s;
+}
+.sel-opt:hover{background:rgba(255,255,255,.07);color:var(--txt)}
+.sel-opt[aria-selected="true"]{background:rgba(34,211,238,.12);color:#A8EEFB;font-weight:700}
+.sel-opt .tick{width:13px;flex:0 0 auto;color:var(--cyan);opacity:0;font-size:11px}
+.sel-opt[aria-selected="true"] .tick{opacity:1}
+
+.sel--block{display:block}
+.sel--block .sel-btn{width:100%}
+.sel--block .sel-menu{width:100%}
+
+/* 搜索框：输入即搜 */
+.searchbox{
+  position:relative;flex:1;min-width:220px;display:flex;align-items:center;
+}
+.searchbox-input{
+  width:100%;padding:10px 40px 10px 36px;border-radius:12px;border:1px solid var(--line);
+  background:rgba(0,0,0,.34);transition:.16s;font-size:13.5px;
+}
+.searchbox-input:focus{outline:none;border-color:rgba(34,211,238,.6);box-shadow:0 0 0 3px rgba(34,211,238,.13)}
+.searchbox-input::placeholder{color:#54627A}
+.searchbox-icon{
+  position:absolute;left:12px;width:14px;height:14px;pointer-events:none;opacity:.55;
+  border:1.7px solid var(--dim);border-radius:50%;
+}
+.searchbox-icon::after{
+  content:"";position:absolute;right:-4px;bottom:-3px;width:6px;height:1.7px;background:var(--dim);
+  transform:rotate(45deg);border-radius:2px;
+}
+.searchbox-clear{
+  position:absolute;right:8px;width:22px;height:22px;border-radius:50%;border:0;cursor:pointer;
+  background:rgba(255,255,255,.08);color:var(--dim);font-size:11px;line-height:1;display:none;
+}
+.searchbox-clear:hover{background:rgba(255,61,127,.2);color:#FFB6CE}
+.searchbox.has-value .searchbox-clear{display:grid;place-items:center}
+.searchbox.loading .searchbox-icon{border-color:var(--cyan);animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ---------- 一级页签：订单管理 / 待核对付款 ---------- */
+.viewtabs{display:flex;gap:8px;margin:20px 0 4px}
+.viewtabs button{
+  display:flex;align-items:center;gap:9px;padding:11px 18px;border-radius:13px;cursor:pointer;
+  border:1px solid var(--line);background:var(--panel);font-size:14px;font-weight:700;color:var(--dim);
+  transition:.16s;
+}
+.viewtabs button:hover{color:var(--txt);border-color:var(--line2)}
+.viewtabs button.on{
+  color:var(--txt);border-color:rgba(34,211,238,.5);
+  background:linear-gradient(140deg,rgba(34,211,238,.16),rgba(34,211,238,.04));
+}
+.viewtabs .cnt{
+  min-width:20px;padding:1px 7px;border-radius:99px;font-size:11.5px;font-weight:800;
+  background:rgba(255,180,67,.18);color:#FFCF86;border:1px solid rgba(255,180,67,.36);
+}
+.viewtabs .cnt.zero{background:rgba(255,255,255,.06);color:var(--mute);border-color:var(--line2)}
+.viewpane{display:none}
+.viewpane.on{display:block}
+
+/* 待核对卡片里的付款备注要显眼 */
+.payref{font-family:var(--mono);font-weight:700;color:#A8EEFB;background:rgba(34,211,238,.1);
+  border:1px solid rgba(34,211,238,.28);border-radius:7px;padding:2px 7px;display:inline-block;word-break:break-all}
+
+/* ---------- 滚动条：跟随暗色主题，细一点 ---------- */
+*{scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.18) transparent}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{
+  background:linear-gradient(180deg,rgba(255,255,255,.2),rgba(255,255,255,.12));
+  border-radius:99px;border:3px solid transparent;background-clip:padding-box;
+}
+::-webkit-scrollbar-thumb:hover{background:linear-gradient(180deg,rgba(34,211,238,.6),rgba(34,211,238,.35));background-clip:padding-box}
+::-webkit-scrollbar-corner{background:transparent}
+.table-scroll::-webkit-scrollbar{width:9px;height:9px}
+.table-scroll::-webkit-scrollbar-thumb{border-width:2px}
+
+/* 表格
+   注意：thead 的吸顶必须有自己的滚动容器。
+   之前把 thead 设成 sticky 而表格区不可滚动，sticky 偏移变成了硬性下移，
+   表头会永久压住第一条订单 —— 这里改成让表格区自己滚动。 */
+.table-card{border-radius:18px;border:1px solid var(--line);background:var(--panel);overflow:hidden;position:relative}
+.table-scroll{max-height:min(64vh,720px);overflow:auto}
+table{width:100%;border-collapse:collapse}
+th,td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11.5px;letter-spacing:.08em;color:var(--mute);font-weight:700;background:rgba(255,255,255,.02);white-space:nowrap}
+thead{position:sticky;top:0;z-index:5}
+thead th{background:#0B111A;box-shadow:inset 0 -1px 0 var(--line)}
+tbody tr:hover{background:rgba(255,255,255,.03)}
+tbody tr:last-child td{border-bottom:0}
+td.no{font-family:var(--mono);font-weight:700;color:var(--cyan);white-space:nowrap}
+.linkish{background:none;border:0;padding:0;font-family:var(--mono);font-weight:700;color:var(--cyan);white-space:nowrap;cursor:pointer;text-align:left}
+.linkish:hover{color:#60E3FA;text-decoration:underline}
+.badge{display:inline-block;font-size:11px;font-weight:800;padding:3px 10px;border-radius:99px;white-space:nowrap}
+.b-wait{background:rgba(255,180,67,.15);color:#FFCF86;border:1px solid rgba(255,180,67,.34)}
+.b-paid{background:rgba(139,123,255,.16);color:#C9C2FF;border:1px solid rgba(139,123,255,.36)}
+.b-doing{background:rgba(34,211,238,.14);color:#A8EEFB;border:1px solid rgba(34,211,238,.34)}
+.b-done{background:rgba(52,211,153,.14);color:#8CF0C8;border:1px solid rgba(52,211,153,.34)}
+.b-canceled{background:rgba(255,255,255,.06);color:var(--mute);border:1px solid var(--line2)}
+.dim{color:var(--dim)}
+.mute{color:var(--mute)}
+.small{font-size:12px}
+.actions{display:flex;gap:6px;flex-wrap:wrap}
+.req{max-width:260px;font-size:12.5px;color:var(--dim);white-space:pre-wrap;word-break:break-word}
+.amount{font-weight:800;color:var(--lime);white-space:nowrap}
+.overdue{color:var(--pink);font-weight:700}
+.pager{display:flex;align-items:center;gap:10px;justify-content:flex-end;padding:13px 16px;color:var(--dim);font-size:12.5px}
+.empty-row{padding:44px;text-align:center;color:var(--mute)}
+.toast-wrap{position:fixed;left:50%;transform:translateX(-50%);bottom:22px;z-index:90;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none}
+.toast{padding:10px 18px;border-radius:999px;font-size:13px;font-weight:700;background:rgba(14,20,32,.97);border:1px solid var(--line2);box-shadow:0 24px 50px -26px #000}
+.toast.ok{border-color:rgba(52,211,153,.45);color:#8CF0C8}
+.toast.bad{border-color:rgba(255,61,127,.45);color:#FFB6CE}
+details.logs{margin-top:8px}
+details.logs summary{cursor:pointer;font-size:12px;color:var(--mute)}
+details.logs ul{margin:8px 0 0;padding-left:16px;font-size:12px;color:var(--dim)}
+@media (max-width:1240px){ .stats{grid-template-columns:repeat(4,minmax(0,1fr))} }
+@media (max-width:1100px){ .stats{grid-template-columns:repeat(3,minmax(0,1fr))} }
+
+/* 窄屏顶栏：按钮组是 flex:nowrap，必须允许收缩，否则整页横向溢出 */
+.topbar{min-width:0}
+.brand{min-width:0;flex-shrink:1}
+.brand span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.brand small{white-space:nowrap}
+.who{min-width:0;flex-shrink:1;flex-wrap:nowrap}
+.who > *{flex-shrink:0}
+
+@media (max-width:640px){
+  .wrap{padding:0 14px}
+  .brand small{display:none}                       /* 副标题让位给按钮 */
+  .who{gap:6px}
+  #whoName{display:none}                           /* 账号名收起，避免挤爆 */
+  .who .btn--sm{padding:6px 9px;font-size:12px}
+}
+@media (max-width:520px){
+  #viewSiteBtn{display:none}                       /* 「查看前台」在小屏上收起 */
+  .brand img{width:28px;height:28px}
+  .brand{font-size:15px}
+}
+@media (max-width:760px){
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  thead{position:static}
+  .table-scroll{max-height:none}
+  table{min-width:900px}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ 登录 ============ -->
+<div class="login-shell" id="loginView">
+  <form class="login-card" id="loginForm">
+    <div class="brand" style="margin-bottom:18px">
+      <img src="/log.jpg" alt="XiCheng" />
+      <span>XiCheng<small>Order Console</small></span>
+    </div>
+    <h1>订单管理后台</h1>
+    <p class="sub">请使用管理员账号登录</p>
+    <label class="f"><span>账号</span><input class="input" id="username" autocomplete="username" placeholder="admin" /></label>
+    <label class="f"><span>密码</span><input class="input" id="password" type="password" autocomplete="current-password" placeholder="••••••••" /></label>
+    <button class="btn btn--primary" id="loginBtn" style="width:100%;padding:12px">登录</button>
+    <div class="msg bad" id="loginMsg"></div>
+    <p class="mute small" style="margin:16px 0 0">默认账号 <b class="mono">admin</b>；密码见服务端 <b class="mono">.env</b> 的 <b class="mono">ADMIN_PASSWORD</b>（首次启动会打印在控制台）。</p>
+  </form>
+</div>
+
+<!-- ============ 主界面 ============ -->
+<div id="mainView" class="hide">
+  <header class="top">
+    <div class="wrap topbar">
+      <div class="brand">
+        <img src="/log.jpg" alt="XiCheng" />
+        <span>XiCheng<small>Order Console</small></span>
+      </div>
+      <div class="who">
+        <span id="whoName" class="dim"></span>
+        <button class="btn btn--sm" id="settingsBtn">账号设置</button>
+        <a class="btn btn--sm" id="viewSiteBtn" href="/" target="_blank" rel="noopener">查看前台</a>
+        <a class="btn btn--sm" id="exportLink" href="#">导出 CSV</a>
+        <button class="btn btn--sm btn--danger" id="logoutBtn">退出</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <!-- 一级页签：待核对付款是每天的入口，登录后默认停在这里 -->
+    <div class="viewtabs" id="viewTabs">
+      <button data-view="claims" class="on">待核对付款 <span class="cnt zero" id="claimCount">0</span></button>
+      <button data-view="orders">订单管理</button>
+    </div>
+
+    <!-- ============ 订单管理 ============ -->
+    <div class="viewpane" id="paneOrders">
+    <div class="stats" id="stats"></div>
+
+    <div class="toolbar">
+      <!-- 自定义下拉：原生 select 的下拉面板无法统一样式 -->
+      <div class="sel" id="selStatus" data-name="status">
+        <button type="button" class="sel-btn" aria-haspopup="listbox" aria-expanded="false">
+          <span class="sel-label">全部状态</span>
+          <span class="sel-arrow" aria-hidden="true"></span>
+        </button>
+        <div class="sel-menu" role="listbox"></div>
+      </div>
+      <div class="sel" id="selGame" data-name="game">
+        <button type="button" class="sel-btn" aria-haspopup="listbox" aria-expanded="false">
+          <span class="sel-label">全部分组</span>
+          <span class="sel-arrow" aria-hidden="true"></span>
+        </button>
+        <div class="sel-menu" role="listbox"></div>
+      </div>
+
+      <div class="searchbox">
+        <span class="searchbox-icon" aria-hidden="true"></span>
+        <input class="searchbox-input" id="fKeyword" type="text" autocomplete="off" autocorrect="off"
+               spellcheck="false" name="xc_order_search" placeholder="搜索订单号 / 联系方式（输入即搜）" />
+        <button type="button" class="searchbox-clear" id="clearKeyword" title="清除" aria-label="清除搜索">✕</button>
+      </div>
+
+      <span class="toolbar-hint" id="filterHint"></span>
+      <button class="btn btn--sm" id="resetBtn">重置</button>
+    </div>
+
+    <div class="table-card">
+      <div class="table-scroll" id="tableScroll">
+        <table>
+          <thead>
+            <tr>
+              <th>订单号 / 时间</th>
+              <th>状态</th>
+              <th>分组 · 规格</th>
+              <th>计价明细</th>
+              <th>应付 / 已付</th>
+              <th>联系方式</th>
+              <th>剪辑要求</th>
+              <th style="min-width:190px">操作</th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+      <div class="pager">
+        <span id="pageInfo" class="dim"></span>
+        <button class="btn btn--sm" id="prevPage">上一页</button>
+        <button class="btn btn--sm" id="nextPage">下一页</button>
+      </div>
+    </div>
+    <p class="mute small" style="margin:16px 0 40px">状态流转：已付款 → 剪辑中 → 已完成；任意状态可取消。删除操作不可恢复。订单里只会有已核对到账的单。</p>
+    </div><!-- /paneOrders -->
+
+    <!-- ============ 待核对付款 ============ -->
+    <div class="viewpane on" id="paneClaims">
+      <div class="stats" id="claimStats"></div>
+
+      <div class="toolbar">
+        <div class="sel" id="selClaimStatus" data-name="cstatus">
+          <button type="button" class="sel-btn" aria-haspopup="listbox" aria-expanded="false">
+            <span class="sel-label">待核对到账</span>
+            <span class="sel-arrow" aria-hidden="true"></span>
+          </button>
+          <div class="sel-menu" role="listbox"></div>
+        </div>
+        <div class="searchbox">
+          <span class="searchbox-icon" aria-hidden="true"></span>
+          <input class="searchbox-input" id="cKeyword" type="text" autocomplete="off" spellcheck="false"
+                 name="xc_claim_search" placeholder="搜索待核对编号 / 联系方式 / 付款备注 / 转账单号（输入即搜）" />
+          <button type="button" class="searchbox-clear" id="clearCKeyword" title="清除" aria-label="清除搜索">✕</button>
+        </div>
+        <span class="toolbar-hint" id="claimHint"></span>
+        <button class="btn btn--sm" id="claimResetBtn">重置</button>
+      </div>
+
+      <div class="table-card">
+        <div class="table-scroll" id="claimScroll">
+          <table>
+            <thead>
+              <tr>
+                <th>待核对编号 / 时间</th>
+                <th>状态</th>
+                <th>付款备注 / 转账单号（对账用）</th>
+                <th>分组 · 规格</th>
+                <th>金额</th>
+                <th>联系方式</th>
+                <th>剪辑要求</th>
+                <th style="min-width:210px">操作</th>
+              </tr>
+            </thead>
+            <tbody id="claimRows"></tbody>
+          </table>
+        </div>
+        <div class="pager">
+          <span id="claimPageInfo" class="dim"></span>
+          <button class="btn btn--sm" id="claimPrev">上一页</button>
+          <button class="btn btn--sm" id="claimNext">下一页</button>
+        </div>
+      </div>
+      <p class="mute small" style="margin:16px 0 40px">
+        客户提交转账单号 + 付款截图后，系统会自动核对（单号、金额一致即通过并直接生成订单）。
+        <b style="color:var(--txt)">「自动通过」的记录无需操作</b>；<b style="color:var(--amber)">「待人工」</b>的记录请点开付款截图，
+        与原支付账单比对后点「确认到账」生成正式订单（XC-），核对不到就驳回。
+      </p>
+    </div><!-- /paneClaims -->
+  </div>
+</div>
+
+<div class="toast-wrap" id="toasts"></div>
+
+<!-- ============ 通用弹层（订单详情 / 备注 / 核对 / 驳回 / 重置密码） ============ -->
+<div class="overlay" id="modalOverlay">
+  <div class="sheet" id="modalSheet" role="dialog" aria-modal="true">
+    <header>
+      <div>
+        <h3 id="modalTitle">标题</h3>
+        <p id="modalSub" class="mute small"></p>
+      </div>
+      <button class="x" id="modalClose" aria-label="关闭">✕</button>
+    </header>
+    <div class="body" id="modalBody"></div>
+    <div class="foot" id="modalFoot">
+      <button class="btn" id="modalCancel">取消</button>
+      <button class="btn btn--primary" id="modalOk">确定</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 改密码 / 账号管理 ============ -->
+<div class="overlay" id="settingsOverlay">
+  <div class="sheet" role="dialog" aria-modal="true">
+    <header>
+      <div>
+        <h3 id="settingsTitle">账号设置</h3>
+        <p id="settingsSub">修改密码与后台账号管理</p>
+      </div>
+      <button class="x" id="settingsClose" aria-label="关闭">✕</button>
+    </header>
+
+    <div class="tabs" id="settingsTabs">
+      <button data-tab="password" class="on">修改我的密码</button>
+      <button data-tab="accounts">账号管理</button>
+    </div>
+
+    <!-- 改密码 -->
+    <div class="body" id="tabPassword">
+      <label class="f"><span>当前密码</span><input class="input" id="curPwd" type="password" autocomplete="current-password" /></label>
+      <label class="f"><span>新密码（至少 8 位）</span><input class="input" id="newPwd" type="password" autocomplete="new-password" /></label>
+      <label class="f"><span>确认新密码</span><input class="input" id="newPwd2" type="password" autocomplete="new-password" /></label>
+      <div class="msg bad" id="pwdMsg"></div>
+      <p class="hint">改完密码后，其它设备上的登录会自动失效，当前会话保留。</p>
+      <div class="foot" style="padding:16px 0 0;border:0">
+        <button class="btn btn--primary" id="pwdSubmit">保存新密码</button>
+      </div>
+    </div>
+
+    <!-- 账号管理 -->
+    <div class="body hide" id="tabAccounts">
+      <table class="accounts">
+        <thead>
+          <tr><th>账号</th><th>显示名</th><th>角色</th><th>状态</th><th style="min-width:150px">操作</th></tr>
+        </thead>
+        <tbody id="accountRows"></tbody>
+      </table>
+
+      <h4 style="margin:22px 0 12px;font-size:14px">新建账号</h4>
+      <div class="form-row">
+        <label class="f"><span>账号（字母/数字，3~32 位）</span><input class="input" id="accName" placeholder="editor01" /></label>
+        <label class="f"><span>显示名</span><input class="input" id="accDisplay" placeholder="剪辑师小王" /></label>
+      </div>
+      <div class="form-row">
+        <label class="f"><span>初始密码（至少 8 位）</span><input class="input" id="accPwd" type="password" /></label>
+        <div class="f"><span>角色</span>
+          <div class="sel sel--block" id="selRole" data-name="role">
+            <button type="button" class="sel-btn" aria-haspopup="listbox" aria-expanded="false">
+              <span class="sel-label">operator（只能管订单）</span>
+              <span class="sel-arrow" aria-hidden="true"></span>
+            </button>
+            <div class="sel-menu" role="listbox"></div>
+          </div>
+        </div>
+      </div>
+      <div class="msg bad" id="accMsg"></div>
+      <div class="foot" style="padding:16px 0 0;border:0">
+        <button class="btn btn--primary" id="accCreate">创建账号</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var TOKEN_KEY = 'xc_admin_token';
+  var state = { token: localStorage.getItem(TOKEN_KEY) || '', page: 1, pageSize: 20, total: 0, filters: {}, meta: null };
+
+  var $ = function (s) { return document.querySelector(s); };
+  function toast(msg, type) {
+    var el = document.createElement('div');
+    el.className = 'toast ' + (type || '');
+    el.textContent = msg;
+    $('#toasts').appendChild(el);
+    setTimeout(function () { el.style.opacity = '0'; el.style.transition = '.3s'; setTimeout(function () { el.remove(); }, 320); }, 2200);
+  }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function money(n) { return '¥' + Number(n || 0).toLocaleString('zh-CN', { maximumFractionDigits: 2 }); }
+  function time(iso) {
+    if (!iso) return '—';
+    var d = new Date(iso);
+    return d.toLocaleString('zh-CN', { hour12: false, month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+  }
+  function api(path, options) {
+    var opt = options || {};
+    var init = { method: opt.method || 'GET', headers: {} };
+    if (state.token) init.headers.authorization = 'Bearer ' + state.token;
+    if (opt.body !== undefined) { init.headers['content-type'] = 'application/json'; init.body = JSON.stringify(opt.body); }
+    return fetch(path, init).then(function (res) {
+      return res.text().then(function (text) {
+        var json = null;
+        try { json = JSON.parse(text); } catch (e) { json = null; }
+        if (!res.ok || (json && json.ok === false)) {
+          var err = new Error((json && json.error && json.error.message) || ('请求失败 HTTP ' + res.status));
+          err.status = res.status;
+          err.code = json && json.error && json.error.code;
+          throw err;
+        }
+        return json && 'data' in json ? json.data : json;
+      });
+    });
+  }
+
+  /* ---------------- 通用弹层 ---------------- */
+  var modalOkHandler = null;
+  var modalOkDisabled = false;
+  function openModal(opts) {
+    opts = opts || {};
+    $('#modalTitle').textContent = opts.title || '';
+    $('#modalSub').textContent = opts.sub || '';
+    $('#modalSub').style.display = opts.sub ? '' : 'none';
+    $('#modalBody').innerHTML = opts.body || '';
+    $('#modalSheet').classList.toggle('wide', !!opts.wide);
+    var ok = $('#modalOk'), cancel = $('#modalCancel');
+    ok.textContent = opts.okText || '确定';
+    ok.className = 'btn ' + (opts.okClass || 'btn--primary');
+    ok.style.display = opts.hideOk ? 'none' : '';
+    cancel.textContent = opts.cancelText || '取消';
+    cancel.style.display = opts.hideCancel ? 'none' : '';
+    modalOkHandler = opts.onOk || null;
+    modalOkDisabled = false;
+    ok.disabled = false;
+    $('#modalOverlay').classList.add('open');
+  }
+  function closeModal() {
+    $('#modalOverlay').classList.remove('open');
+    modalOkHandler = null;
+  }
+  function setModalBusy(busy, text) {
+    var ok = $('#modalOk');
+    if (busy) { modalOkDisabled = true; ok.disabled = true; ok.textContent = text || '处理中…'; }
+    else { modalOkDisabled = false; ok.disabled = false; ok.textContent = '确定'; }
+  }
+  function val(id) { var el = document.getElementById(id); return el ? el.value : ''; }
+
+  $('#modalClose').addEventListener('click', closeModal);
+  $('#modalOverlay').addEventListener('click', function (e) { if (e.target === $('#modalOverlay')) closeModal(); });
+  $('#modalCancel').addEventListener('click', closeModal);
+  $('#modalOk').addEventListener('click', function () {
+    if (modalOkDisabled) return;
+    if (typeof modalOkHandler === 'function') modalOkHandler();
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+
+  /* ---------------- 登录 ---------------- */
+  function showLogin(msg) {
+    $('#loginView').classList.remove('hide');
+    $('#mainView').classList.add('hide');
+    if (msg) { $('#loginMsg').textContent = msg; $('#loginMsg').classList.add('on'); }
+  }
+  function showMain() {
+    $('#loginView').classList.add('hide');
+    $('#mainView').classList.remove('hide');
+  }
+
+  $('#loginForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var btn = $('#loginBtn');
+    btn.disabled = true; btn.textContent = '登录中…';
+    $('#loginMsg').classList.remove('on');
+    api('/api/admin/login', { method: 'POST', body: { username: $('#username').value, password: $('#password').value } })
+      .then(function (d) {
+        state.token = d.token;
+        localStorage.setItem(TOKEN_KEY, d.token);
+        $('#whoName').textContent = (d.admin.displayName || d.admin.username) + ' · ' + d.admin.role;
+        showMain();
+        boot();
+      })
+      .catch(function (err) {
+        $('#loginMsg').textContent = err.message || '登录失败';
+        $('#loginMsg').classList.add('on');
+      })
+      .then(function () { btn.disabled = false; btn.textContent = '登录'; });
+  });
+
+  $('#logoutBtn').addEventListener('click', function () {
+    api('/api/admin/logout', { method: 'POST' }).catch(function () {});
+    state.token = '';
+    localStorage.removeItem(TOKEN_KEY);
+    showLogin('已退出登录');
+  });
+
+  /* ---------------- 元数据 ---------------- */
+  function loadMeta() {
+    return api('/api/admin/meta').then(function (meta) {
+      state.meta = meta;
+      statusOptions = meta.statuses.map(function (s) { return { value: s.value, label: s.label }; });
+      gameOptions = meta.games.map(function (g) { return { value: g.key, label: g.name + (g.consult ? '（询价）' : '') }; });
+      buildSelect('selStatus', statusOptions, state.filters.status || '', '全部状态');
+      buildSelect('selGame', gameOptions, state.filters.game || '', '全部分组');
+    });
+  }
+
+  /* ---------------- 统计 ---------------- */
+  function loadStats() {
+    return api('/api/admin/stats').then(function (s) {
+      var order = ['wait', 'paid', 'doing', 'done', 'canceled'];
+      var cards = order.map(function (k) {
+        var b = s.byStatus[k] || { count: 0, amount: 0 };
+        var cls = k === 'done' ? 'hi' : (k === 'wait' ? 'warn' : '');
+        return '<div class="stat ' + cls + '"><span>' + esc(b.label) + '</span><b>' + b.count + '<em>单</em></b>' +
+               '<div class="mute small">' + money(b.amount) + '</div></div>';
+      });
+      cards.push('<div class="stat"><span>今日新增</span><b>' + s.today.count + '<em>单</em></b><div class="mute small">' + money(s.today.amount) + '</div></div>');
+      cards.push('<div class="stat ' + (s.overdue ? 'warn' : '') + '"><span>超时未交付</span><b>' + s.overdue + '<em>单</em></b><div class="mute small">累计 ' + s.total.count + ' 单 · 已付 ' + money(s.paidAmount) + '</div></div>');
+      $('#stats').innerHTML = cards.join('');
+    });
+  }
+
+  /* ---------------- 列表 ---------------- */
+  function statusBadge(o) {
+    var cls = { wait: 'b-wait', paid: 'b-paid', doing: 'b-doing', done: 'b-done', canceled: 'b-canceled' }[o.status] || 'b-wait';
+    return '<span class="badge ' + cls + '">' + esc(o.statusLabel) + '</span>';
+  }
+  function detail(o) {
+    var lines = ['<b>' + o.quantity + ' ' + esc(o.unit) + '</b> × ' + money(o.unitPrice)];
+    if (o.overtimeUnits > 0) lines.push('超时长 ' + o.overtimeUnits + ' 分钟 +' + money(o.overtimeAmount));
+    if (o.upscale4k) lines.push('4K 超分 +' + money(o.upscaleAmount));
+    if (o.rush) lines.push('<span style="color:var(--amber)">加急（费用另议）</span>');
+    lines.push('<span class="mute">' + esc(o.pricingMode) + '</span>');
+    return lines.join('<br />');
+  }
+  function actionsFor(o) {
+    var flow = { wait: ['paid', 'canceled'], paid: ['doing', 'canceled'], doing: ['done'], done: [], canceled: ['wait'] };
+    var label = { paid: '标记已付款', doing: '开始剪辑', done: '标记已交付', canceled: '取消订单', wait: '恢复待确认' };
+    var cls = { canceled: 'btn--danger' };
+    var btns = [];
+    btns.push('<button class="btn btn--sm" data-act="detail" data-no="' + esc(o.orderNo) + '">详情</button>');
+    (flow[o.status] || []).forEach(function (s) {
+      btns.push('<button class="btn btn--sm ' + (cls[s] || '') + '" data-act="status" data-no="' + esc(o.orderNo) + '" data-to="' + s + '">' + label[s] + '</button>');
+    });
+    btns.push('<button class="btn btn--sm" data-act="note" data-no="' + esc(o.orderNo) + '">备注</button>');
+    btns.push('<button class="btn btn--sm btn--danger" data-act="delete" data-no="' + esc(o.orderNo) + '">删除</button>');
+    return '<div class="actions">' + btns.join('') + '</div>';
+  }
+  function render(rows) {
+    if (!rows.length) {
+      $('#rows').innerHTML = '<tr><td colspan="8" class="empty-row">暂无订单</td></tr>';
+      return;
+    }
+    $('#rows').innerHTML = rows.map(function (o) {
+      var overdue = o.dueAt && new Date(o.dueAt).getTime() < Date.now() && ['paid', 'doing'].includes(o.status);
+      return '<tr data-row-no="' + esc(o.orderNo) + '">' +
+        '<td><button type="button" class="linkish no" data-act="detail" data-no="' + esc(o.orderNo) + '" title="查看详情">' + esc(o.orderNo) + '</button>' +
+          '<div class="mute small">' + time(o.createdAt) + '</div>' +
+          (o.dueAt ? '<div class="small ' + (overdue ? 'overdue' : 'mute') + '">承诺交付 ' + time(o.dueAt) + (overdue ? ' · 已超时' : '') + '</div>' : '') +
+        '</td>' +
+        '<td>' + statusBadge(o) + '</td>' +
+        '<td><b>' + esc(o.gameName) + '</b><div class="dim small">' + esc(o.pkgName) + '</div></td>' +
+        '<td class="small">' + detail(o) + '</td>' +
+        '<td><div class="amount">' + money(o.totalAmount) + '</div><div class="mute small">已付 ' + money(o.paidAmount) + '</div></td>' +
+        '<td class="small"><div class="mono">' + esc(o.contact) + '</div>' +
+          '<div class="mute">' + (o.music === 'self' ? '自备音乐' : '剪辑师自选') + ' · ' + (o.material === 'ready' ? '素材已备' : '稍后提供') + '</div>' +
+          (o.refLink ? '<div class="mute" style="word-break:break-all">' + esc(o.refLink) + '</div>' : '') +
+        '</td>' +
+        '<td><div class="req">' + (o.requirement ? esc(o.requirement) : '<span class="mute">未填写</span>') + '</div>' +
+          (o.adminNote ? '<div class="small" style="color:var(--amber)">备注：' + esc(o.adminNote) + '</div>' : '') +
+        '</td>' +
+        '<td>' + actionsFor(o) + '</td>' +
+      '</tr>';
+    }).join('');
+  }
+
+  function load() {
+    var q = new URLSearchParams();
+    q.set('page', state.page);
+    q.set('pageSize', state.pageSize);
+    Object.keys(state.filters).forEach(function (k) { if (state.filters[k]) q.set(k, state.filters[k]); });
+    var box = $('#fKeyword').closest('.searchbox');
+    if (box) box.classList.add('loading');
+    updateHint('查询中…');
+    return api('/api/admin/orders?' + q.toString())
+      .then(function (d) {
+        state.total = d.total;
+        render(d.rows);
+        var pages = Math.max(1, Math.ceil(d.total / state.pageSize));
+        $('#pageInfo').textContent = '共 ' + d.total + ' 单 · 第 ' + state.page + ' / ' + pages + ' 页';
+        $('#prevPage').disabled = state.page <= 1;
+        $('#nextPage').disabled = state.page >= pages;
+        updateHint(filterSummary(d.total));
+      })
+      .catch(function (err) {
+        if (err.status === 401) { state.token = ''; localStorage.removeItem(TOKEN_KEY); showLogin('登录已过期，请重新登录'); return; }
+        updateHint('');
+        toast(err.message || '加载失败', 'bad');
+      })
+      .then(function () {
+        if (box) box.classList.remove('loading');
+      });
+  }
+
+  /* ---------------- 订单详情（含状态流转时间线） ---------------- */
+  function showOrderDetail(orderNo) {
+    api('/api/admin/orders/' + encodeURIComponent(orderNo))
+      .then(function (d) {
+        var o = d.order;
+        var lines = [
+          ['订单号', '<span class="mono">' + esc(o.orderNo) + '</span>'],
+          ['状态', statusBadge(o)],
+          ['游戏 / 规格', esc(o.gameName) + ' · ' + esc(o.pkgName)],
+          ['计价方式', esc(o.pricingMode)],
+          ['时长', o.quantity + ' ' + esc(o.unit)],
+          ['规格小计', money(o.baseAmount)],
+          ['超时长', o.overtimeUnits > 0 ? o.overtimeUnits + ' 分钟 +' + money(o.overtimeAmount) : '—'],
+          ['4K 超分', o.upscale4k ? '+' + money(o.upscaleAmount) : '—'],
+          ['加急', o.rush ? '<span style="color:var(--amber)">是（另议）</span>' : '否'],
+          ['应付合计', money(o.totalAmount)],
+          ['已付金额', money(o.paidAmount)],
+          ['联系方式', '<span class="mono">' + esc(o.contact) + '</span>'],
+          ['配乐 / 素材', (o.music === 'self' ? '自备音乐' : '剪辑师自选') + ' · ' + (o.material === 'ready' ? '素材已备' : '稍后提供')],
+          ['下单时间', time(o.createdAt)],
+          ['付款时间', o.paidAt ? time(o.paidAt) : '—'],
+          ['承诺交付', o.dueAt ? time(o.dueAt) : '—'],
+          ['交付时间', o.deliveredAt ? time(o.deliveredAt) : '—'],
+          ['来源 / IP', esc(o.source || '—') + (o.clientIp ? ' / <span class="mono">' + esc(o.clientIp) + '</span>' : '')],
+        ];
+        var grid = lines.map(function (pair) {
+          return '<div class="detail-item"><span class="mute">' + pair[0] + '</span><b>' + pair[1] + '</b></div>';
+        }).join('');
+        if (o.refLink) {
+          grid += '<div class="detail-item full"><span class="mute">参考链接</span><b style="color:var(--cyan)">' + esc(o.refLink) + '</b></div>';
+        }
+        if (o.requirement) {
+          grid += '<div class="detail-item full"><span class="mute">剪辑要求</span><b>' + esc(o.requirement) + '</b></div>';
+        }
+        if (o.adminNote) {
+          grid += '<div class="detail-item full"><span class="mute">内部备注</span><b style="color:var(--amber)">' + esc(o.adminNote) + '</b></div>';
+        }
+        var logs = (o.logs || []).map(function (l) {
+          var arrow = l.from ? (l.from + ' → ') : '';
+          return '<li><b>' + arrow + esc(l.toLabel) + '</b><small>' + time(l.at) + ' · ' + esc(l.operator || '—') + (l.note ? ' · ' + esc(l.note) : '') + '</small></li>';
+        }).join('') || '<li><small>暂无流转记录</small></li>';
+        var body =
+          '<div class="detail-grid">' + grid + '</div>' +
+          '<h4 style="margin:18px 0 2px;font-size:14px">状态流转记录</h4>' +
+          '<ul class="timeline">' + logs + '</ul>';
+        openModal({ title: '订单详情', sub: orderNo, body: body, okText: '关闭', hideCancel: true, onOk: closeModal, wide: true });
+      })
+      .catch(function (err) { toast(err.message || '加载详情失败', 'bad'); });
+  }
+
+  /* 待核对详情 */
+  function showClaimDetail(claimNo) {
+    // 复用列表数据：直接从当前已渲染的行对象找更省请求，但为保证最新，走接口
+    api('/api/admin/payment-claims?keyword=' + encodeURIComponent(claimNo))
+      .then(function (d) {
+        var c = d.rows.filter(function (x) { return x.claimNo === claimNo; })[0];
+        if (!c) throw new Error('未找到该待核对记录');
+        var lines = [
+          ['待核对编号', '<span class="mono">' + esc(c.claimNo) + '</span>'],
+          ['状态', '<span class="badge ' + (CLAIM_BADGE[c.status] || 'b-wait') + '">' + esc(c.statusLabel) + '</span>'],
+          ['游戏 / 规格', esc(c.gameName) + ' · ' + esc(c.pkgName)],
+          ['计价 / 时长', esc(c.pricingMode) + ' · ' + c.quantity + ' ' + esc(c.unit)],
+          ['应付金额', money(c.totalAmount)],
+          ['付款备注', '<span class="payref">' + esc(c.payRef || '—') + '</span>'],
+          ['转账单号', '<span class="mono">' + esc(c.payNo || '—') + '</span>'],
+          ['联系方式', '<span class="mono">' + esc(c.contact) + '</span>'],
+          ['提交时间', time(c.createdAt)],
+          ['核对时间', c.reviewedAt ? time(c.reviewedAt) : '—'],
+          ['核对人', esc(c.reviewedBy || '—')],
+          ['生成订单', c.orderNo ? '<span class="mono" style="color:var(--cyan)">' + esc(c.orderNo) + '</span>' : '—'],
+        ];
+        var grid = lines.map(function (pair) {
+          return '<div class="detail-item"><span class="mute">' + pair[0] + '</span><b>' + pair[1] + '</b></div>';
+        }).join('');
+        if (c.ocrNote) grid += '<div class="detail-item full"><span class="mute">自动核验</span><b style="color:var(--lime)">' + esc(c.ocrNote) + '</b></div>';
+        if (c.requirement) grid += '<div class="detail-item full"><span class="mute">剪辑要求</span><b>' + esc(c.requirement) + '</b></div>';
+        if (c.reviewNote) grid += '<div class="detail-item full"><span class="mute">核对备注</span><b style="color:var(--amber)">' + esc(c.reviewNote) + '</b></div>';
+        var shot = '';
+        if (c.payShot) {
+          shot = '<h4 style="margin:16px 0 6px;font-size:14px">付款截图</h4><a href="' + esc(c.payShot) + '" target="_blank" rel="noopener">' +
+            '<img src="' + esc(c.payShot) + '" alt="付款截图" style="max-height:200px;border-radius:10px;border:1px solid var(--line2)" /></a>';
+        }
+        var body = '<div class="detail-grid">' + grid + '</div>' + shot;
+        openModal({ title: '待核对详情', sub: claimNo, body: body, okText: '关闭', hideCancel: true, onOk: closeModal, wide: true });
+      })
+      .catch(function (err) { toast(err.message || '加载详情失败', 'bad'); });
+  }
+
+  /* ---------------- 筛选：自定义下拉 + 输入即搜 ---------------- */
+  var TICK = '<span class="tick">✓</span>';
+
+  function optionHtml(value, label, selected) {
+    return '<button type="button" class="sel-opt" role="option" data-value="' + esc(value) + '" aria-selected="' +
+      (selected ? 'true' : 'false') + '">' + TICK + esc(label) + '</button>';
+  }
+
+  function buildSelect(selId, options, current, placeholder) {
+    var root = document.getElementById(selId);
+    if (!root) return;
+    root.querySelector('.sel-menu').innerHTML =
+      optionHtml('', placeholder, !current) +
+      options.map(function (o) { return optionHtml(o.value, o.label, current === o.value); }).join('');
+    var label = root.querySelector('.sel-label');
+    var hit = options.filter(function (o) { return o.value === current; })[0];
+    label.textContent = hit ? hit.label : placeholder;
+    label.classList.toggle('is-placeholder', !current);
+  }
+
+  function closeAllSelects(except) {
+    document.querySelectorAll('.sel.open').forEach(function (el) {
+      if (el === except) return;
+      el.classList.remove('open');
+      var b = el.querySelector('.sel-btn');
+      if (b) b.setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  function setFilter(name, value) {
+    state.filters[name] = value;
+    state.page = 1;
+    if (name === 'status') buildSelect('selStatus', statusOptions, value, '全部状态');
+    if (name === 'game') buildSelect('selGame', gameOptions, value, '全部分组');
+    load();
+  }
+
+  var statusOptions = [];
+  var gameOptions = [];
+  var newRole = 'operator';                                  // 新建账号时选中的角色
+  var newRoleLabelEl = document.querySelector('#selRole .sel-label');
+
+  function updateHint(text) {
+    var el = $('#filterHint');
+    if (el) el.textContent = text || '';
+  }
+
+  function filterSummary(total) {
+    if (total === 0) return '没有匹配的订单';
+    var parts = [];
+    var s = state.filters.status, g = state.filters.game, k = state.filters.keyword;
+    if (s) parts.push(statusLabelOf(s));
+    if (g) parts.push(gameLabelOf(g));
+    if (k) parts.push('“' + k + '”');
+    return parts.length ? '筛选中：' + parts.join(' · ') + ' · ' + total + ' 单' : '共 ' + total + ' 单';
+  }
+  function statusLabelOf(v) {
+    var hit = statusOptions.filter(function (o) { return o.value === v; })[0];
+    return hit ? hit.label : v;
+  }
+  function gameLabelOf(v) {
+    var hit = gameOptions.filter(function (o) { return o.value === v; })[0];
+    return hit ? hit.label : v;
+  }
+
+  /* 下拉开关 */
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.sel-btn');
+    if (btn) {
+      var root = btn.closest('.sel');
+      var willOpen = !root.classList.contains('open');
+      closeAllSelects(root);
+      root.classList.toggle('open', willOpen);
+      btn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+      return;
+    }
+    var opt = e.target.closest && e.target.closest('.sel-opt');
+    if (opt) {
+      var sel = opt.closest('.sel');
+      closeAllSelects();
+      // 账号管理弹层里的角色下拉复用同一套交互，但不走列表筛选
+      if (sel.dataset.newAccount === '1') {
+        newRole = opt.dataset.value;
+        newRoleLabelEl.textContent = opt.textContent.replace('✓', '').trim();
+        return;
+      }
+      setFilter(sel.dataset.name, opt.dataset.value);
+      return;
+    }
+    if (!e.target.closest || !e.target.closest('.sel')) closeAllSelects();
+  });
+
+  /* 输入即搜（防抖 300ms） */
+  var searchTimer = null;
+  var fKeyword = document.getElementById('fKeyword');
+  var searchBox = fKeyword ? fKeyword.closest('.searchbox') : null;
+
+  function syncClearBtn() {
+    if (searchBox) searchBox.classList.toggle('has-value', !!fKeyword.value.trim());
+  }
+
+  fKeyword.addEventListener('input', function () {
+    syncClearBtn();
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(function () {
+      state.filters.keyword = fKeyword.value.trim();
+      state.page = 1;
+      load();
+    }, 300);
+  });
+  fKeyword.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') { clearTimeout(searchTimer); state.filters.keyword = fKeyword.value.trim(); state.page = 1; load(); }
+    if (e.key === 'Escape') { fKeyword.value = ''; syncClearBtn(); clearTimeout(searchTimer); state.filters.keyword = ''; state.page = 1; load(); }
+  });
+  document.getElementById('clearKeyword').addEventListener('click', function () {
+    fKeyword.value = '';
+    syncClearBtn();
+    clearTimeout(searchTimer);
+    state.filters.keyword = '';
+    state.page = 1;
+    load();
+    fKeyword.focus();
+  });
+
+  /* ---------------- 行内操作 ---------------- */
+  function confirmModal(msg, title, onOk, okClass, okText) {
+    openModal({
+      title: title || '请确认',
+      body: '<div style="font-size:13.5px;color:var(--dim)">' + msg + '</div>',
+      okText: okText || '确定',
+      okClass: okClass || 'btn--primary',
+      onOk: function () { closeModal(); if (onOk) onOk(); },
+    });
+  }
+  function editNoteModal(o) {
+    openModal({
+      title: '编辑内部备注',
+      sub: o ? o.orderNo : '',
+      body: '<label class="f-label">备注（仅后台可见，客户不可见）</label>' +
+            '<textarea class="textarea" id="mNote"></textarea>',
+      okText: '保存备注',
+      onOk: function () {
+        var note = val('mNote');
+        setModalBusy(true, '保存中…');
+        api('/api/admin/orders/' + encodeURIComponent(o.orderNo), { method: 'PATCH', body: { adminNote: note } })
+          .then(function () { toast('备注已保存', 'ok'); closeModal(); return refresh(); })
+          .catch(function (err) { setModalBusy(false); toast(err.message || '保存失败', 'bad'); });
+      },
+    });
+    document.getElementById('mNote').value = o.adminNote || '';
+    document.getElementById('mNote').focus();
+  }
+
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('[data-act]');
+    if (btn) {
+      var no = btn.dataset.no;
+      var act = btn.dataset.act;
+
+      if (act === 'detail') { showOrderDetail(no); return; }
+
+      if (act === 'status') {
+        var to = btn.dataset.to;
+        var label = { paid: '标记为已付款', doing: '开始剪辑', done: '标记已交付', canceled: '取消该订单', wait: '恢复为待确认付款' }[to] || to;
+        confirmModal('确定要将订单 <b class="mono">' + esc(no) + '</b> <b>' + esc(label) + '</b> 吗？', '状态流转', function () {
+          api('/api/admin/orders/' + encodeURIComponent(no) + '/status', { method: 'PATCH', body: { status: to } })
+            .then(function () { toast('状态已更新', 'ok'); return refresh(); })
+            .catch(function (err) { toast(err.message || '操作失败', 'bad'); });
+        });
+        return;
+      }
+
+      if (act === 'note') { editNoteModal({ orderNo: no, adminNote: '' }); return; }
+
+      if (act === 'delete') {
+        confirmModal('确定删除订单 <b class="mono">' + esc(no) + '</b>？删除后不可恢复。', '删除订单', function () {
+          api('/api/admin/orders/' + encodeURIComponent(no), { method: 'DELETE' })
+            .then(function () { toast('订单已删除', 'ok'); return refresh(); })
+            .catch(function (err) { toast(err.message || '删除失败', 'bad'); });
+        }, 'btn--danger', '确认删除');
+        return;
+      }
+      return;
+    }
+    /* 整行点击（非操作按钮）→ 打开详情 */
+    var row = e.target.closest && e.target.closest('tr[data-row-no]');
+    if (row && !e.target.closest('.actions') && !e.target.closest('button')) {
+      var rno = row.getAttribute('data-row-no');
+      if (rno) showOrderDetail(rno);
+    }
+  });
+
+  /* ---------------- 重置与分页 ---------------- */
+  $('#resetBtn').addEventListener('click', function () {
+    closeAllSelects();
+    clearTimeout(searchTimer);
+    fKeyword.value = '';
+    syncClearBtn();
+    state.filters = {};
+    state.page = 1;
+    buildSelect('selStatus', statusOptions, '', '全部状态');
+    buildSelect('selGame', gameOptions, '', '全部分组');
+    load();
+  });
+  $('#prevPage').addEventListener('click', function () { if (state.page > 1) { state.page--; load(); } });
+  $('#nextPage').addEventListener('click', function () {
+    if (state.page < Math.ceil(state.total / state.pageSize)) { state.page++; load(); }
+  });
+
+  /* ============================================================
+     待核对付款（核对到账后才生成订单）
+     ============================================================ */
+  var claimState = { page: 1, pageSize: 20, total: 0, filters: { status: 'pending' } };
+  var CLAIM_BADGE = { pending: 'b-wait', confirmed: 'b-done', rejected: 'b-doing', expired: 'b-canceled' };
+
+  function claimStatusOptions() {
+    return [
+      { value: 'pending', label: '待核对到账' },
+      { value: 'confirmed', label: '已核对 · 已转订单' },
+      { value: 'rejected', label: '已驳回' },
+      { value: 'expired', label: '已过期' },
+      { value: '', label: '全部状态' },
+    ];
+  }
+
+  function loadClaimStats() {
+    var q = new URLSearchParams();
+    q.set('page', 1);
+    q.set('pageSize', 1);
+    return api('/api/admin/payment-claims?' + q.toString())
+      .then(function (d) {
+        var s = d.stats || {};
+        var cards = ['pending', 'confirmed', 'rejected'].map(function (k) {
+          var b = s[k] || { count: 0, amount: 0 };
+          var cls = k === 'pending' ? (b.count ? 'warn' : '') : (k === 'confirmed' ? 'hi' : '');
+          return '<div class="stat ' + cls + '"><span>' + esc(b.label || k) + '</span><b>' + b.count +
+                 '<em>单</em></b><div class="mute small">' + money(b.amount) + '</div></div>';
+        });
+        $('#claimStats').innerHTML = cards.join('');
+
+        // 页签上的待核对数量角标
+        var pending = (s.pending && s.pending.count) || 0;
+        var badge = $('#claimCount');
+        badge.textContent = pending;
+        badge.classList.toggle('zero', pending === 0);
+
+        return d;
+      });
+  }
+
+  function renderClaims(rows) {
+    if (!rows.length) {
+      $('#claimRows').innerHTML = '<tr><td colspan="8" class="empty-row">没有待核对的付款记录</td></tr>';
+      return;
+    }
+    $('#claimRows').innerHTML = rows.map(function (c) {
+      var cls = CLAIM_BADGE[c.status] || 'b-wait';
+      var canConfirm = c.status === 'pending';
+      var canReject = c.status === 'pending';
+      var actions = [];
+      if (canConfirm) actions.push('<button class="btn btn--sm btn--primary" data-claim="confirm" data-no="' + esc(c.claimNo) + '" data-amount="' + c.totalAmount + '" data-payref="' + esc(c.payRef || '') + '">确认到账 → 生成订单</button>');
+      if (canReject) actions.push('<button class="btn btn--sm btn--danger" data-claim="reject" data-no="' + esc(c.claimNo) + '">驳回</button>');
+      if (c.orderNo) actions.push('<button class="btn btn--sm" data-claim="goto" data-no="' + esc(c.orderNo) + '">查看订单</button>');
+      actions.unshift('<button class="btn btn--sm" data-claim="detail" data-no="' + esc(c.claimNo) + '">详情</button>');
+      if (!actions.length) actions.push('<span class="mute small">无操作</span>');
+
+      var detail = [];
+      detail.push('<b>' + esc(c.gameName) + '</b>');
+      detail.push('<div class="dim small">' + esc(c.pkgName) + ' · ' + c.quantity + ' ' + esc(c.unit) + '</div>');
+      if (c.overtimeUnits > 0) detail.push('<div class="mute small">超时长 ' + c.overtimeUnits + ' 分钟 +' + money(c.overtimeAmount) + '</div>');
+      if (c.upscale4k) detail.push('<div class="mute small">4K 超分 +' + money(c.upscaleAmount) + '</div>');
+
+      // 自动核验状态角标
+      var ocrTag = '';
+      if (c.ocrOk) {
+        ocrTag = '<span class="small" style="display:inline-block;margin-top:5px;color:#8CF0C8;font-weight:700">✓ 自动核验通过</span>';
+      } else if (c.status === 'pending') {
+        ocrTag = '<span class="small" style="display:inline-block;margin-top:5px;color:var(--amber);font-weight:700">待人工核对</span>';
+      }
+      // 付款截图（缩略图 + 放大查看）
+      var shotHtml = '';
+      if (c.payShot) {
+        shotHtml = '<a href="' + esc(c.payShot) + '" target="_blank" rel="noopener" title="点击查看大图" style="display:inline-block;margin-top:6px">' +
+          '<img src="' + esc(c.payShot) + '" alt="付款截图" style="width:74px;height:52px;object-fit:cover;border-radius:7px;border:1px solid var(--line2)" />' +
+          '</a>';
+      }
+
+      return '<tr>' +
+        '<td><div class="no">' + esc(c.claimNo) + '</div><div class="mute small">' + time(c.createdAt) + '</div></td>' +
+        '<td><span class="badge ' + cls + '">' + esc(c.statusLabel) + '</span>' +
+          (c.orderNo ? '<div class="small mono" style="color:var(--cyan);margin-top:5px">' + esc(c.orderNo) + '</div>' : '') + '</td>' +
+        '<td><span class="payref">' + esc(c.payRef || '—') + '</span>' +
+          (c.payNo ? '<div class="small mono" style="margin-top:5px;color:var(--dim);word-break:break-all">单号：' + esc(c.payNo) + '</div>' : '') +
+          ocrTag +
+          (c.ocrNote ? '<div class="mute small" style="margin-top:5px;word-break:break-all">OCR：' + esc(c.ocrNote) + '</div>' : '') +
+          shotHtml +
+          (c.reviewNote ? '<div class="mute small" style="margin-top:6px">备注：' + esc(c.reviewNote) + '</div>' : '') + '</td>' +
+        '<td class="small">' + detail.join('') + '</td>' +
+        '<td><div class="amount">' + money(c.totalAmount) + '</div></td>' +
+        '<td class="small"><div class="mono">' + esc(c.contact) + '</div>' +
+          '<div class="mute">' + (c.music === 'self' ? '自备音乐' : '剪辑师自选') + ' · ' + (c.material === 'ready' ? '素材已备' : '稍后提供') + '</div>' +
+          (c.refLink ? '<div class="mute" style="word-break:break-all">' + esc(c.refLink) + '</div>' : '') +
+        '</td>' +
+        '<td><div class="req">' + (c.requirement ? esc(c.requirement) : '<span class="mute">未填写</span>') + '</div></td>' +
+        '<td><div class="actions">' + actions.join('') + '</div></td>' +
+      '</tr>';
+    }).join('');
+  }
+
+  function loadClaims() {
+    var q = new URLSearchParams();
+    q.set('page', claimState.page);
+    q.set('pageSize', claimState.pageSize);
+    Object.keys(claimState.filters).forEach(function (k) { if (claimState.filters[k]) q.set(k, claimState.filters[k]); });
+    var box = $('#cKeyword').closest('.searchbox');
+    if (box) box.classList.add('loading');
+    return api('/api/admin/payment-claims?' + q.toString())
+      .then(function (d) {
+        claimState.total = d.total;
+        renderClaims(d.rows);
+        var pages = Math.max(1, Math.ceil(d.total / claimState.pageSize));
+        $('#claimPageInfo').textContent = '共 ' + d.total + ' 条 · 第 ' + claimState.page + ' / ' + pages + ' 页';
+        $('#claimPrev').disabled = claimState.page <= 1;
+        $('#claimNext').disabled = claimState.page >= pages;
+        var s = d.stats || {};
+        $('#claimHint').textContent = (s.pending && s.pending.count)
+          ? '有 ' + s.pending.count + ' 笔待核对（' + money(s.pending.amount) + '）'
+          : '暂无待核对';
+      })
+      .catch(function (err) {
+        if (err.status === 401) { state.token = ''; localStorage.removeItem(TOKEN_KEY); showLogin('登录已过期，请重新登录'); return; }
+        toast(err.message || '加载失败', 'bad');
+      })
+      .then(function () {
+        if (box) box.classList.remove('loading');
+      });
+  }
+
+  /* 页签切换（默认落在「待核对付款」：所有新记录都从待核对开始） */
+  var currentView = 'claims';
+  function switchView(name) {
+    currentView = name;
+    Array.prototype.forEach.call(document.querySelectorAll('#viewTabs button'), function (b) {
+      b.classList.toggle('on', b.dataset.view === name);
+    });
+    $('#paneOrders').classList.toggle('on', name === 'orders');
+    $('#paneClaims').classList.toggle('on', name === 'claims');
+    if (name === 'claims') {
+      loadClaimStats().catch(function () {});
+      loadClaims().catch(function () {});
+    } else {
+      loadStats().catch(function () {});
+      load().catch(function () {});
+    }
+  }
+  $('#viewTabs').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-view]');
+    if (b) switchView(b.dataset.view);
+  });
+
+  /* 核对操作 */
+  function confirmClaimModal(btn) {
+    var no = btn.dataset.no;
+    var amount = btn.dataset.amount || '';
+    var payref = btn.dataset.payref || '';
+    openModal({
+      title: '确认到账 · 生成订单',
+      sub: no,
+      body:
+        '<div class="modal-line"><span class="mute">付款备注</span><b class="payref">' + esc(payref) + '</b></div>' +
+        '<label class="f-label" style="margin-top:14px">实收金额（默认等于应付金额，可改）</label>' +
+        '<input class="input" id="mPaid" type="number" step="0.01" min="0" value="' + esc(amount) + '" />' +
+        '<label class="f-label" style="margin-top:12px">核对备注（选填，如“微信到账 99 元，尾号 8888”）</label>' +
+        '<textarea class="textarea" id="mNote2" placeholder="核对备注…"></textarea>' +
+        '<p class="hint" style="margin-top:10px">确认前请先在「详情」里查看付款截图，与系统 OCR 结果及原支付账单比对单号、金额。确认后立即生成正式订单号并进入剪辑队列。</p>',
+      okText: '确认到账并生成订单',
+      onOk: function () {
+        var paid = Number(val('mPaid'));
+        if (!Number.isFinite(paid) || paid < 0) { toast('请填写有效的实收金额', 'bad'); return; }
+        setModalBusy(true, '生成中…');
+        api('/api/admin/payment-claims/' + encodeURIComponent(no) + '/confirm', { method: 'POST', body: { note: val('mNote2'), paidAmount: paid } })
+          .then(function (d) {
+            toast('已生成订单 ' + d.order.orderNo, 'ok');
+            closeModal();
+            return Promise.all([loadClaims(), loadClaimStats(), loadStats()]);
+          })
+          .catch(function (err) { setModalBusy(false); toast(err.message || '核对失败', 'bad'); });
+      },
+    });
+    document.getElementById('mNote2').focus();
+  }
+
+  function rejectClaimModal(btn) {
+    var no = btn.dataset.no;
+    openModal({
+      title: '驳回待核对',
+      sub: no,
+      body:
+        '<label class="f-label">驳回原因（会记录在案）</label>' +
+        '<textarea class="textarea" id="mWhy" placeholder="未查到这笔到账">未查到这笔到账</textarea>',
+      okText: '确认驳回',
+      okClass: 'btn--danger',
+      onOk: function () {
+        var why = val('mWhy').trim();
+        if (!why) { toast('请填写驳回原因', 'bad'); return; }
+        setModalBusy(true, '驳回中…');
+        api('/api/admin/payment-claims/' + encodeURIComponent(no) + '/reject', { method: 'POST', body: { note: why } })
+          .then(function () {
+            toast('已驳回', 'ok');
+            closeModal();
+            return Promise.all([loadClaims(), loadClaimStats()]);
+          })
+          .catch(function (err) { setModalBusy(false); toast(err.message || '操作失败', 'bad'); });
+      },
+    });
+    document.getElementById('mWhy').focus();
+  }
+
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('[data-claim]');
+    if (!btn) return;
+    var no = btn.dataset.no;
+    var act = btn.dataset.claim;
+
+    if (act === 'detail') { showClaimDetail(no); return; }
+
+    if (act === 'confirm') { confirmClaimModal(btn); return; }
+    if (act === 'reject') { rejectClaimModal(btn); return; }
+
+    if (act === 'goto') {
+      switchView('orders');
+      state.filters = { keyword: no };
+      state.page = 1;
+      $('#fKeyword').value = no;
+      syncClearBtn();
+      load();
+    }
+  });
+
+  /* 待核对筛选与分页 */
+  $('#claimPrev').addEventListener('click', function () { if (claimState.page > 1) { claimState.page--; loadClaims(); } });
+  $('#claimNext').addEventListener('click', function () {
+    if (claimState.page < Math.ceil(claimState.total / claimState.pageSize)) { claimState.page++; loadClaims(); }
+  });
+  $('#claimResetBtn').addEventListener('click', function () {
+    closeAllSelects();
+    clearTimeout(claimSearchTimer);
+    $('#cKeyword').value = '';
+    $('#cKeyword').closest('.searchbox').classList.remove('has-value');
+    claimState.filters = { status: 'pending' };
+    claimState.page = 1;
+    buildSelect('selClaimStatus', claimStatusOptions(), 'pending', '待核对到账');
+    loadClaims();
+  });
+
+  var claimSearchTimer = null;
+  (function initClaimSearch() {
+    var el = document.getElementById('cKeyword');
+    var box = el.closest('.searchbox');
+    el.addEventListener('input', function () {
+      box.classList.toggle('has-value', !!el.value.trim());
+      clearTimeout(claimSearchTimer);
+      claimSearchTimer = setTimeout(function () {
+        claimState.filters.keyword = el.value.trim();
+        claimState.page = 1;
+        loadClaims();
+      }, 300);
+    });
+    document.getElementById('clearCKeyword').addEventListener('click', function () {
+      el.value = '';
+      box.classList.remove('has-value');
+      clearTimeout(claimSearchTimer);
+      claimState.filters.keyword = '';
+      claimState.page = 1;
+      loadClaims();
+    });
+  })();
+
+  function refresh() { return Promise.all([load(), loadStats()]); }
+
+  /* ---------------- 启动 ---------------- */
+  function boot() {
+    $('#exportLink').href = '/api/admin/orders-export.csv';
+    // 先拿元数据把下拉选项渲染出来，再加载列表（避免提示语取不到标签）
+    loadMeta().catch(function () {}).then(function () {
+      buildSelect('selClaimStatus', claimStatusOptions(), 'pending', '待核对到账');
+      return refresh().catch(function () {});
+    }).then(function () {
+      return Promise.all([loadClaimStats(), loadClaims()]).catch(function () {});
+    });
+  }
+
+  // 已登录则直接进入
+  if (state.token) {
+    api('/api/admin/me')
+      .then(function (d) {
+        $('#whoName').textContent = (d.admin.displayName || d.admin.username) + ' · ' + d.admin.role;
+        showMain();
+        boot();
+      })
+      .catch(function () {
+        state.token = '';
+        localStorage.removeItem(TOKEN_KEY);
+        showLogin();
+      });
+  } else {
+    showLogin();
+  }
+
+  // CSV 导出需要带 token：用 fetch 拿到 blob 再下载
+  $('#exportLink').addEventListener('click', function (e) {
+    e.preventDefault();
+    var q = new URLSearchParams();
+    Object.keys(state.filters).forEach(function (k) { if (state.filters[k]) q.set(k, state.filters[k]); });
+    if (state.total > 200) {
+      toast('当前条件下共 ' + state.total + ' 条，CSV 最多导出前 200 条，建议缩小筛选再导出', 'bad');
+      return;
+    }
+    fetch('/api/admin/orders-export.csv?' + q.toString(), { headers: { authorization: 'Bearer ' + state.token } })
+      .then(function (res) {
+        if (!res.ok) throw new Error('导出失败 HTTP ' + res.status);
+        return res.blob();
+      })
+      .then(function (blob) {
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'orders-' + new Date().toISOString().slice(0, 10) + '.csv';
+        a.click();
+        URL.revokeObjectURL(a.href);
+        toast('已开始下载', 'ok');
+      })
+      .catch(function (err) { toast(err.message, 'bad'); });
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { closeAllSelects(); closeSettings(); }
+  });
+
+  /* ============================================================
+     账号设置：改密码 + 账号管理
+     ============================================================ */
+  var settings = { tab: 'password', accounts: [], myRole: 'operator' };
+
+  function openSettings(tab) {
+    settings.tab = tab || 'password';
+    $('#settingsOverlay').classList.add('open');
+    switchTab(settings.tab);
+  }
+  function closeSettings() { $('#settingsOverlay').classList.remove('open'); }
+
+  function switchTab(tab) {
+    settings.tab = tab;
+    Array.prototype.forEach.call(document.querySelectorAll('#settingsTabs button'), function (b) {
+      b.classList.toggle('on', b.dataset.tab === tab);
+    });
+    $('#tabPassword').classList.toggle('hide', tab !== 'password');
+    $('#tabAccounts').classList.toggle('hide', tab !== 'accounts');
+    if (tab === 'accounts') loadAccounts();
+  }
+
+  $('#settingsBtn').addEventListener('click', function () { openSettings('password'); });
+  $('#settingsClose').addEventListener('click', closeSettings);
+  $('#settingsOverlay').addEventListener('click', function (e) { if (e.target === $('#settingsOverlay')) closeSettings(); });
+  $('#settingsTabs').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-tab]');
+    if (b) switchTab(b.dataset.tab);
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeSettings(); });
+
+  /* 改密码 */
+  $('#pwdSubmit').addEventListener('click', function () {
+    var cur = $('#curPwd').value, n1 = $('#newPwd').value, n2 = $('#newPwd2').value;
+    var msg = $('#pwdMsg');
+    msg.classList.remove('on');
+    function bad(t) { msg.textContent = t; msg.classList.add('on'); }
+    if (!cur) return bad('请输入当前密码');
+    if (!n1 || n1.length < 8) return bad('新密码至少 8 位');
+    if (n1 !== n2) return bad('两次输入的新密码不一致');
+    if (n1 === cur) return bad('新密码不能与当前密码相同');
+
+    var btn = this;
+    btn.disabled = true; btn.textContent = '保存中…';
+    api('/api/admin/password', { method: 'PATCH', body: { currentPassword: cur, newPassword: n1 } })
+      .then(function (d) {
+        toast('密码已修改' + (d.revokedSessions ? '，已注销其它 ' + d.revokedSessions + ' 个会话' : ''), 'ok');
+        $('#curPwd').value = $('#newPwd').value = $('#newPwd2').value = '';
+        closeSettings();
+      })
+      .catch(function (err) { bad(err.message || '保存失败'); })
+      .then(function () { btn.disabled = false; btn.textContent = '保存新密码'; });
+  });
+
+  /* 账号列表 */
+  function loadAccounts() {
+    if (state.meta && state.meta.role) settings.myRole = state.meta.role;
+    return api('/api/admin/accounts')
+      .then(function (d) {
+        settings.accounts = d.accounts || [];
+        $('#accountRows').innerHTML = settings.accounts.map(function (a) {
+          var roleTag = '<span class="role-tag role-' + a.role + '">' + (a.role === 'admin' ? '超级管理员' : 'operator') + '</span>';
+          var stateTag = a.enabled ? '<span class="state-on">启用</span>' : '<span class="state-off">已停用</span>';
+          var toggle = a.enabled
+            ? '<button class="btn btn--sm btn--danger" data-acc="disable" data-id="' + a.id + '">停用</button>'
+            : '<button class="btn btn--sm" data-acc="enable" data-id="' + a.id + '">启用</button>';
+          return '<tr>' +
+            '<td class="mono">' + esc(a.username) + '</td>' +
+            '<td>' + esc(a.displayName || '—') + '</td>' +
+            '<td>' + roleTag + '</td>' +
+            '<td>' + stateTag + '</td>' +
+            '<td class="actions">' +
+              '<button class="btn btn--sm" data-acc="reset" data-id="' + a.id + '">重置密码</button>' +
+              toggle +
+              '<button class="btn btn--sm btn--danger" data-acc="delete" data-id="' + a.id + '">删除</button>' +
+            '</td>' +
+          '</tr>';
+        }).join('');
+      })
+      .catch(function (err) {
+        $('#accountRows').innerHTML = '<tr><td colspan="5" class="empty-row">' + esc(err.message || '加载失败') + '</td></tr>';
+      });
+  }
+
+  $('#accountRows').addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-acc]');
+    if (!btn) return;
+    var id = Number(btn.dataset.id);
+    var act = btn.dataset.acc;
+    var target = settings.accounts.filter(function (a) { return a.id === id; })[0] || {};
+
+    if (act === 'enable' || act === 'disable') {
+      api('/api/admin/accounts/' + id, { method: 'PATCH', body: { enabled: act === 'enable' } })
+        .then(function () { toast(act === 'enable' ? '账号已启用' : '账号已停用', 'ok'); return loadAccounts(); })
+        .catch(function (err) { toast(err.message, 'bad'); });
+      return;
+    }
+    if (act === 'reset') {
+      openModal({
+        title: '重置密码',
+        sub: target.username || '',
+        body: '<label class="f-label">为账号「' + esc(target.username || '') + '」设置新密码（至少 8 位）</label>' +
+              '<input class="input" id="mAccPwd" type="password" autocomplete="new-password" />',
+        okText: '重置密码',
+        onOk: function () {
+          var p = val('mAccPwd');
+          if (p.length < 8) { toast('密码至少 8 位', 'bad'); return; }
+          setModalBusy(true, '重置中…');
+          api('/api/admin/accounts/' + id, { method: 'PATCH', body: { password: p } })
+            .then(function () { toast('密码已重置，该账号需重新登录', 'ok'); closeModal(); return loadAccounts(); })
+            .catch(function (err) { setModalBusy(false); toast(err.message, 'bad'); });
+        },
+      });
+      document.getElementById('mAccPwd').focus();
+      return;
+    }
+    if (act === 'delete') {
+      confirmModal('确定删除账号「<b>' + esc(target.username || '') + '</b>」？删除后该账号立即失效。', '删除账号', function () {
+        api('/api/admin/accounts/' + id, { method: 'DELETE' })
+          .then(function () { toast('账号已删除', 'ok'); return loadAccounts(); })
+          .catch(function (err) { toast(err.message, 'bad'); });
+      }, 'btn--danger', '确认删除');
+    }
+  });
+
+  /* 新建账号 */
+  var ROLE_OPTIONS = [
+    { value: 'operator', label: 'operator（只能管订单）' },
+    { value: 'admin', label: 'admin（可管账号）' },
+  ];
+  var selRoleEl = document.getElementById('selRole');
+  if (selRoleEl) {
+    selRoleEl.dataset.newAccount = '1';   // 让通用下拉处理器知道这是新建账号的角色选择
+    buildSelect('selRole', ROLE_OPTIONS, newRole, 'operator（只能管订单）');
+  }
+
+  $('#accCreate').addEventListener('click', function () {
+    var msg = $('#accMsg');
+    msg.classList.remove('on');
+    function bad(t) { msg.textContent = t; msg.classList.add('on'); }
+    var body = {
+      username: $('#accName').value.trim(),
+      displayName: $('#accDisplay').value.trim(),
+      password: $('#accPwd').value,
+      role: newRole,
+    };
+    if (!body.username) return bad('请填写账号');
+    if (!body.password || body.password.length < 8) return bad('初始密码至少 8 位');
+
+    var btn = this;
+    btn.disabled = true; btn.textContent = '创建中…';
+    api('/api/admin/accounts', { method: 'POST', body: body })
+      .then(function () {
+        toast('账号已创建', 'ok');
+        $('#accName').value = $('#accDisplay').value = $('#accPwd').value = '';
+        return loadAccounts();
+      })
+      .catch(function (err) { bad(err.message || '创建失败'); })
+      .then(function () { btn.disabled = false; btn.textContent = '创建账号'; });
+  });
+})();
+</script>
+</body>
+</html>

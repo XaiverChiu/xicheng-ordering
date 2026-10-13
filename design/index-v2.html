@@ -1,0 +1,1716 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>XiCheng · 电竞剪辑自助下单 — Game Highlight Studio</title>
+<meta name="description" content="XiCheng 游戏高光剪辑自助下单：三角洲行动 / 无畏契约 / CS2，按价目表自选规格、实时计价、先付后剪，付款后 48h 内出片；其他游戏请联系剪辑师。" />
+<link rel="icon" href="log.jpg" />
+<style>:root{
+  --bg:#0B0D11; --bg-2:#10131A;
+  --panel:#0F1217; --panel-2:#151A22;
+  --line:rgba(255,255,255,.09); --line-strong:rgba(255,255,255,.17);
+  --txt:#F3F5F8; --txt-dim:#A8B1C0; --txt-mute:#5D6675;
+  --gold:#F2B04C; --gold-bright:#FFD98A; --gold-deep:#B97C1E;
+  --cyan:#F2B04C; --pink:#F2B04C; --amber:#F2B04C; --lime:#F2B04C; --ok:#C9CDD4;
+  --r-sm:8px; --r-md:12px; --r-lg:16px; --r-xl:22px;
+  --shadow:0 30px 70px -34px rgba(0,0,0,.95);
+  --font:"HarmonyOS Sans SC","MiSans","PingFang SC","Microsoft YaHei UI","Microsoft YaHei",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --display:"Bahnschrift","DIN Alternate","Rajdhani","Arial Narrow","HarmonyOS Sans SC","Microsoft YaHei UI",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Consolas,"Cascadia Mono",monospace;
+  --maxw:1180px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--txt);font-family:var(--font);-webkit-font-smoothing:antialiased;line-height:1.65;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(1100px 620px at 78% -8%,rgba(255,255,255,.06),transparent 62%),radial-gradient(820px 500px at 0% 12%,rgba(255,255,255,.03),transparent 60%),radial-gradient(120% 130% at 50% 40%,transparent 52%,rgba(0,0,0,.55) 100%)}
+body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='150' height='150' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E");background-size:150px 150px}
+img,svg{display:block;max-width:100%}
+button{font:inherit;color:inherit}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--gold);color:#1A1205}
+.wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 24px;position:relative;z-index:2}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.dim{color:var(--txt-dim)}
+.mute{color:var(--txt-mute)}
+.hide{display:none !important}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:8px}
+summary:focus-visible,.qa summary:focus-visible{outline-color:var(--gold)}
+*::-webkit-scrollbar{width:10px;height:10px}
+*::-webkit-scrollbar-thumb{background:#232A35;border-radius:20px;border:2px solid var(--bg)}
+*::-webkit-scrollbar-track{background:transparent}
+.chip{display:inline-flex;align-items:center;gap:7px;padding:6px 13px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.03);font-size:12.5px;color:var(--txt-dim);white-space:nowrap}
+.chip b{color:var(--txt);font-weight:600}
+.chip--gold,.chip--lime{border-color:rgba(255,255,255,.16);background:rgba(255,255,255,.05);color:var(--txt-dim)}
+.chip--cyan{border-color:rgba(255,255,255,.16);background:rgba(255,255,255,.05);color:var(--txt-dim)}
+.chip--pink{border-color:rgba(255,255,255,.16);background:rgba(255,255,255,.05);color:var(--txt-dim)}
+.dot{width:6px;height:6px;border-radius:50%;background:currentColor;box-shadow:0 0 0 3px color-mix(in srgb,currentColor 22%,transparent)}
+.pulse{animation:pulse 1.9s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.82)}}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:12px 20px;border-radius:10px;border:1px solid var(--line-strong);background:rgba(255,255,255,.04);cursor:pointer;font-weight:700;font-size:14px;transition:.18s ease;white-space:nowrap;position:relative}
+.btn:hover{background:rgba(255,255,255,.09);transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn--primary{background:linear-gradient(100deg,var(--gold-bright),var(--gold) 55%,#D98E2B);color:#1A1205;border-color:transparent;font-weight:800;overflow:hidden;box-shadow:0 14px 36px -14px rgba(242,176,76,.7)}
+.btn--primary:hover{box-shadow:0 18px 44px -12px rgba(242,176,76,.9);filter:brightness(1.05)}
+.btn--primary::after{content:"";position:absolute;top:0;bottom:0;left:-70%;width:46%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.5),transparent);transform:skewX(-18deg);pointer-events:none;animation:shimmer 3.6s ease-in-out infinite}
+@keyframes shimmer{0%{left:-70%}55%{left:135%}100%{left:135%}}
+.btn--ghost{background:transparent}
+.btn--sm{padding:8px 14px;font-size:13px;border-radius:9px}
+.btn--xs{padding:6px 11px;font-size:12px;border-radius:8px}
+.btn[disabled]{opacity:.4;cursor:not-allowed;transform:none}
+.card{position:relative;overflow:hidden;border-radius:var(--r-lg);background:linear-gradient(168deg,rgba(255,255,255,.05),rgba(255,255,255,.014) 45%);border:1px solid rgba(242,176,76,.14);box-shadow:inset 0 0 0 1px rgba(242,176,76,.04);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.card--flat{background:var(--panel);backdrop-filter:none}
+.card--glow::after{content:"";position:absolute;inset:-1px;border-radius:inherit;pointer-events:none;background:linear-gradient(140deg,rgba(242,176,76,.5),transparent 40%,rgba(242,176,76,.18));-webkit-mask:linear-gradient(#000,#000) content-box,linear-gradient(#000,#000);mask:linear-gradient(#000,#000) content-box,linear-gradient(#000,#000);-webkit-mask-composite:xor;mask-composite:exclude;padding:1px}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);font-weight:700}
+.eyebrow::before{content:"";width:28px;height:2px;background:linear-gradient(90deg,var(--gold),transparent)}
+h1,h2,h3,h4{margin:0;line-height:1.14;letter-spacing:-.02em;font-weight:800;font-family:var(--display)}
+.sec{padding-top:78px;padding-bottom:78px;position:relative;z-index:2}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:22px;flex-wrap:wrap;margin-bottom:30px}
+.sec-head h2{font-size:clamp(26px,3.4vw,40px)}
+.sec-head p{margin:10px 0 0;color:var(--txt-dim);max-width:60ch;font-size:14.5px}
+header.top{position:sticky;top:0;z-index:60;background:rgba(11,13,17,.75);backdrop-filter:blur(18px) saturate(150%);-webkit-backdrop-filter:blur(18px) saturate(150%);border-bottom:1px solid transparent;transition:border-color .3s,background .3s}
+header.top.stuck{border-bottom-color:var(--line);background:rgba(11,13,17,.92)}
+.topbar{display:flex;align-items:center;gap:20px;height:66px}
+.brand{display:flex;align-items:center;gap:11px;font-weight:900;font-size:17px;letter-spacing:-.01em}
+.brand .mark{width:38px;height:38px;border-radius:50%;display:block;flex:0 0 auto;object-fit:cover;border:1px solid rgba(242,176,76,.5);box-shadow:0 0 0 2px rgba(242,176,76,.12),0 6px 18px -8px rgba(242,176,76,.7)}
+.brand small{display:block;font-size:10.5px;font-weight:600;letter-spacing:.22em;color:var(--txt-mute);text-transform:uppercase}
+nav.tabs{display:flex;align-items:center;gap:4px;margin-left:auto}
+nav.tabs a{padding:9px 15px;border-radius:9px;font-size:14px;font-weight:600;color:var(--txt-dim);transition:.16s;position:relative}
+nav.tabs a:hover{color:var(--txt);background:rgba(255,255,255,.05)}
+nav.tabs a.on{color:var(--txt);background:rgba(255,255,255,.07)}
+nav.tabs a.on::after{content:"";position:absolute;left:15px;right:15px;bottom:3px;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--gold),rgba(242,176,76,.2))}
+.top-cta{display:flex;align-items:center;gap:9px}
+.burger{display:none;width:40px;height:40px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.05);place-items:center;cursor:pointer}
+.hero{padding-top:64px;padding-bottom:34px;position:relative;z-index:2}
+.hero::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:linear-gradient(115deg,transparent 38%,rgba(255,255,255,.06) 44%,rgba(255,255,255,.02) 50%,transparent 57%);mask-image:linear-gradient(90deg,#000 28%,transparent 80%);-webkit-mask-image:linear-gradient(90deg,#000 28%,transparent 80%)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(340px,.94fr);gap:40px;align-items:start}
+.hero h1{font-size:clamp(36px,5.4vw,64px);font-weight:900;letter-spacing:-.035em;margin:20px 0 0}
+.hero h1 em{font-style:normal;background:linear-gradient(96deg,var(--gold-bright),var(--gold) 55%,#B97C1E);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .lead{color:var(--txt-dim);font-size:16px;margin:20px 0 0;max-width:56ch}
+.hero .lead b{color:var(--txt)}
+.hero-actions{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}
+.hero-stats{display:flex;gap:28px;margin-top:36px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:24px}
+.hero-stats div span{display:block;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--txt-mute)}
+.hero-stats div b{font-size:23px;font-weight:800;letter-spacing:-.02em;font-family:var(--display)}
+.games-strip{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
+.quote{padding:22px;border-radius:var(--r-xl);border:1px solid rgba(242,176,76,.2);box-shadow:inset 0 0 0 1px rgba(242,176,76,.05),0 30px 70px -40px rgba(0,0,0,.9)}
+.quote h3{font-size:16px;display:flex;align-items:center;gap:9px}
+.quote h3 .tag{margin-left:auto;font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--gold);border:1px solid rgba(242,176,76,.4);padding:3px 10px;border-radius:999px;background:rgba(242,176,76,.08)}
+.field{margin-top:15px}
+.field > label{display:flex;align-items:center;gap:7px;font-size:12.5px;font-weight:700;color:var(--txt-dim);margin-bottom:8px;letter-spacing:.02em}
+.field > label .req{color:var(--pink)}
+.field > label .tip{margin-left:auto;font-weight:500;color:var(--txt-mute);font-size:11.5px}
+.seg{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px}
+.seg button{padding:11px 8px;border-radius:11px;border:1px solid var(--line);background:rgba(255,255,255,.03);cursor:pointer;font-size:13px;font-weight:700;color:var(--txt-dim);transition:.16s;line-height:1.35;font-family:var(--display)}
+.seg button small{display:block;font-size:10.5px;font-weight:600;color:var(--txt-mute);margin-top:2px;font-family:var(--font)}
+.seg button:hover{border-color:var(--line-strong);color:var(--txt)}
+.seg button.on{border-color:rgba(242,176,76,.65);color:#FFE3AF;background:linear-gradient(160deg,rgba(242,176,76,.22),rgba(242,176,76,.06));box-shadow:0 8px 24px -14px rgba(242,176,76,.9)}
+.seg button.on small{color:#F6C97E}
+.seg--2{grid-template-columns:repeat(2,1fr)}
+.quote-out{margin-top:18px;padding:16px;border-radius:14px;border:1px dashed rgba(242,176,76,.4);background:rgba(0,0,0,.3);display:grid;grid-template-columns:1fr auto;gap:6px 14px;align-items:end}
+.quote-out .k{font-size:12px;color:var(--txt-mute)}
+.quote-out .v{font-size:13px;font-weight:700}
+.quote-out .total{text-align:right}
+.quote-out .total b{font-size:33px;font-weight:900;letter-spacing:-.03em;color:var(--gold);text-shadow:0 0 28px rgba(242,176,76,.4);font-family:var(--display)}
+.quote-out .total b i{font-style:normal;font-size:15px;color:var(--txt-dim);margin-right:2px}
+.mini-note{display:flex;gap:9px;align-items:flex-start;font-size:12px;color:var(--txt-mute);margin-top:13px}
+.pay-item{margin:0;padding:10px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.03);text-align:center}
+.pay-item img{width:100%;border-radius:9px;display:block;background:#fff}
+.pay-item figcaption{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:10px;font-size:13.5px;font-weight:700}
+.pay-item small{display:block;margin-top:5px;font-size:11.5px;color:var(--txt-mute)}
+.pay-lightbox{position:fixed;inset:0;z-index:120;display:none;align-items:center;justify-content:center;padding:22px;background:rgba(5,7,10,.88);backdrop-filter:blur(8px)}
+.pay-lightbox.open{display:flex}
+.pay-lightbox img{max-width:min(560px,92vw);max-height:86vh;border-radius:14px;background:#fff;padding:10px}
+.pay-lightbox .close{position:absolute;top:22px;right:22px}
+.pay-cta{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);gap:26px;align-items:start}
+.pay-cta-main h3{font-size:20px;margin:12px 0 0;line-height:1.35}
+.pay-cta-main p{margin:12px 0 0;font-size:13.5px;line-height:1.75}
+.pay-cta-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.pay-cta-side{padding:16px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.03)}
+.pay-cta-steps{display:flex;flex-direction:column;gap:10px;font-size:13px;color:var(--txt-dim)}
+.pay-cta-steps div{display:flex;gap:10px;align-items:flex-start}
+.pay-cta-steps span{flex:0 0 auto;width:20px;height:20px;border-radius:5px;display:grid;place-items:center;font-family:var(--mono);font-size:11px;font-weight:700;background:rgba(242,176,76,.14);color:var(--gold);border:1px solid rgba(242,176,76,.35);margin-top:1px}
+.pay-inline{padding:18px;border-radius:16px;border:1px solid var(--line);background:rgba(0,0,0,.24)}
+.pay-inline-head{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;margin-bottom:16px}
+.pay-inline-head h4{margin:0;font-size:16px}
+.pay-inline-head p{margin:6px 0 0;font-size:12.5px;max-width:46ch}
+.pay-amount{margin-left:auto;text-align:right}
+.pay-amount span{display:block;font-size:11.5px;color:var(--txt-mute);letter-spacing:.08em}
+.pay-amount b{font-size:30px;font-weight:900;color:var(--gold);letter-spacing:-.02em;font-family:var(--display)}
+.pay-inline-grid{display:grid;grid-template-columns:170px 170px minmax(0,1fr);gap:16px;align-items:start}
+.pay-inline-steps ol{margin:0;padding-left:18px;font-size:13px;color:var(--txt-dim);display:flex;flex-direction:column;gap:8px}
+.pay-inline-steps ol b{color:var(--gold)}
+.pay-ref-recap{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:14px;padding:11px 13px;border-radius:11px;border:1px dashed rgba(242,176,76,.45);background:rgba(242,176,76,.07);font-size:12.5px;color:var(--txt-dim)}
+.pay-ref-recap b{font-family:var(--mono);color:#FFD98A}
+.pay-ref-recap .btn{margin-left:auto}
+.price-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:stretch}
+.pcard{padding:0;display:flex;flex-direction:column;height:100%}
+.pcard header{padding:22px 20px 17px;border-bottom:1px solid var(--line);display:block}
+.pcard header h3{font-size:18px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.pcard header p{margin:6px 0 0;font-size:12.5px;color:var(--txt-mute)}
+.flag--same{font-size:10px;font-weight:800;letter-spacing:.06em;padding:2px 8px;border-radius:6px;background:rgba(255,255,255,.07);color:#C9CDD4;border:1px solid rgba(255,255,255,.16)}
+.pcard .contact-body{padding:22px 20px 6px;flex:1;display:flex;flex-direction:column;gap:14px;justify-content:center}
+.pcard .contact-body .big{font-size:22px;font-weight:900;letter-spacing:-.02em;line-height:1.3;font-family:var(--display)}
+.pcard .contact-body .big em{font-style:normal;color:var(--gold)}
+.pcard .contact-body p{margin:0;font-size:13px;color:var(--txt-dim)}
+.pcard .contact-body .ways{display:flex;flex-direction:column;gap:9px;margin-top:2px}
+.pcard .contact-body .way{display:flex;align-items:center;gap:10px;padding:11px 13px;border-radius:11px;border:1px solid var(--line);background:rgba(255,255,255,.03);font-size:13.5px}
+.pcard .contact-body .way b{margin-left:auto;font-family:var(--mono);color:var(--gold)}
+.pcard .contact-body .way--wx b{color:var(--gold-bright)}
+.pcard ul{list-style:none;margin:0;padding:8px 10px 10px;display:flex;flex-direction:column;gap:2px;flex:1;justify-content:center}
+.pitem{display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:center;padding:12px 12px;border-radius:12px;transition:.16s;position:relative;cursor:pointer}
+.pitem:hover{background:rgba(255,255,255,.05)}
+.pitem:focus-within{background:rgba(255,255,255,.06)}
+.pitem .nm{font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.pitem .nm .flag{font-size:10px;font-weight:800;letter-spacing:.08em;padding:2px 7px;border-radius:6px;text-transform:uppercase}
+.flag--hot{background:rgba(255,255,255,.08);color:#E8ECF2;border:1px solid rgba(255,255,255,.2);animation:hotPulse 2.2s ease-in-out infinite}
+@keyframes hotPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,255,255,.22)}55%{box-shadow:0 0 0 5px rgba(255,255,255,0)}}
+.flag--self{background:rgba(255,255,255,.1);color:#E8ECF2;border:1px solid rgba(255,255,255,.22)}
+.pitem .sub{grid-column:1;font-size:11.5px;color:var(--txt-mute)}
+.pitem .pr{grid-row:1 / span 2;grid-column:2;text-align:right;font-weight:900;font-size:19px;letter-spacing:-.02em;display:flex;align-items:baseline;gap:3px;white-space:nowrap;font-family:var(--display)}
+.pitem .pr i{font-style:normal;font-size:12px;font-weight:700;color:var(--txt-mute)}
+.pitem .pr .amt{color:var(--gold)}
+.pitem .pr .per{font-size:11.5px;color:var(--txt-mute);font-weight:600;margin-left:2px}
+.pitem .go{grid-column:1 / -1;margin-top:8px;opacity:0;max-height:0;overflow:hidden;transition:.2s}
+.pitem:hover .go,.pitem:focus-within .go{opacity:1;max-height:44px}
+@media (hover:none){.pitem .go{opacity:1;max-height:48px}}
+.pcard footer{padding:14px 20px 18px;border-top:1px solid var(--line);display:flex;gap:9px;flex-wrap:wrap}
+.pcard .accent{position:absolute;top:0;left:0;right:0;height:3px}
+.flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;counter-reset:s}
+.flow .step{padding:22px 20px 20px;position:relative;counter-increment:s}
+.flow .step::before{content:"0" counter(s);position:absolute;top:13px;right:17px;font-family:var(--display);font-size:30px;font-weight:800;color:rgba(242,176,76,.28);letter-spacing:-.04em}
+.flow .step h4{font-size:15.5px;margin-bottom:8px}
+.flow .step p{margin:0;font-size:13px;color:var(--txt-dim)}
+.upsell{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.upsell .u{padding:22px;border-radius:var(--r-lg);display:flex;gap:16px;align-items:flex-start}
+.upsell .u h4{font-size:16px;margin-bottom:7px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.upsell .u p{margin:0;font-size:13.5px;color:var(--txt-dim)}
+.upsell .u .price{margin-left:auto;font-weight:900;font-size:20px;white-space:nowrap;color:var(--gold);font-family:var(--display)}
+.checks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
+.check{display:flex;gap:11px;align-items:flex-start;padding:13px 14px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.025);cursor:pointer;transition:.16s;user-select:none}
+.check:hover{border-color:var(--line-strong);background:rgba(255,255,255,.05)}
+.check.on{border-color:rgba(242,176,76,.55);background:rgba(242,176,76,.08)}
+.check input{position:absolute;opacity:0;pointer-events:none}
+.check .box{width:19px;height:19px;border-radius:6px;border:1.6px solid var(--line-strong);flex:0 0 auto;margin-top:1px;display:grid;place-items:center;transition:.16s}
+.check.on .box{background:var(--gold);border-color:var(--gold);color:#1A1205}
+.check .box svg{opacity:0;transition:.16s}
+.check.on .box svg{opacity:1}
+.check b{display:block;font-size:13.5px;font-weight:700}
+.check small{display:block;font-size:11.5px;color:var(--txt-mute);margin-top:2px}
+.notice-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.ncard{padding:20px;border-radius:var(--r-lg);scroll-margin-top:96px}
+.ncard .tag{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.1em;padding:4px 10px;border-radius:99px;margin-bottom:13px}
+.ncard h4{font-size:15px;margin-bottom:9px}
+.ncard p{margin:0;font-size:13.5px;color:var(--txt-dim)}
+.ncard ul{margin:0;padding-left:17px;font-size:13.5px;color:var(--txt-dim);display:flex;flex-direction:column;gap:6px}
+.ncard ul b{color:var(--txt)}
+.ncard.warn{border-color:rgba(255,255,255,.2);background:linear-gradient(165deg,rgba(255,255,255,.055),rgba(255,255,255,.014) 45%)}
+.ncard.warn h4{color:var(--txt)}
+.faq{margin-top:22px;border-radius:var(--r-lg);overflow:hidden}
+.qa{border-bottom:1px solid var(--line)}
+.qa:last-child{border-bottom:0}
+.qa summary{list-style:none;cursor:pointer;padding:17px 20px;display:flex;align-items:center;gap:14px;font-weight:700;font-size:14.5px;transition:.16s}
+.qa summary::-webkit-details-marker{display:none}
+.qa summary:hover{background:rgba(255,255,255,.04)}
+.qa summary .q{font-family:var(--mono);font-size:11.5px;font-weight:700;color:var(--gold);border:1px solid rgba(242,176,76,.35);border-radius:7px;padding:2px 7px;flex:0 0 auto}
+.qa summary .plus{margin-left:auto;color:var(--txt-mute);transition:.22s;flex:0 0 auto}
+.qa[open] summary .plus{transform:rotate(45deg);color:var(--gold)}
+.qa .ans{padding:0 20px 19px 64px;font-size:13.5px;color:var(--txt-dim)}
+.qa .ans b{color:var(--txt)}
+.cta-band{padding:36px;border-radius:var(--r-xl);display:flex;align-items:center;gap:28px;flex-wrap:wrap;background:linear-gradient(112deg,rgba(255,255,255,.07),rgba(255,255,255,.03) 48%,rgba(255,255,255,.07));border:1px solid var(--line-strong)}
+.cta-band .txt{flex:1;min-width:260px}
+.cta-band h2{font-size:clamp(22px,2.8vw,32px)}
+.cta-band p{margin:10px 0 0;color:var(--txt-dim);font-size:14px;max-width:56ch}
+footer.site{border-top:1px solid var(--line);padding:40px 0 46px;margin-top:20px;position:relative;z-index:2}
+.foot-grid{display:flex;gap:28px;flex-wrap:wrap;align-items:flex-start;justify-content:space-between}
+.foot-col h5{margin:0 0 12px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--txt-mute);font-weight:700}
+.foot-col a,.foot-col p{display:block;margin:0 0 8px;font-size:13.5px;color:var(--txt-dim)}
+.foot-col a:hover{color:var(--gold)}
+.foot-bottom{margin-top:30px;padding-top:20px;border-top:1px solid var(--line);display:flex;gap:14px;flex-wrap:wrap;justify-content:space-between;font-size:12.5px;color:var(--txt-mute)}
+.dock{position:fixed;right:20px;bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:70;display:flex;flex-direction:column;gap:10px;align-items:flex-end;pointer-events:none}
+.dock button{pointer-events:auto;display:flex;align-items:center;gap:10px;padding:12px 17px;border-radius:999px;cursor:pointer;border:1px solid var(--line-strong);background:rgba(15,18,23,.94);backdrop-filter:blur(14px);font-size:13.5px;font-weight:700;box-shadow:var(--shadow);transition:.18s}
+.dock button:hover{transform:translateY(-2px);border-color:rgba(242,176,76,.55)}
+.dock .main{background:linear-gradient(100deg,var(--gold-bright),var(--gold));color:#1A1205;border-color:transparent}
+.overlay{position:fixed;inset:0;z-index:90;display:none;align-items:center;justify-content:center;padding:22px;background:rgba(5,7,10,.78);backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px)}
+.overlay.open{display:flex;animation:fade .22s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.sheet{width:100%;max-width:1000px;max-height:92vh;overflow:auto;border-radius:var(--r-xl);background:linear-gradient(175deg,#141A23,#0A0D12 62%);border:1px solid rgba(242,176,76,.22);box-shadow:inset 0 0 0 1px rgba(242,176,76,.05),0 40px 90px -30px #000;animation:rise .28s cubic-bezier(.2,.9,.25,1)}
+@keyframes rise{from{opacity:0;transform:translateY(22px) scale(.985)}to{opacity:1;transform:none}}
+.sheet header{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:14px;padding:18px 22px;border-bottom:1px solid var(--line);background:rgba(11,14,19,.96);backdrop-filter:blur(12px)}
+.sheet header h3{font-size:17px}
+.sheet header p{margin:2px 0 0;font-size:12px;color:var(--txt-mute)}
+.sheet .body{padding:22px}
+.x{width:36px;height:36px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.05);display:grid;place-items:center;cursor:pointer;margin-left:auto;transition:.16s}
+.x:hover{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.3)}
+.stepper{display:flex;gap:8px;padding:16px 22px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.stepper div{display:flex;align-items:center;gap:9px;font-size:12.5px;font-weight:700;color:var(--txt-mute);padding:7px 13px;border-radius:10px;border:1px solid transparent;cursor:pointer;transition:.16s}
+.stepper div:hover{background:rgba(255,255,255,.045)}
+.stepper div span{width:20px;height:20px;border-radius:6px;display:grid;place-items:center;font-family:var(--mono);font-size:11px;background:rgba(255,255,255,.07);color:var(--txt-dim);transition:.2s}
+.stepper div.on{color:var(--txt);background:rgba(242,176,76,.12);border-color:rgba(242,176,76,.38)}
+.stepper div.on span{background:var(--gold);color:#1A1205}
+.stepper div.done{color:var(--ok)}
+.stepper div.done span{background:rgba(255,255,255,.14);color:var(--ok)}
+.wizard{display:grid;grid-template-columns:minmax(0,1fr) 306px;gap:22px;padding:22px;border:1px solid rgba(242,176,76,.14);border-radius:var(--r-xl)}
+.wstep{display:none}
+.wstep.on{display:block;animation:fade .22s ease}
+.game-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.gcard{padding:18px 16px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.026);cursor:pointer;transition:.18s;text-align:left;position:relative;overflow:hidden}
+.gcard:hover{transform:translateY(-2px);border-color:var(--line-strong)}
+.gcard.on{border-color:rgba(242,176,76,.65);background:linear-gradient(160deg,rgba(242,176,76,.2),rgba(242,176,76,.04))}
+.gcard b{display:block;font-size:14.5px}
+.gcard small{display:block;font-size:11.5px;color:var(--txt-mute);margin-top:4px;line-height:1.5}
+.pkg-list{display:flex;flex-direction:column;gap:9px;margin-top:6px}
+.pkg{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:13px;align-items:center;padding:14px;border-radius:13px;border:1px solid var(--line);background:rgba(255,255,255,.024);cursor:pointer;transition:.16s;text-align:left;width:100%}
+.pkg:hover{border-color:var(--line-strong);background:rgba(255,255,255,.05)}
+.pkg.on{border-color:rgba(242,176,76,.6);background:linear-gradient(120deg,rgba(242,176,76,.12),transparent 70%)}
+.pkg .radio{width:19px;height:19px;border-radius:50%;border:1.7px solid var(--line-strong);display:grid;place-items:center;flex:0 0 auto}
+.pkg.on .radio{border-color:var(--gold)}
+.pkg.on .radio::after{content:"";width:9px;height:9px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px var(--gold)}
+.pkg .nm{font-size:14px;font-weight:700;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.pkg .ds{font-size:11.5px;color:var(--txt-mute);margin-top:3px}
+.pkg .pr{font-weight:900;font-size:17px;white-space:nowrap;font-family:var(--display)}
+.pkg .pr i{font-style:normal;font-size:11.5px;color:var(--txt-mute);font-weight:600}
+.sidebox{padding:18px;border-radius:var(--r-lg);border:1px solid rgba(242,176,76,.16);background:var(--panel);height:max-content;position:sticky;top:88px}
+.sidebox h4{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--txt-mute);margin-bottom:14px}
+.bill{display:flex;flex-direction:column;gap:9px;font-size:13px}
+.bill .row{display:flex;justify-content:space-between;gap:12px;color:var(--txt-dim)}
+.bill .row b{color:var(--txt);font-weight:700;text-align:right}
+.bill .sep{height:1px;background:var(--line);margin:4px 0}
+.bill .total{display:flex;justify-content:space-between;align-items:flex-end}
+.bill .total span{font-size:12.5px;color:var(--txt-mute)}
+.bill .total b{font-size:30px;font-weight:900;color:var(--gold);letter-spacing:-.03em;font-family:var(--display)}
+.bill .total b i{font-style:normal;font-size:14px;color:var(--txt-dim);margin-right:2px}
+.input,textarea.input,select.input{width:100%;padding:12px 14px;border-radius:11px;border:1px solid var(--line);background:rgba(0,0,0,.36);color:var(--txt);font:inherit;font-size:14px;transition:.16s}
+.input:focus{outline:none;border-color:rgba(242,176,76,.65);box-shadow:0 0 0 3px rgba(242,176,76,.14)}
+.input::placeholder{color:#4E5766}
+textarea.input{min-height:104px;resize:vertical;line-height:1.65}
+.input.err{border-color:rgba(242,176,76,.7);box-shadow:0 0 0 3px rgba(242,176,76,.14)}
+.err-msg{color:#FFD98A;font-size:11.5px;margin-top:6px;display:none}
+.err-msg.on{display:block}
+.wfoot{display:flex;gap:10px;align-items:center;padding:16px 22px;border-top:1px solid var(--line);flex-wrap:wrap}
+.wfoot .hint{font-size:12px;color:var(--txt-mute);flex:1;min-width:200px}
+.done-wrap{text-align:center;padding:16px 6px}
+.tick{width:74px;height:74px;border-radius:50%;margin:4px auto 18px;display:grid;place-items:center;background:radial-gradient(circle at 50% 40%,rgba(255,255,255,.14),transparent 70%);border:1px solid rgba(255,255,255,.3);color:var(--ok)}
+.code-box{display:inline-flex;align-items:center;gap:12px;margin:16px 0 6px;padding:12px 18px;border-radius:12px;border:1px dashed rgba(255,255,255,.3);background:rgba(255,255,255,.05)}
+.code-box b{font-family:var(--mono);font-size:20px;letter-spacing:.06em;color:#E8ECF2}
+.done-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:24px;text-align:left}
+.done-steps div{padding:14px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.025)}
+.done-steps b{display:block;font-size:13.5px;margin-bottom:5px}
+.done-steps small{font-size:11.5px;color:var(--txt-mute);line-height:1.6}
+.empty{text-align:center;padding:44px 20px;color:var(--txt-mute)}
+.order{padding:18px;border-radius:var(--r-lg);border:1px solid var(--line);background:var(--panel);margin-bottom:12px}
+.order .head{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.order .head .no{font-family:var(--mono);font-weight:700;font-size:15px;color:#E8ECF2}
+.badge{font-size:11px;font-weight:800;padding:3px 10px;border-radius:99px;letter-spacing:.04em}
+.badge--wait{background:rgba(255,255,255,.07);color:#9AA2AF;border:1px solid rgba(255,255,255,.14)}
+.badge--run{background:rgba(255,255,255,.08);color:#C9CDD4;border:1px solid rgba(255,255,255,.18)}
+.badge--ok{background:rgba(255,255,255,.1);color:#E8ECF2;border:1px solid rgba(255,255,255,.22)}
+.order .meta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;font-size:12.5px}
+.order .meta span{display:block;color:var(--txt-mute);font-size:11px;margin-bottom:3px;letter-spacing:.04em}
+.track{display:flex;gap:0;margin-top:18px;flex-wrap:wrap}
+.track .node{flex:1;min-width:120px;position:relative;padding-top:22px}
+.track .node::before{content:"";position:absolute;top:5px;left:0;right:0;height:2px;background:var(--line)}
+.track .node:first-child::before{left:50%}
+.track .node:last-child::before{right:50%}
+.track .node::after{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:12px;height:12px;border-radius:50%;background:#1B2431;border:2px solid #2A3646}
+.track .node.act::after{background:var(--gold);border-color:var(--gold);box-shadow:0 0 14px rgba(242,176,76,.85)}
+.track .node.act::before{background:linear-gradient(90deg,var(--gold),var(--line))}
+.track .node b{display:block;font-size:12px;text-align:center}
+.track .node small{display:block;font-size:10.5px;color:var(--txt-mute);text-align:center;margin-top:2px}
+.track .node.act b{color:var(--gold)}
+.toast-wrap{position:fixed;left:50%;transform:translateX(-50%);bottom:26px;z-index:120;display:flex;flex-direction:column;gap:9px;align-items:center;pointer-events:none}
+.toast{padding:11px 19px;border-radius:999px;font-size:13.5px;font-weight:700;background:rgba(15,18,23,.97);border:1px solid var(--line-strong);box-shadow:var(--shadow);animation:tin .26s ease;display:flex;align-items:center;gap:9px}
+.toast.ok{border-color:rgba(255,255,255,.28);color:#E8ECF2}
+.toast.bad{border-color:rgba(255,255,255,.2);color:#9AA2AF}
+@keyframes tin{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.rv{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.8,.25,1)}
+.rv.in{opacity:1;transform:none}
+.pcard::before,.gcard::before{content:attr(data-game);position:absolute;right:-6px;bottom:-16px;z-index:0;font-family:var(--display);font-size:clamp(54px,5vw,76px);font-weight:900;letter-spacing:-.02em;line-height:1;text-transform:uppercase;pointer-events:none;user-select:none;opacity:.8}
+.pcard[data-game="delta"]::before,.gcard[data-game="delta"]::before{color:rgba(255,255,255,.05)}
+.pcard[data-game="valorant"]::before,.gcard[data-game="valorant"]::before{color:rgba(255,255,255,.05)}
+.pcard[data-game="other"]::before{color:rgba(255,255,255,.05)}
+.pcard,.gcard,.pkg{transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease,background .18s ease}.pcard:hover,.gcard:hover,.pkg:hover{border-color:rgba(242,176,76,.35)}
+.pcard:hover,.gcard:hover{transform:translateY(-3px);box-shadow:0 18px 44px -22px rgba(255,255,255,.16)}
+.pkg:hover{transform:translateY(-1px)}
+@media (max-width:1080px){
+  .hero-grid{grid-template-columns:1fr;gap:32px}
+  .price-grid{grid-template-columns:1fr}
+  .flow{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .notice-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .wizard{grid-template-columns:1fr}
+  .sidebox{position:static}
+}
+@media (max-width:760px){
+  .pay-inline-grid{grid-template-columns:1fr}
+  .pay-item{max-width:300px;margin:0 auto}
+  nav.tabs{position:absolute;top:66px;left:0;right:0;flex-direction:column;align-items:stretch;gap:2px;background:rgba(10,12,16,.99);border-bottom:1px solid var(--line);padding:10px;display:none}
+  nav.tabs.open{display:flex}
+  nav.tabs a{padding:12px 14px}
+  nav.tabs a.on::after{display:none}
+  .burger{display:grid;margin-left:auto}
+  .top-cta .btn{display:none}
+  .sec{padding-top:54px;padding-bottom:54px}
+  .upsell,.checks,.notice-grid,.flow{grid-template-columns:1fr}
+  .order .meta{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .done-steps{grid-template-columns:1fr}
+  .game-cards{grid-template-columns:1fr}
+  .cta-band{padding:24px}
+  .sheet{max-height:94vh}
+  .wizard{padding:16px}
+  .dock{right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+  .dock button{padding:11px 14px;font-size:12.5px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none !important;transition:none !important}
+  .rv{opacity:1;transform:none}
+}</style>
+</head>
+<body>
+
+<!-- ========== 顶栏 ========== -->
+<header class="top" id="top">
+  <div class="wrap topbar">
+    <a class="brand" href="#home">
+      <img class="mark" src="log.jpg" alt="XiCheng logo" width="38" height="38" />
+      <span>XiCheng<small>Game Highlight Studio</small></span>
+    </a>
+    <nav class="tabs" id="nav">
+      <a href="#home" data-nav="home">首页</a>
+      <a href="#price" data-nav="price">价目表</a>
+      <a href="#flow" data-nav="flow">下单流程</a>
+      <a href="#notice" data-nav="notice">下单须知</a>
+      <a href="#track" data-nav="track">查订单</a>
+    </nav>
+    <div class="top-cta">
+      <button class="btn btn--primary btn--sm" data-open-order>立即下单</button>
+      <button class="burger" id="burger" aria-label="菜单">菜单</button>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- ========== Hero ========== -->
+<section class="hero wrap" id="home">
+  <div class="hero-grid">
+    <div>
+      <span class="eyebrow">XiCheng Studio · Self-Service Ordering</span>
+      <h1>你的高光时刻，<br />值得被 <em>剪成作品</em>。</h1>
+      <p class="lead">
+        三角洲行动 / 无畏契约 / CS2 的高光剪辑，<b>按价目表自选规格、系统实时计价、下单即排单</b>。
+        没有中间商报价，没有隐藏加价 —— 选好、填好、付款、等收片；<b>其他游戏请联系剪辑师单独报价</b>。
+      </p>
+      <div class="hero-actions">
+        <button class="btn btn--primary" data-open-order>
+          开始自助下单
+        </button>
+        <a class="btn btn--ghost" href="#price">
+          先看价目表
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div><span>Delivery</span><b>48<i style="font-style:normal;font-size:13px;color:var(--txt-mute)">h 内出片</i></b></div>
+        <div><span>Payment</span><b>先付后剪</b></div>
+        <div><span>Extra minute</span><b>+12<i style="font-style:normal;font-size:13px;color:var(--txt-mute)"> 元/分钟</i></b></div>
+        <div><span>Upscale</span><b>4K +15</b></div>
+      </div>
+      <div class="games-strip">
+        <span class="chip chip--gold"><i class="dot pulse"></i>三角洲行动</span>
+        <span class="chip">无畏契约</span>
+        <span class="chip">CS2</span>
+        <span class="chip">其他游戏</span>
+        <span class="chip chip--lime">单回合剪辑</span>
+        <span class="chip chip--gold">卡点剪辑</span>
+      </div>
+    </div>
+
+    <!-- 快速试算 -->
+    <div class="card card--glow quote">
+      <h3>
+        快速试算
+        <span class="tag">实时计价</span>
+      </h3>
+      <div class="field">
+        <label>① 选择游戏</label>
+        <div class="seg" id="qGame"></div>
+      </div>
+      <div class="field">
+        <label>② 选择规格 <span class="tip">价格以价目表为准</span></label>
+        <div class="seg seg--2" id="qPkg" style="grid-template-columns:1fr"></div>
+      </div>
+      <div class="quote-out">
+        <div>
+          <div class="k">计费方式</div>
+          <div class="v" id="qMode">—</div>
+        </div>
+        <div class="total">
+          <div class="k">预估总价</div>
+          <b id="qTotal"><i>¥</i>0</b>
+        </div>
+      </div>
+      <div class="mini-note">
+        <span>试算仅含所选规格。超过每分钟基准时长部分按 <b style="color:var(--txt)">+12 元/分钟</b> 计，4K 超分为可选增值项。</span>
+      </div>
+      <button class="btn btn--primary" style="width:100%;margin-top:16px" data-quick-go>带此规格去下单</button>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 价目表 ========== -->
+<section class="sec wrap" id="price">
+  <div class="sec-head">
+    <div>
+      <span class="eyebrow">Price list · 价目表</span>
+      <h2>三组收费，一张透明的价目表</h2>
+      <p>三角洲行动、无畏契约 / CS2 已列明价目，可直接自助下单；其他游戏请联系剪辑师单独报价。</p>
+    </div>
+  </div>
+  <div class="price-grid" id="priceGrid"></div>
+
+  <div class="upsell" style="margin-top:20px">
+    <div class="card u">
+      <div>
+        <h4>超分服务 <span class="chip chip--lime" style="padding:2px 9px;font-size:11px">+15</span></h4>
+        <p>在原规格基础上加 15 元，成品解锁 4K 画质输出。下单时勾选即可，无需另开一单。</p>
+      </div>
+      <div class="price" style="font-size:17px">+15</div>
+    </div>
+    <div class="card u">
+      <div>
+        <h4>超时长计费 <span class="chip chip--cyan" style="padding:2px 9px;font-size:11px">+12 / 分钟</span></h4>
+        <p>规格内按分钟计价，<b style="color:var(--txt)">每多一分钟 +12 元</b>。下单时填写预计成品时长，系统自动累加。</p>
+      </div>
+      <div class="price" style="font-size:17px;color:var(--cyan)">+12</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 流程 ========== -->
+<section class="sec wrap" id="flow">
+  <div class="sec-head">
+    <div>
+      <span class="eyebrow">How it works · 下单流程</span>
+      <h2>四步，从素材到成片</h2>
+      <p>你只管选规格、填要求、付款；剩下的排单与剪辑交给制作端。</p>
+    </div>
+  </div>
+  <div class="flow">
+    <div class="card step rv">
+      <h4>选游戏与规格</h4>
+      <p>按价目表选择游戏、集锦类型或单回合/卡点规格，价格即时显示。</p>
+    </div>
+    <div class="card step rv">
+      <h4>确认附加服务</h4>
+      <p>成品时长、4K 超分、配乐是否指定，符合条件的自动计入总价。</p>
+    </div>
+    <div class="card step rv">
+      <h4>留信息并提交</h4>
+      <p>填写联系方式与剪辑要求，提交后生成订单号，进入待确认队列。</p>
+    </div>
+    <div class="card step rv">
+      <h4>付款后等待出片</h4>
+      <p>确认付款后开始剪辑，<b style="color:var(--txt)">正常 48h 内交付</b>；加急请先咨询。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 须知 ========== -->
+<section class="sec wrap" id="notice">
+  <div class="sec-head">
+    <div>
+      <span class="eyebrow">Before you order · 下单须知</span>
+      <h2>把这 6 条看完，售后基本不会发生</h2>
+      <p>以下为平台规则原文，下单即视为已阅读并同意。</p>
+    </div>
+    <span class="chip chip--gold"><i class="dot"></i>付款前请务必确认</span>
+  </div>
+  <div class="notice-grid">
+    <div class="card ncard rv" id="n1">
+      <span class="tag" style="background:rgba(255,255,255,.05);color:#C9CDD4;border:1px solid rgba(255,255,255,.14)">REQ · 01</span>
+      <h4>先付后剪</h4>
+      <p>平台采用先付款后排单的模式。确认付款到账后才会开始剪辑，未付款订单不会占用剪辑排期。</p>
+    </div>
+    <div class="card ncard rv" id="n2">
+      <span class="tag" style="background:rgba(255,255,255,.05);color:#C9CDD4;border:1px solid rgba(255,255,255,.14)">TIME · 02</span>
+      <h4>48 小时内出片</h4>
+      <p>付款后正常 <b style="color:var(--txt)">48h 内</b> 交付成品。需要加急请在付款前咨询剪辑师，确认可插队后再下单。</p>
+    </div>
+    <div class="card ncard rv" id="n3">
+      <span class="tag" style="background:rgba(255,255,255,.05);color:#C9CDD4;border:1px solid rgba(255,255,255,.14)">PRICE · 03</span>
+      <h4>超时长 +12 元/分钟</h4>
+      <p>成品时长以规格内的分钟数为基础，<b style="color:var(--txt)">每加一分钟 +12 元</b>，下单时按预估时长一并结算。</p>
+    </div>
+    <div class="card ncard rv" id="n4">
+      <span class="tag" style="background:rgba(255,255,255,.05);color:#C9CDD4;border:1px solid rgba(255,255,255,.14)">MUSIC · 04</span>
+      <h4>音乐请自备</h4>
+      <p>需要客户自备音乐。若下单时没有指定音乐，则由剪辑师自行选择，<b style="color:var(--txt)">成品不支持更换</b>。</p>
+    </div>
+    <div class="card ncard rv" id="n5">
+      <span class="tag" style="background:rgba(255,255,255,.05);color:#C9CDD4;border:1px solid rgba(255,255,255,.14)">REVISE · 05</span>
+      <h4>无详细要求不支持修改</h4>
+      <p>没有在下单时写清详细要求的成品，不支持修改。请把节奏、风格、参考链接一次性写清楚。</p>
+    </div>
+    <div class="card ncard warn rv" id="n6">
+      <span class="tag" style="background:rgba(255,255,255,.05);color:#C9CDD4;border:1px solid rgba(255,255,255,.14)">VALORANT · 06</span>
+      <h4>无畏契约卡点剪辑需自备素材</h4>
+      <p>卡点剪辑（60 元/分钟）必须客户自备素材，<b style="color:#FFD98A">推荐使用“求偶”素材</b>；素材不足会影响成片效果。</p>
+    </div>
+  </div>
+
+  <div class="card faq rv">
+    <details class="qa" open>
+      <summary><span class="q">Q1</span>下单后我要做什么？<span class="plus"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+      <div class="ans">提交订单后会生成订单号并进入 <b>待确认付款</b> 队列。制作端会通过你留下的联系方式（QQ / 微信）与你确认付款方式，<b>付款到账后开始剪辑</b>。</div>
+    </details>
+    <details class="qa">
+      <summary><span class="q">Q2</span>素材和配乐怎么给你？<span class="plus"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+      <div class="ans">素材可直接发到 <b>QQ 3493548230</b> 或 <b>微信 xcq7689OnO</b>，也可以发送下载链接；配乐支持音乐软件分享链接（推荐网易云）。下单时把链接填进 <b>配乐 / 参考链接</b> 一栏即可。</div>
+    </details>
+    <details class="qa">
+      <summary><span class="q">Q3</span>为什么说不支持修改？<span class="plus"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+      <div class="ans">剪辑按你下单时写的要求执行。若下单时未填写详细要求（节奏、风格、参考视频等），成片默认由剪辑师自由发挥，<b>后续不支持修改</b>；音乐未指定时同样不支持更换。</div>
+    </details>
+    <details class="qa">
+      <summary><span class="q">Q4</span>“每加一分钟 +12 元”怎么算？<span class="plus"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+      <div class="ans">集锦类规格按分钟计价（如普通集锦 15 元/分钟）。当你需要的成品时长超出一分钟基准，超出的每一分钟加收 <b>12 元</b>，下单页会自动累加并显示明细。</div>
+    </details>
+  </div>
+</section>
+
+<!-- ========== 下单 / 查单 ========== -->
+<section class="sec wrap" id="track">
+  <div class="cta-band rv">
+    <div class="txt">
+      <span class="eyebrow">Order &amp; track</span>
+      <h2 style="margin-top:12px">先下单付款，核对到账后开始剪；进度就在这查。</h2>
+      <p>三角洲行动与无畏契约 / CS2 可直接自助下单付款；其他游戏请先联系剪辑师询价。提交后你会拿到 <b class="mono" style="color:var(--cyan)">XCP-</b> 待核对编号，核对通过后换成 <b class="mono" style="color:var(--cyan)">XC-</b> 订单号。</p>
+    </div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+      <button class="btn btn--primary" data-open-order>
+        立即下单
+      </button>
+      <button class="btn" data-open-track>
+        查询订单进度
+      </button>
+    </div>
+  </div>
+
+  <div class="card faq rv" style="margin-top:22px;padding:20px">
+    <div style="display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap">
+      <div style="flex:1;min-width:260px">
+        <h4 style="font-size:15px;margin-bottom:6px">订单查询</h4>
+        <p class="mute" style="margin:0;font-size:13px">输入待核对编号（XCP-）、订单号（XC-），或下单时填写的 QQ / 微信号 / 手机号，查询核对进度与交付状态。</p>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+        <input class="input" id="trackInput" style="min-width:250px" placeholder="XCP- 待核对编号 / XC- 订单号 / 联系方式" />
+        <button class="btn" id="trackBtn">查询</button>
+      </div>
+    </div>
+    <div id="trackResult" style="margin-top:18px"></div>
+  </div>
+</section>
+</main>
+
+<!-- ========== 页脚 ========== -->
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col" style="max-width:320px">
+        <div class="brand" style="margin-bottom:14px"><img class="mark" src="log.jpg" alt="XiCheng logo" width="38" height="38" /><span>XiCheng<small>Game Highlight Studio</small></span></div>
+        <p class="mute" style="font-size:13px">三角洲行动 / 无畏契约 / CS2 及其他游戏高光剪辑 · 自助下单。先付后剪，正常 48h 内交付。</p>
+      </div>
+      <div class="foot-col">
+        <h5>导航</h5>
+        <a href="#price">价目表</a>
+        <a href="#flow">下单流程</a>
+        <a href="#notice">下单须知</a>
+        <a href="#track">查询订单</a>
+      </div>
+      <div class="foot-col">
+        <h5>联系与售后</h5>
+        <p>QQ：<b class="mono" style="color:var(--cyan)">3493548230</b> <button class="btn btn--xs" data-copy="3493548230" style="margin-left:6px">复制</button></p>
+        <p>微信：<b class="mono" style="color:var(--cyan)">xcq7689OnO</b> <button class="btn btn--xs" data-copy="xcq7689OnO" style="margin-left:6px">复制</button></p>
+        <p class="mute" style="font-size:12px">素材发送 · 加急咨询 · 售后沟通</p>
+      </div>
+      <div class="foot-col">
+        <h5>平台规则</h5>
+        <p>先付后剪</p>
+        <p>48h 内出片</p>
+        <p>超时长 +12 元/分钟</p>
+        <p>4K 超分 +15</p>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 XiCheng · 前端效果图（Demo，数据为本地模拟）</span>
+      <span>页面设计与参考站无关，仅需求口径一致</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ========== 悬浮按钮 ========== -->
+<div class="dock">
+  <button data-open-track title="查询订单">
+    查订单
+  </button>
+  <button class="main" data-open-order>
+    立即下单
+  </button>
+</div>
+
+<!-- ========== 下单弹层 ========== -->
+<div class="overlay" id="orderOverlay">
+  <div class="sheet" role="dialog" aria-modal="true" aria-label="自助下单">
+    <header>
+      <div>
+        <h3>自助下单</h3>
+        <p>按价目表选规格 · 实时计价 · 提交后进入待确认付款队列</p>
+      </div>
+      <button class="x" data-close aria-label="关闭">✕</button>
+    </header>
+
+    <div class="stepper" id="stepper">
+      <div data-step="1" class="on"><span>1</span>游戏与规格</div>
+      <div data-step="2"><span>2</span>规格确认</div>
+      <div data-step="3"><span>3</span>联系方式与要求</div>
+      <div data-step="4"><span>4</span>扫码付款</div>
+      <div data-step="5"><span>5</span>确认提交</div>
+    </div>
+
+    <div class="wizard">
+      <div>
+        <!-- STEP 1 -->
+        <section class="wstep on" data-panel="1">
+          <div class="field" style="margin-top:0">
+            <label>选择游戏 <span class="req">*</span></label>
+            <div class="game-cards" id="wGame"></div>
+          </div>
+          <div class="field">
+            <label>选择规格 <span class="req">*</span> <span class="tip" id="wPkgHint"></span></label>
+            <div class="pkg-list" id="wPkg"></div>
+          </div>
+        </section>
+
+        <!-- STEP 2 -->
+        <section class="wstep" data-panel="2">
+          <div class="field" style="margin-top:0">
+            <label>预计成品时长 <span class="req">*</span> <span class="tip">超出规格基准的部分 +12 元/分钟</span></label>
+            <div class="seg seg--2" id="wDur" style="grid-template-columns:repeat(4,1fr)"></div>
+          </div>
+          <div class="field">
+            <label>增值服务 <span class="tip">可多选，按需勾选</span></label>
+            <div class="checks">
+              <label class="check" id="ck4k">
+                <input type="checkbox" id="opt4k" />
+                <span class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+                <span><b>4K 超分画质</b><small>解锁 4K 输出，额外 +15 元</small></span>
+              </label>
+              <label class="check" id="ckRush">
+                <input type="checkbox" id="optRush" />
+                <span class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+                <span><b>加急排单（需咨询）</b><small>勾选后先与剪辑师确认可行性与加急费用</small></span>
+              </label>
+            </div>
+          </div>
+          <div class="field">
+            <label>配乐方式 <span class="req">*</span></label>
+            <div class="seg seg--2" id="wMusic"></div>
+            <div class="mini-note">
+              <span>选择“剪辑师自选”即表示接受成品音乐不支持更换；需要指定音乐请自备并附上链接。</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- STEP 3 -->
+        <section class="wstep" data-panel="3">
+          <div class="field" style="margin-top:0">
+            <label>联系方式 <span class="req">*</span> <span class="tip">付款与交付都靠它，QQ / 微信 / 手机号均可</span></label>
+            <input class="input" id="fContact" placeholder="例如：QQ 3493548230 或 微信 xcq7689OnO" />
+            <div class="err-msg" id="errContact">请填写正确的联系方式（QQ 号 / 微信号 / 手机号），用于付款核对与交付。</div>
+          </div>
+          <div class="field">
+            <label>付款备注 / 交易单号 <span class="req">*</span> <span class="tip">下一步扫码付款时填的就是它</span></label>
+            <input class="input" id="fPayRef" placeholder="例如：WX2026093012345678 或 13800008888" autocomplete="off" />
+            <div class="err-msg" id="errPayRef">请填写付款备注号（至少 4 位），剪辑师靠它对账。还没付款的请先到下一步扫码。</div>
+          </div>
+          <div class="field">
+            <label>配乐 / 参考链接 <span class="tip">选填，音乐或视频链接均可（推荐网易云）</span></label>
+            <input class="input" id="fLink" placeholder="粘贴音乐或参考视频链接" />
+          </div>
+          <div class="field">
+            <label>剪辑要求 <span class="tip">选填，但强烈建议填写</span></label>
+            <textarea class="input" id="fNote" placeholder="例如：卡点剪辑 / 击杀集锦 / 偏电影感调色 / 参考某视频的节奏；不填则默认剪辑师自由发挥，成品不支持修改。"></textarea>
+          </div>
+          <div class="field">
+            <label>素材情况</label>
+            <div class="seg seg--2" id="wMat"></div>
+          </div>
+        </section>
+
+        <!-- STEP 4：扫码付款（下单前必须完成） -->
+        <section class="wstep" data-panel="4">
+          <div class="pay-inline">
+            <div class="pay-inline-head">
+              <div>
+                <h4>请先扫码付款</h4>
+                <p class="mute">先付后剪。扫码付款完成后，在下方填写转账单号、上传付款截图，系统自动核对，一致即生成订单。</p>
+              </div>
+              <div class="pay-amount">
+                <span>应付金额</span>
+                <b class="mono">¥<span id="wPayAmount">0</span></b>
+              </div>
+            </div>
+
+            <div class="pay-inline-grid">
+              <figure class="pay-item">
+                <img src="pay-wechat.png" alt="微信收款码" />
+                <figcaption><b>微信支付</b><button type="button" class="btn btn--xs" data-payzoom="pay-wechat.png">放大</button></figcaption>
+              </figure>
+              <figure class="pay-item">
+                <img src="pay-alipay.png" alt="支付宝收款码" />
+                <figcaption><b>支付宝</b><button type="button" class="btn btn--xs" data-payzoom="pay-alipay.png">放大</button></figcaption>
+              </figure>
+              <div class="pay-inline-steps">
+                <ol>
+                  <li>用微信或支付宝扫码，支付 <b id="wPayAmount2">¥0</b></li>
+                  <li>付款备注里写你的<b>手机号 / QQ 号</b>（方便对账）</li>
+                  <li><b>付款完成后</b>，在下方填写转账单号并上传付款截图</li>
+                  <li>点「下一步」提交，系统自动核对单号与金额，一致直接生成订单</li>
+                </ol>
+                <div class="pay-ref-recap">
+                  你填写的付款备注：<b id="wPayRefRecap">—</b>
+                  <button type="button" class="btn btn--xs" id="wEditRef">去修改</button>
+                </div>
+                <div class="mini-note">
+                  <span>付款完成后才能继续：截图需包含交易单号与金额，系统自动核对，一致即生成订单。</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 付款完成后的凭证：转账单号 + 付款截图（系统自动核验） -->
+            <div style="margin-top:22px;padding-top:18px;border-top:1px dashed var(--line)">
+              <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:12px">
+                <h4 style="margin:0;font-size:16px">付款完成了吗？上传凭证，系统自动核对</h4>
+                <span class="chip" style="font-size:11px">未付款请先扫码，不要跳过</span>
+              </div>
+              <div class="field" style="margin-top:0">
+                <label>转账单号 <span class="req">*</span> <span class="tip">在微信/支付宝「账单详情」里复制的交易单号，用于自动核对付款</span></label>
+                <input class="input" id="fPayNo" placeholder="例如：4200001743202609301234567" autocomplete="off" />
+                <div class="err-msg" id="errPayNo">请填写转账后的交易单号（10 位以上数字或字母），与付款截图一致才能自动核对通过。</div>
+              </div>
+              <div class="field">
+                <label>付款截图 <span class="req">*</span> <span class="tip">转账完成后的账单详情截图，系统会自动识别单号与金额（PNG/JPG/WebP，≤5MB）</span></label>
+                <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+                  <label style="flex:1 1 220px;min-width:0;cursor:pointer;border:1px dashed var(--line);border-radius:12px;padding:11px 14px;font-size:13px;color:var(--mute);background:rgba(255,255,255,.03);transition:border-color .2s" id="payShotPick">
+                    选择图片… <input type="file" id="fPayShot" accept="image/png,image/jpeg,image/webp" style="display:none" />
+                  </label>
+                  <div id="payShotPreview" hidden style="position:relative">
+                    <img id="payShotImg" alt="付款截图预览" style="max-height:110px;max-width:220px;border-radius:10px;border:1px solid var(--line);display:block" />
+                    <button type="button" class="btn btn--xs" id="payShotClear" style="position:absolute;top:-9px;right:-9px;border-radius:50%;width:22px;height:22px;padding:0;line-height:1">×</button>
+                  </div>
+                </div>
+                <div class="err-msg" id="errPayShot">请上传付款截图（PNG/JPG/WebP，≤5MB），否则无法自动核对付款。</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- STEP 5 -->
+        <section class="wstep" data-panel="5" id="confirmPanel"></section>
+        <section class="wstep" data-panel="6" id="donePanel"></section>
+      </div>
+
+      <aside class="sidebox" id="sidebox">
+        <h4>费用明细</h4>
+        <div class="bill" id="bill"></div>
+        <div class="mini-note" style="margin-top:14px">
+          <span>下单即视为同意「先付后剪 / 48h 内出片 / 超时长 +12 元每分钟 / 成品依要求执行」等平台规则。</span>
+        </div>
+      </aside>
+    </div>
+
+    <div class="wfoot">
+      <button class="btn" id="wPrev">
+        上一步
+      </button>
+      <span class="hint" id="wHint">选择游戏与规格后进入下一步。</span>
+      <button class="btn btn--primary" id="wNext">
+        下一步
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 查单弹层 ========== -->
+<div class="overlay" id="trackOverlay">
+  <div class="sheet" style="max-width:640px" role="dialog" aria-modal="true" aria-label="查询订单">
+    <header>
+      <div>
+        <h3>查询订单</h3>
+        <p>输入订单号，或下单时填写的联系方式</p>
+      </div>
+      <button class="x" data-close aria-label="关闭">✕</button>
+    </header>
+    <div class="body">
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <input class="input" id="trackInput2" style="flex:1;min-width:220px" placeholder="XCP- 待核对编号 / XC- 订单号 / 联系方式" />
+        <button class="btn btn--primary" id="trackBtn2">查询</button>
+      </div>
+      <div id="trackResult2" style="margin-top:18px"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast-wrap" id="toasts"></div>
+
+<!-- 收款码放大层 -->
+<div class="pay-lightbox" id="payLightbox">
+  <button class="btn btn--sm close" id="payLightboxClose">关闭</button>
+  <img id="payLightboxImg" src="" alt="收款码" />
+</div>
+
+<script>
+/* ============================================================
+   数据层：严格来自 1.md《收费标准》
+   ============================================================ */
+const GAMES = {
+  delta: {
+    key:'delta', name:'三角洲行动', short:'DF', kind:'other',
+    note:'集锦剪辑，素材自备',
+    ico:'linear-gradient(150deg,#2E2510,#140F08)', icoColor:'#F2B04C',
+    packages:[
+      { id:'d-normal', name:'普通集锦', price:15, unit:'分钟', mode:'按时长 · 15 元/分钟', desc:'常规节奏剪辑，含基础调色与字幕包装' },
+      { id:'d-fx',     name:'特效集锦', price:30, unit:'分钟', mode:'按时长 · 30 元/分钟', desc:'特效包装、转场与音效设计，视觉冲击更强', flag:'HOT' }
+    ]
+  },
+  valorant: {
+    key:'valorant', name:'无畏契约 / CS2',
+    title:'无畏契约 / CS2', sub:'同一收费标准', short:'瓦 · CS2', kind:'valorant',
+    note:'同一收费标准 · 含单回合 / 卡点',
+    ico:'linear-gradient(150deg,#2E2510,#140F08)', icoColor:'#F2B04C',
+    sameRate:true,
+    packages:[
+      { id:'v-round', name:'单回合', price:9.9, unit:'回合', chip:'单回合 9.9', mode:'按回合 · 9.9 元/回合', desc:'单个高光回合独立成片，适合单局高光投稿' },
+      { id:'v-normal',name:'普通集锦', price:15, unit:'分钟', mode:'按时长 · 15 元/分钟', desc:'多回合高光串剪，常规节奏' },
+      { id:'v-fx',    name:'特效集锦', price:20, unit:'分钟', mode:'按时长 · 20 元/分钟', desc:'特效包装与镜头设计，观感更“大片”', flag:'HOT' },
+      { id:'v-beat',  name:'卡点剪辑', price:60, unit:'分钟', mode:'按时长 · 60 元/分钟', desc:'严格跟拍卡点，需自备素材（推荐“求偶”素材）', flag:'SELF' }
+    ]
+  },
+  other: {
+    key:'other', name:'其他游戏', kind:'other',
+    title:'其他游戏', sub:'永劫无间 / LOL / APEX 等',
+    note:'永劫无间 / LOL / APEX 等',
+    icoColor:'#F2B04C',
+    /* 其他游戏不设固定价目，统一引导联系剪辑师报价 */
+    consult:true,
+    packages:[]
+  }
+};
+const ADDON_4K = 15;      // 超分服务 +15 解锁 4K
+const EXTRA_MIN = 12;     // 每加一分钟 +12
+const CONTACT = { qq:'3493548230', wechat:'xcq7689OnO' };   // 真实联系方式（改这里即可全站生效）
+
+const DURATIONS = [1,2,3,5,8,10,15,20];
+const MUSIC = [
+  { id:'self', name:'我自备音乐', note:'下单后附链接' },
+  { id:'pro',  name:'剪辑师自选', note:'成品不支持更改' }
+];
+const MATERIAL = [
+  { id:'ready', name:'素材已准备好', note:'可以随时发送' },
+  { id:'later', name:'稍后提供素材', note:'付款后补齐' }
+];
+
+const CONTACT_POOL = ['QQ ' + CONTACT.qq, '微信 ' + CONTACT.wechat, 'QQ ' + CONTACT.qq];
+
+/* ============================================================
+   工具
+   ============================================================ */
+const $  = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => [...r.querySelectorAll(s)];
+const yuan = n => (Math.round(n*100)/100).toLocaleString('zh-CN',{minimumFractionDigits:0,maximumFractionDigits:2});
+const esc = s => String(s??'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+function toast(msg, type=''){
+  const el = document.createElement('div');
+  el.className = 'toast ' + type;
+  el.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">${
+    type==='bad' ? '<path d="M6 6l12 12M18 6 6 18"/>' : '<path d="M20 6 9 17l-5-5"/>'}</svg>${esc(msg)}`;
+  $('#toasts').appendChild(el);
+  setTimeout(()=>{ el.style.transition='.3s'; el.style.opacity='0'; el.style.transform='translateY(10px)'; setTimeout(()=>el.remove(),300); }, 2200);
+}
+
+/* 滚动浮现观察器（提前声明，避免初始化顺序问题） */
+let io = null;
+
+/* 剪贴板兜底（file:// 或非安全上下文下 navigator.clipboard 不可用） */
+function fallbackCopy(text, done){
+  try {
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly',''); ta.style.cssText = 'position:fixed;top:-1000px;opacity:0';
+    document.body.appendChild(ta); ta.select(); ta.setSelectionRange(0, ta.value.length);
+    const ok = document.execCommand('copy');
+    ta.remove();
+    ok ? done() : toast('请手动复制：' + text, 'bad');
+  } catch (e){ toast('请手动复制：' + text, 'bad'); }
+}
+
+function store(key, fallback){
+  try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; }
+  catch(e){ return fallback; }
+}
+function save(key, val){ try { localStorage.setItem(key, JSON.stringify(val)); } catch(e){} }
+
+/* ============================================================
+   状态
+   ============================================================ */
+const draft = { game:'delta', pkg:'d-normal', duration:1, up4k:false, rush:false,
+                music:'self', material:'ready', contact:'', link:'', note:'', payRef:'', payNo:'', payShot:null };
+let quick = { game:'delta', pkg:'d-normal' };
+/* 暴露到 window：顶层 const 只存在于全局词法环境，不是 window 属性，
+   后端注入的 api-bridge.js 需要能取到当前下单草稿（同一个对象引用）。
+   window.__XC_SELECT 里是该次选择对应的「分组 key / 规格 id」，接口直接可用，
+   不需要靠中文名称反查。 */
+window.draft = draft;
+window.quick = quick;
+window.__XC_SELECT = { game: draft.game, pkg: draft.pkg };
+
+function pkgOf(gameKey, pkgId){
+  const g = GAMES[gameKey];
+  return g.packages.find(p => p.id === pkgId) || g.packages[0];
+}
+/* 计价：单价 × 数量 + 超时长 + 4K */
+function calc(d){
+  const g = GAMES[d.game], p = pkgOf(d.game, d.pkg);
+  const baseMin = 1;
+  let qty = 1, base;
+  if (p.unit === '回合'){
+    qty = 1; base = p.price;
+  } else {
+    qty = d.duration; base = p.price * d.duration;
+  }
+  const overUnit = (p.unit === '分钟' && d.duration > baseMin) ? d.duration - baseMin : 0;
+  const over = overUnit * EXTRA_MIN;
+  const up4k = d.up4k ? ADDON_4K : 0;
+  return { game:g, pkg:p, qty, base, overUnit, over, up4k, total: base + over + up4k };
+}
+
+/* ============================================================
+   价目表渲染
+   布局：三组并排一排 —— 三角洲行动 / 无畏契约·CS2 / 其他游戏（其他游戏引导联系剪辑师）
+   ============================================================ */
+function renderPrice(){
+  const keys = Object.keys(GAMES);
+  $('#priceGrid').innerHTML = keys.map((k, i) => {
+    const g = GAMES[k];
+
+    /* —— 其他游戏：不列价格，直接引导联系剪辑师 —— */
+    if (g.consult){
+      return `
+      <div class="card pcard rv" data-game="${g.key}" data-slot="${i+1}">
+        <span class="accent" style="background:linear-gradient(90deg,${g.icoColor},transparent)"></span>
+        <header>
+          <h3>${esc(g.title)}</h3>
+        </header>
+        <div class="contact-body">
+          <div class="big">其他游戏暂无固定价目<br /><em>请联系剪辑师</em></div>
+          <p>按素材情况与成品时长单独报价，加好友后直接沟通。</p>
+          <div class="ways">
+            <div class="way">QQ<b>${esc(CONTACT.qq)}</b><button class="btn btn--xs" data-copy="${esc(CONTACT.qq)}">复制</button></div>
+            <div class="way way--wx">微信<b>${esc(CONTACT.wechat)}</b><button class="btn btn--xs" data-copy="${esc(CONTACT.wechat)}">复制</button></div>
+          </div>
+        </div>
+        <footer>
+          <span class="chip" style="font-size:11.5px">询价后再下单</span>
+          <span class="chip" style="font-size:11.5px">可加 4K 超分 +15</span>
+        </footer>
+      </div>`;
+    }
+
+    /* —— 有固定价目的游戏 —— */
+    const rows = g.packages;
+    const body = rows.map(p=>`
+          <li class="pitem" data-pick="${g.key}|${p.id}" role="button" tabindex="0" aria-label="选择 ${esc(p.name)} 下单">
+            <div class="nm">${esc(p.name)}
+              ${p.flag==='HOT' ? '<span class="flag flag--hot">热门</span>' : ''}
+              ${p.flag==='SELF' ? '<span class="flag flag--self">需自备素材</span>' : ''}
+            </div>
+            <div class="sub">${esc(p.desc)}</div>
+            <div class="pr"><span style="color:var(--txt-mute);font-size:13px">¥</span><span class="amt">${yuan(p.price)}</span><span class="per">/${esc(p.unit)}</span></div>
+            <div class="go"><button class="btn btn--sm" style="width:100%" data-pick="${g.key}|${p.id}">选此规格下单</button></div>
+          </li>`).join('');
+
+    return `
+    <div class="card pcard rv" data-game="${g.key}" data-slot="${i+1}">
+      <span class="accent" style="background:linear-gradient(90deg,${g.icoColor},transparent)"></span>
+      <header>
+        <h3>${esc(g.title || g.name)}${g.sameRate ? '<span class="flag flag--same">同一收费标准</span>' : ''}</h3>
+        <p>${esc(g.sub || g.note)}</p>
+      </header>
+      <ul>${body}</ul>
+      <footer>
+        <span class="chip" style="font-size:11.5px">${esc(rows[0].chip || rows[0].mode)}</span>
+        <span class="chip" style="font-size:11.5px">可加 4K 超分 +15</span>
+      </footer>
+    </div>`;
+  }).join('');
+  observeReveal();
+}
+renderPrice();
+
+document.addEventListener('click', e=>{
+  const btn = e.target.closest('[data-pick]');
+  if (!btn) return;
+  const [gk, pk] = btn.dataset.pick.split('|');
+  draft.game = gk; draft.pkg = pk; draft.duration = 1;
+  openOrder(2);
+});
+/* 价格表整行可点击：支持键盘 Enter 触发同样行为 */
+document.addEventListener('keydown', e=>{
+  if (e.key !== 'Enter' && e.key !== ' ') return;
+  const row = e.target.closest('[data-pick]');
+  if (!row || row.tagName === 'BUTTON') return;
+  e.preventDefault(); row.click();
+});
+
+/* ============================================================
+   快速试算
+   ============================================================ */
+/* 只有设定了固定价目的分组才支持自助下单（其他游戏需联系剪辑师询价） */
+const selfServeGames = () => Object.values(GAMES).filter(g => !g.consult);
+
+function renderQuick(){
+  $('#qGame').innerHTML = selfServeGames().map(g=>
+    `<button data-qg="${g.key}" class="${quick.game===g.key?'on':''}">${esc(g.name)}<small>${esc(g.note)}</small></button>`).join('');
+  const g = GAMES[quick.game];
+  $('#qPkg').innerHTML = g.packages.map(p=>
+    `<button data-qp="${p.id}" class="${quick.pkg===p.id?'on':''}" style="text-align:left">
+       <span style="display:flex;justify-content:space-between;gap:10px;align-items:center">
+         <span>${esc(p.name)}</span>
+         <span class="mono" style="color:var(--lime);font-size:14px">¥${yuan(p.price)}<span style="font-size:11px;color:var(--txt-mute)">/${esc(p.unit)}</span></span>
+       </span>
+       <small style="text-align:left">${esc(p.desc)}</small>
+     </button>`).join('');
+  const p = pkgOf(quick.game, quick.pkg);
+  $('#qMode').textContent = p.mode;
+  setCountHTML('#qTotal', p.price);
+}
+renderQuick();
+$('#qGame').addEventListener('click', e=>{
+  const b = e.target.closest('[data-qg]'); if(!b) return;
+  quick.game = b.dataset.qg; quick.pkg = GAMES[quick.game].packages[0].id; renderQuick();
+});
+$('#qPkg').addEventListener('click', e=>{
+  const b = e.target.closest('[data-qp]'); if(!b) return;
+  quick.pkg = b.dataset.qp; renderQuick();
+});
+/* 快速试算 → 去下单：把用户在试算里选的游戏/规格真正带入下单向导 */
+document.addEventListener('click', e=>{
+  const go = e.target.closest('[data-quick-go]');
+  if (!go) return;
+  e.preventDefault();
+  draft.game = quick.game;
+  draft.pkg = quick.pkg;
+  draft.duration = 1;
+  window.__XC_SELECT = { game: draft.game, pkg: draft.pkg };
+  openOrder(2);   // 游戏与规格已选定，直接进「规格确认」，避免重复选择
+});
+
+/* ============================================================
+   下单向导
+   ============================================================ */
+let step = 1;
+
+function renderWizard(){
+  /* 游戏卡：只列可自助下单的分组 */
+  $('#wGame').innerHTML = selfServeGames().map(g=>`
+    <button class="gcard ${draft.game===g.key?'on':''}" data-wg="${g.key}" data-game="${g.key}">
+      <b>${esc(g.name)}</b>
+      <small>${esc(g.note)}</small>
+    </button>`).join('');
+  /* 规格 */
+  const g = GAMES[draft.game];
+  $('#wPkgHint').textContent = g.packages.length + ' 个可选规格';
+  $('#wPkg').innerHTML = g.packages.map(p=>`
+    <button class="pkg ${draft.pkg===p.id?'on':''}" data-wp="${p.id}">
+      <span class="radio"></span>
+      <span>
+        <span class="nm">${esc(p.name)}
+          ${p.flag==='HOT'?'<span class="flag flag--hot">热门</span>':''}
+          ${p.flag==='SELF'?'<span class="flag flag--self">需自备素材</span>':''}
+        </span>
+        <span class="ds">${esc(p.desc)}</span>
+      </span>
+      <span class="pr">¥${yuan(p.price)}<i>/${esc(p.unit)}</i></span>
+    </button>`).join('');
+  /* 时长 */
+  const isRound = pkgOf(draft.game, draft.pkg).unit === '回合';
+  const durations = isRound ? [1,2,3,5] : DURATIONS;
+  if (isRound) { draft.duration = Math.min(draft.duration, 5); }
+  $('#wDur').innerHTML = durations.map(d=>{
+    const p = pkgOf(draft.game, draft.pkg);
+    const extra = (p.unit==='分钟' && d>1) ? `+${(d-1)*EXTRA_MIN}` : '';
+    return `<button data-wd="${d}" class="${draft.duration===d?'on':''}">${d}${esc(p.unit)}${extra?`<small style="color:var(--amber)">${extra} 元</small>`:'<small>基准</small>'}</button>`;
+  }).join('');
+  /* 配乐 */
+  $('#wMusic').innerHTML = MUSIC.map(m=>`<button data-wm="${m.id}" class="${draft.music===m.id?'on':''}">${esc(m.name)}<small>${esc(m.note)}</small></button>`).join('');
+  /* 素材 */
+  $('#wMat').innerHTML = MATERIAL.map(m=>`<button data-wt="${m.id}" class="${draft.material===m.id?'on':''}">${esc(m.name)}<small>${esc(m.note)}</small></button>`).join('');
+  /* 复选 */
+  $('#opt4k').checked = draft.up4k;  $('#ck4k').classList.toggle('on', draft.up4k);
+  $('#optRush').checked = draft.rush; $('#ckRush').classList.toggle('on', draft.rush);
+  /* 输入保持 */
+  if ($('#fContact').value !== draft.contact) $('#fContact').value = draft.contact;
+  if ($('#fLink').value !== draft.link) $('#fLink').value = draft.link;
+  if ($('#fNote').value !== draft.note) $('#fNote').value = draft.note;
+  if ($('#fPayRef').value !== draft.payRef) $('#fPayRef').value = draft.payRef;
+  if ($('#fPayNo').value !== draft.payNo) $('#fPayNo').value = draft.payNo;
+  renderBill();
+  /* 付款步骤的金额与备注回显 */
+  const total = calc(draft).total;
+  const a1 = $('#wPayAmount'), a2 = $('#wPayAmount2');
+  if (a1) setCountText(a1, total, '');
+  if (a2) setCountText(a2, total, '¥');
+  const recap = $('#wPayRefRecap');
+  if (recap) recap.textContent = draft.payRef ? draft.payRef : '—（请回上一步填写）';
+}
+
+function renderBill(){
+  const c = calc(draft);
+  const rows = [];
+  rows.push(`<div class="row"><span>${esc(c.game.name)}</span><b>${esc(c.pkg.name)}</b></div>`);
+  rows.push(`<div class="row"><span>${esc(c.pkg.mode)}</span><b class="mono">${c.pkg.unit==='回合'?c.qty:c.qty} ${esc(c.pkg.unit)}</b></div>`);
+  rows.push(`<div class="row"><span>规格小计</span><b class="mono">¥${yuan(c.base)}</b></div>`);
+  if (c.over > 0) rows.push(`<div class="row"><span>超出 ${c.overUnit} 分钟 × ${EXTRA_MIN}</span><b class="mono" style="color:var(--amber)">+¥${yuan(c.over)}</b></div>`);
+  if (c.up4k)    rows.push(`<div class="row"><span>4K 超分服务</span><b class="mono" style="color:var(--lime)">+¥${yuan(c.up4k)}</b></div>`);
+  if (draft.rush)rows.push(`<div class="row"><span>加急排单</span><b style="color:var(--amber)">费用另议</b></div>`);
+  rows.push(`<div class="sep"></div>`);
+  rows.push(`<div class="row"><span>配乐</span><b>${esc((MUSIC.find(m=>m.id===draft.music)||{}).name||'')}</b></div>`);
+  rows.push(`<div class="total"><span>应付合计<br />（先付后剪）</span><b class="mono"><i>¥</i>${yuan(c.total)}</b></div>`);
+  $('#bill').innerHTML = rows.join('');
+  setCountHTML('.bill .total b', c.total);
+}
+
+function setStep(n){
+  step = n;
+  /* 同步当前选择，供后端桥接层直接取用（见 window.__XC_SELECT） */
+  if (window.__XC_SELECT){ window.__XC_SELECT.game = draft.game; window.__XC_SELECT.pkg = draft.pkg; }
+  $$('#stepper div').forEach(d=>{
+    const s = +d.dataset.step;
+    d.classList.toggle('on', s===n);
+    d.classList.toggle('done', s<n);
+  });
+  $$('.wstep').forEach(p=>p.classList.toggle('on', +p.dataset.panel===n));
+  const isDone = n===6;
+  $('#wPrev').style.display = (n===1 || n===6) ? 'none' : 'inline-flex';
+  $('#wNext').style.display = isDone ? 'none' : 'inline-flex';
+  $('#sidebox').style.display = isDone ? 'none' : '';
+  $$('.wizard').forEach(w=>w.style.gridTemplateColumns = isDone ? '1fr' : '');
+  $('#wNext').innerHTML = n===5 ? '我已完成付款，提交' : '下一步';
+  const hints = {
+    1:'选择游戏与规格后进入下一步。',
+    2:'确认时长与增值服务，费用明细在右侧实时更新。',
+    3:'留下联系方式，并填好付款备注——下一步扫码付款时要用它。',
+    4:'先扫码付款；付款完成后，在下方填写转账单号、上传付款截图。',
+    5:'核对信息无误后提交，系统自动核对单号与金额，一致直接生成订单。',
+    6:'已提交付款信息，系统正在自动核对或等待人工复核。'
+  };
+  $('#wHint').textContent = hints[n] || '';
+  if (n===5) renderConfirm();
+  if (n===6) renderDone();
+  $('.sheet').scrollTop = 0;
+}
+
+function renderConfirm(){
+  const c = calc(draft);
+  const payName = (MUSIC.find(m=>m.id===draft.music)||{}).name || '—';
+  const nodes = [
+    { k:'游戏 / 规格', v:`${c.game.name} · ${c.pkg.name}` },
+    { k:'计价方式', v: c.pkg.mode },
+    { k:'成品时长', v: `${draft.duration} ${c.pkg.unit}` + (c.over?`（含超出 ${c.overUnit} 分钟）`:'') },
+    { k:'增值服务', v: [draft.up4k?'4K 超分 +15':'', draft.rush?'加急排单（另议）':''].filter(Boolean).join('、') || '无' },
+    { k:'应付金额', v:`¥${yuan(c.total)}`, strong:true },
+    { k:'付款备注', v: draft.payRef || '未填写', mono:true },
+    { k:'转账单号', v: draft.payNo || '未填写', mono:true },
+    { k:'付款截图', v: draft.payShot ? '已上传 ✓' : '未上传', mono:true },
+    { k:'配乐方式', v: payName },
+    { k:'素材情况', v: (MATERIAL.find(m=>m.id===draft.material)||{}).name || '—' },
+    { k:'联系方式', v: draft.contact || '—' },
+    { k:'配乐 / 参考', v: draft.link || '未填写' },
+    { k:'剪辑要求', v: draft.note || '未填写（默认剪辑师自由发挥，成品不支持修改）' },
+    { k:'交付时效', v:'付款核对到账后 48h 内出片' }
+  ];
+  $('#confirmPanel').innerHTML = `
+    <div class="card card--flat" style="padding:18px;border-radius:18px">
+      <h4 style="font-size:15px;margin-bottom:14px;display:flex;align-items:center;gap:9px">
+        最后核对一遍
+      </h4>
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 20px;font-size:13.5px">
+        ${nodes.map(n=>`<div style="display:flex;gap:10px;justify-content:space-between;border-bottom:1px dashed var(--line);padding-bottom:9px">
+            <span class="mute" style="flex:0 0 auto">${esc(n.k)}</span>
+            <b style="text-align:right;font-weight:600${n.strong?';color:var(--lime)':''}" class="${n.mono?'mono':''}">${esc(n.v)}</b>
+          </div>`).join('')}
+      </div>
+      ${draft.payShot ? `<div style="margin-top:12px">
+          <span class="mute" style="font-size:12px">付款截图预览：</span>
+          <img src="${esc(URL.createObjectURL(draft.payShot))}" alt="付款截图" style="max-height:140px;max-width:100%;border-radius:12px;border:1px solid var(--line);margin-top:6px;display:block" />
+        </div>` : ''}
+      <div class="mini-note" style="margin-top:16px">
+        <span>提交后系统会<b style="color:var(--txt)">自动核对转账单号与付款截图</b>（单号、金额一致即通过）；一致的直接生成订单开始剪辑，不一致或识别失败会转人工核对，请确保截图清晰、单号填写正确。</span>
+      </div>
+      <label class="check ${draft.agree?'on':''}" id="ckAgree" style="margin-top:14px;grid-column:1/-1">
+        <input type="checkbox" id="optAgree" ${draft.agree?'checked':''} />
+        <span class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+        <span><b>我已付款，并同意下单须知</b><small>先付后剪 · 48h 内出片 · 每加一分钟 +12 · 未填详细要求不支持修改 · 音乐自备</small></span>
+      </label>
+    </div>`;
+}
+
+function newNo(){
+  const d = new Date();
+  const y = String(d.getFullYear()).slice(2);
+  const m = String(d.getMonth()+1).padStart(2,'0');
+  const day = String(d.getDate()).padStart(2,'0');
+  return `NC-${y}${m}${day}-${String(Math.floor(Math.random()*9000)+1000)}`;
+}
+
+function renderDone(){
+  const c = calc(draft);
+  const o = draft.saved;                       // 后端返回的待核对记录
+  const order = draft.savedOrder || null;      // 自动核验通过时后端同时返回正式订单
+  const no = order ? order.orderNo : (o ? (o.claimNo || o.no) : draft.no);
+  const total = order ? order.totalAmount : (o ? (o.totalAmount != null ? o.totalAmount : o.total) : c.total);
+  if (order){
+    // —— 自动核验通过：订单已直接生成 ——
+    $('#donePanel').innerHTML = `
+      <div class="done-wrap">
+        <div class="tick tick--ok" style="background:var(--ok)">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#05070B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+        </div>
+        <h3 style="font-size:23px">付款核对一致，订单已自动生成</h3>
+        <p class="dim" style="margin:10px auto 0;max-width:54ch;font-size:14px">
+          系统已自动核对你的转账单号与付款截图（单号、金额一致），
+          <b style="color:var(--txt)">¥${yuan(total)}</b> 已到账，订单已进入剪辑队列，
+          <b style="color:var(--txt)">48h 内出片</b>，会通过 <b style="color:var(--txt)">${esc(draft.contact)}</b> 联系你。
+        </p>
+        <div class="code-box">
+          <span class="mute" style="font-size:12px">正式订单号</span>
+          <b>${esc(no || '—')}</b>
+          <button class="btn btn--xs" id="copyNo">复制</button>
+        </div>
+        <div class="chip chip--lime" style="margin-top:12px">已自动核对 · 已付款 ¥${yuan(total)}</div>
+        <div class="done-steps">
+          <div><b>① 自动核对通过</b><small>转账单号与截图金额与系统记录一致。</small></div>
+          <div><b>② 已生成订单号</b><small>订单进入剪辑队列（XC- 开头），可随时查询进度。</small></div>
+          <div><b>③ 开始剪辑</b><small>从到账起 48h 内交付；成品按你填写的要求执行。</small></div>
+        </div>
+        <div class="mini-note" style="margin-top:18px;justify-content:center">
+          <span>小提示：剪辑过程中想加急、改要求，可以直接联系剪辑师。</span>
+        </div>
+        <div style="display:flex;gap:10px;justify-content:center;margin-top:24px;flex-wrap:wrap">
+          <button class="btn" data-open-track>查询剪辑进度</button>
+          <button class="btn" id="againBtn">再下一单</button>
+          <button class="btn btn--primary" data-close>完成</button>
+        </div>
+      </div>`;
+  } else {
+    // —— 待核对/转人工复核 ——
+    $('#donePanel').innerHTML = `
+      <div class="done-wrap">
+        <div class="tick">
+        </div>
+        <h3 style="font-size:23px">已提交付款信息，正在核对</h3>
+        <p class="dim" style="margin:10px auto 0;max-width:54ch;font-size:14px">
+          系统会自动核对转账单号与付款截图；识别不一致或无法识别时转人工复核。
+          已提交 <b style="color:var(--txt)">${esc(draft.payRef || '你的付款备注')}</b> ·
+          <b style="color:var(--lime)">¥${yuan(total)}</b> ·
+          通过 <b style="color:var(--txt)">${esc(draft.contact)}</b> 联系你。
+          <b style="color:var(--txt)">核对通过后立即开始剪辑，48h 内出片</b>。
+        </p>
+        <div class="code-box">
+          <span class="mute" style="font-size:12px">待核对编号</span>
+          <b>${esc(no || '—')}</b>
+          <button class="btn btn--xs" id="copyNo">复制</button>
+        </div>
+        <div class="chip chip--lime" style="margin-top:12px">已付金额 ¥${yuan(total)} · 先付后剪</div>
+        <div class="done-steps">
+          <div><b>① 自动核对付款</b><small>识别转账单号与金额，与系统记录比对，通常几秒完成。</small></div>
+          <div><b>② 生成订单号</b><small>核对通过后自动生成正式订单号（XC- 开头），可在下方查询。</small></div>
+          <div><b>③ 开始剪辑</b><small>从核对到账起 48h 内交付；成品按你填写的要求执行。</small></div>
+        </div>
+        <div class="mini-note" style="margin-top:18px;justify-content:center">
+          <span>小提示：核对失败会转人工复核，请确认截图清晰、单号填写正确。</span>
+        </div>
+        <div style="display:flex;gap:10px;justify-content:center;margin-top:24px;flex-wrap:wrap">
+          <button class="btn" data-open-track>查询核对进度</button>
+          <button class="btn" id="againBtn">再下一单</button>
+          <button class="btn btn--primary" data-close>完成</button>
+        </div>
+      </div>`;
+  }
+  $('#copyNo')?.addEventListener('click', ()=>{
+    navigator.clipboard?.writeText(no||'').then(()=>toast('已复制编号 '+no,'ok'), ()=>toast('复制失败，请手动记录','bad'));
+  });
+  $('#againBtn')?.addEventListener('click', ()=>{
+    draft.no=null; draft.saved=null; draft.savedOrder=null; draft.agree=false; draft.payRef='';
+    draft.payNo=''; draft.payShot=null;
+    const fi = $('#fPayShot'); if (fi) fi.value='';
+    const pv = $('#payShotPreview'); if (pv) pv.hidden = true;
+    draft.contact=''; draft.link=''; draft.note=''; draft.up4k=false; draft.rush=false;
+    renderWizard(); setStep(1);
+  });
+}
+
+/* 交互绑定 */
+$('#wGame').addEventListener('click', e=>{
+  const b = e.target.closest('[data-wg]'); if(!b) return;
+  draft.game = b.dataset.wg;
+  draft.pkg = GAMES[draft.game].packages[0].id;
+  renderWizard();
+});
+$('#wPkg').addEventListener('click', e=>{
+  const b = e.target.closest('[data-wp]'); if(!b) return;
+  draft.pkg = b.dataset.wp; renderWizard();
+});
+$('#wDur').addEventListener('click', e=>{
+  const b = e.target.closest('[data-wd]'); if(!b) return;
+  draft.duration = +b.dataset.wd; renderWizard();
+});
+$('#wMusic').addEventListener('click', e=>{
+  const b = e.target.closest('[data-wm]'); if(!b) return;
+  draft.music = b.dataset.wm; renderWizard();
+});
+$('#wMat').addEventListener('click', e=>{
+  const b = e.target.closest('[data-wt]'); if(!b) return;
+  draft.material = b.dataset.wt; renderWizard();
+});
+$('#ck4k').addEventListener('click', e=>{ e.preventDefault(); e.stopPropagation(); draft.up4k = !draft.up4k; renderWizard(); });
+$('#ckRush').addEventListener('click', e=>{ e.preventDefault(); e.stopPropagation(); draft.rush = !draft.rush; renderWizard(); });
+document.addEventListener('click', e=>{
+  const ag = e.target.closest('#ckAgree');
+  if (ag){ e.preventDefault(); e.stopPropagation(); draft.agree = !draft.agree; ag.classList.toggle('on', draft.agree); $('#optAgree').checked = draft.agree; }
+});
+$('#fContact').addEventListener('input', e=>{ draft.contact = e.target.value; e.target.classList.remove('err'); $('#errContact').classList.remove('on'); });
+$('#fPayRef').addEventListener('input', e=>{ draft.payRef = e.target.value; e.target.classList.remove('err'); $('#errPayRef').classList.remove('on'); });
+$('#fPayNo').addEventListener('input', e=>{ draft.payNo = e.target.value; e.target.classList.remove('err'); $('#errPayNo').classList.remove('on'); });
+$('#fPayShot').addEventListener('change', e=>{
+  const f = e.target.files && e.target.files[0];
+  const pick = $('#payShotPick');
+  if (pick) pick.style.borderColor = '';
+  $('#errPayShot').classList.remove('on');
+  if (!f){ draft.payShot = null; $('#payShotPreview').hidden = true; return; }
+  if (!/^image\/(png|jpeg|webp)$/.test(f.type)){ toast('仅支持 PNG/JPG/WebP 图片','bad'); e.target.value=''; return; }
+  if (f.size > 5*1024*1024){ toast('付款截图不能超过 5MB','bad'); e.target.value=''; return; }
+  draft.payShot = f;
+  const img = $('#payShotImg');
+  img.src = URL.createObjectURL(f);
+  $('#payShotPreview').hidden = false;
+});
+$('#payShotClear').addEventListener('click', ()=>{
+  draft.payShot = null;
+  const fi = $('#fPayShot'); if (fi) fi.value = '';
+  $('#payShotPreview').hidden = true;
+  $('#payShotPick').style.borderColor = '';
+});
+$('#fLink').addEventListener('input', e=>{ draft.link = e.target.value; });
+$('#fNote').addEventListener('input', e=>{ draft.note = e.target.value; });
+$('#wEditRef')?.addEventListener('click', ()=>{ setStep(3); setTimeout(()=>$('#fPayRef').focus(), 120); });
+
+$('#wPrev').addEventListener('click', ()=>{ if (step>1) setStep(step-1); });
+$('#wNext').addEventListener('click', ()=>{
+  if (step===1){ setStep(2); return; }
+  if (step===2){ setStep(3); return; }
+  if (step===3){
+    const v = draft.contact.trim();
+    const ok = v.length>=3 && /[0-9A-Za-z\u4e00-\u9fa5_\-]{3,}/.test(v);
+    if (!ok){
+      $('#fContact').classList.add('err'); $('#errContact').classList.add('on');
+      $('#fContact').focus(); toast('请填写有效联系方式','bad'); return;
+    }
+    const ref = (draft.payRef || '').trim();
+    if (ref.length < 4){
+      $('#fPayRef').classList.add('err'); $('#errPayRef').classList.add('on');
+      $('#fPayRef').focus(); toast('请填写付款备注号（至少 4 位）','bad'); return;
+    }
+    setStep(4); return;
+  }
+  if (step===4){
+    // 扫码付款完成后的凭证校验：转账单号 + 付款截图（系统自动核验用）
+    const payNo = (draft.payNo || '').trim();
+    if (!/^[0-9A-Za-z]{10,64}$/.test(payNo)){
+      $('#fPayNo').classList.add('err'); $('#errPayNo').classList.add('on');
+      $('#fPayNo').focus(); toast('请填写转账后的交易单号（10 位以上数字/字母）','bad'); return;
+    }
+    if (!draft.payShot){
+      $('#errPayShot').classList.add('on');
+      $('#payShotPick').style.borderColor = 'var(--pink)';
+      toast('请上传付款截图（转账完成后的账单详情截图）','bad'); return;
+    }
+    setStep(5); return;
+  }
+  if (step===5){
+    if (!draft.agree){ toast('请先勾选“我已付款，并同意下单须知”','bad'); return; }
+    submitOrder();
+  }
+});
+$('#stepper').addEventListener('click', e=>{
+  const d = e.target.closest('[data-step]'); if(!d) return;
+  const s = +d.dataset.step;
+  if (s < step) setStep(s);
+});
+
+/**
+ * 提交付款待核对
+ * 只把「已付款 + 订单内容」提交给后端登记，后端生成待核对编号（XCP-），
+ * 剪辑师核对到账后才生成正式订单（XC-）。所以这里不再本地造订单号。
+ */
+/* 无后端时的兜底提交：生成待核对编号，仅本地留痕 */
+function submitOrderLocal(){
+  const c = calc(draft);
+  const d = new Date();
+  const p = n => String(n).padStart(2,'0');
+  const no = `XCP-LOCAL-${p(d.getMonth()+1)}${p(d.getDate())}-${String(Math.floor(Math.random()*9000)+1000)}`;
+  draft.no = no;
+  draft.saved = {
+    claimNo: no, status: 'pending', statusLabel: '待核对到账（未联网）',
+    totalAmount: c.total, contact: draft.contact.trim(), offline: true
+  };
+  setStep(6);
+  toast('已提交（当前离线，未写入服务器）', 'bad');
+}
+
+/** 有后端时由桥接层接管（见 api-bridge.js 里的 patchSubmit） */
+function submitOrder(){
+  submitOrderLocal();
+}
+
+function openOrder(startStep=1){ renderWizard(); setStep(startStep); openOverlay('#orderOverlay'); }
+function openOverlay(sel){ $(sel).classList.add('open'); document.body.style.overflow='hidden'; }
+function closeOverlay(el){ el.classList.remove('open'); if(!$$('.overlay.open').length) document.body.style.overflow=''; }
+
+document.addEventListener('click', e=>{
+  /* 复制联系方式 */
+  const cp = e.target.closest('[data-copy]');
+  if (cp){
+    const val = cp.dataset.copy;
+    const done = () => toast('已复制：' + val, 'ok');
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(val).then(done, () => fallbackCopy(val, done));
+    } else fallbackCopy(val, done);
+    return;
+  }
+  /* 收款码放大 */
+  const zoom = e.target.closest('[data-payzoom]');
+  if (zoom){
+    const box = $('#payLightbox');
+    $('#payLightboxImg').src = zoom.dataset.payzoom;
+    box.classList.add('open');
+    return;
+  }
+  if (e.target.closest('#payLightboxClose') || e.target.id === 'payLightbox'){
+    /* 点放大层的背景关闭时，同样避开“页面有选中文本”的情况，防止全选后误关 */
+    const sel = window.getSelection && window.getSelection();
+    const hasSel = !!(sel && sel.toString() && !sel.isCollapsed);
+    if (e.target.id !== 'payLightbox' || !hasSel) $('#payLightbox').classList.remove('open');
+    return;
+  }
+  if (e.target.closest('[data-open-order]')) { e.preventDefault(); openOrder(1); return; }
+  if (e.target.closest('[data-open-track]')){ e.preventDefault(); openOverlay('#trackOverlay'); $('#trackInput2').focus(); return; }
+  const c = e.target.closest('[data-close]');
+  if (c){
+    /* 安全检查：只响应 .overlay 内的关闭按钮，防止 checkbox / label 等元素的
+       事件冒泡误触发关闭（<label> 包裹 checkbox 时可能产生二次 click 事件） */
+    const ov = c.closest('.overlay');
+    if (ov && ov.classList.contains('open')) closeOverlay(ov);
+  }
+});
+/* 点击弹层背景关闭：仅当“按下与抬起都在背景上”且“页面没有选中文本”时才关闭。
+   防止“全选/框选文字后，随手点一下背景想取消选择”时把下单弹层误关掉。 */
+$$('.overlay').forEach(o=>{
+  let down = null;
+  o.addEventListener('mousedown', e=>{ down = e.target; });
+  o.addEventListener('click', e=>{
+    if (e.target !== o || down !== o) return;
+    const sel = window.getSelection && window.getSelection();
+    if (sel && sel.toString() && !sel.isCollapsed) return;
+    closeOverlay(o);
+  });
+});
+document.addEventListener('keydown', e=>{
+  if (e.key !== 'Escape') return;
+  const ae = document.activeElement;
+  if (ae && (ae.tagName === 'INPUT' || ae.tagName === 'TEXTAREA' || ae.tagName === 'SELECT' || ae.isContentEditable)){
+    /* 焦点在输入框时按 Esc：只取消焦点/选择，不关闭下单弹层（防止“全选后按 Esc 页面退出”） */
+    ae.blur(); return;
+  }
+  const sel = window.getSelection && window.getSelection();
+  if (sel && sel.toString() && !sel.isCollapsed){
+    /* 页面有选中文本时按 Esc：先清除选择，再按一次才关闭 */
+    sel.removeAllRanges(); return;
+  }
+  $$('.overlay.open').forEach(closeOverlay);
+  $('#payLightbox').classList.remove('open');
+});
+
+/* ============================================================
+   查单
+   ============================================================ */
+const STATUS = {
+  wait:{ label:'排队中 · 待确认付款', cls:'wait', track:1, next:'制作端确认付款方式' },
+  run :{ label:'已确认 · 剪辑中',     cls:'run',  track:2, next:'付款到账，正在剪辑' },
+  done:{ label:'已完成 · 已交付',     cls:'ok',   track:3, next:'成品已交付' }
+};
+function orderHTML(o){
+  const s = STATUS[o.status] || STATUS.wait;
+  return `
+  <div class="order">
+    <div class="head">
+      <span class="no">${esc(o.no)}</span>
+      <span class="badge badge--${s.cls}">${esc(s.label)}</span>
+      <span class="chip" style="margin-left:auto;font-size:11.5px">${esc(new Date(o.ts).toLocaleString('zh-CN',{hour12:false}))}</span>
+      <button class="btn btn--xs" data-next="${esc(o.no)}">模拟推进状态</button>
+      <button class="btn btn--xs" data-del="${esc(o.no)}">删除</button>
+    </div>
+    <div class="meta">
+      <div><span>游戏 / 规格</span><b>${esc(o.game)} · ${esc(o.pkg)}</b></div>
+      <div><span>计价 / 时长</span><b>${esc(o.mode)} · ${o.duration} ${esc(o.unit)}</b></div>
+      <div><span>应付合计</span><b class="mono" style="color:var(--lime)">¥${yuan(o.total)}</b></div>
+      <div><span>联系方式</span><b>${esc(o.contact)}</b></div>
+    </div>
+    <div class="track">
+      <div class="node ${s.track>=1?'act':''}"><b>已提交</b><small>进入待确认队列</small></div>
+      <div class="node ${s.track>=2?'act':''}"><b>已付款 · 剪辑中</b><small>付款到账后开始</small></div>
+      <div class="node ${s.track>=3?'act':''}"><b>已交付成品</b><small>48h 内出片</small></div>
+    </div>
+    ${o.note?`<div class="mini-note" style="margin-top:14px"><span>剪辑要求：${esc(o.note)}</span></div>`:''}
+    ${o.rush?`<div class="mini-note" style="margin-top:6px"><span>已勾选加急，请与剪辑师确认加急费用。</span></div>`:''}
+  </div>`;
+}
+function doTrack(q, target){
+  const box = $(target);
+  q = (q||'').trim();
+  if (!q){ box.innerHTML = `<div class="empty">请输入订单号或联系方式</div>`; return; }
+  const list = store('nc_orders', []);
+  const hit = list.filter(o => o.no.toLowerCase()===q.toLowerCase()
+    || o.contact.toLowerCase().includes(q.toLowerCase()));
+  if (!hit.length){
+    box.innerHTML = `<div class="empty">
+      没有找到匹配的订单。请检查订单号，或确认使用的是下单时填写的联系方式。<br /><span style="font-size:12px">（本站为效果图 Demo，订单数据保存在本机浏览器）</span>
+    </div>`;
+    return;
+  }
+  box.innerHTML = hit.map(orderHTML).join('');
+}
+document.addEventListener('click', e=>{
+  const n = e.target.closest('[data-next]');
+  if (n){
+    const list = store('nc_orders', []);
+    const o = list.find(x=>x.no===n.dataset.next);
+    if (o){ o.status = o.status==='wait' ? 'run' : (o.status==='run' ? 'done' : 'wait'); save('nc_orders', list); }
+    doTrack($('#trackInput').value, '#trackResult'); doTrack($('#trackInput2').value, '#trackResult2');
+    toast('状态已更新（Demo 模拟）','ok'); return;
+  }
+  const d = e.target.closest('[data-del]');
+  if (d){
+    if (!confirm('确定删除订单 '+d.dataset.del+' ？删除后不可恢复。')) return;
+    const list = store('nc_orders', []).filter(x=>x.no!==d.dataset.del);
+    save('nc_orders', list);
+    doTrack($('#trackInput').value, '#trackResult'); doTrack($('#trackInput2').value, '#trackResult2');
+    toast('订单已删除','ok');
+  }
+});
+$('#trackBtn').addEventListener('click', ()=>doTrack($('#trackInput').value, '#trackResult'));
+$('#trackInput').addEventListener('keydown', e=>{ if(e.key==='Enter') doTrack(e.target.value,'#trackResult'); });
+$('#trackBtn2').addEventListener('click', ()=>doTrack($('#trackInput2').value, '#trackResult2'));
+$('#trackInput2').addEventListener('keydown', e=>{ if(e.key==='Enter') doTrack(e.target.value,'#trackResult2'); });
+
+/* Demo 种子订单，便于直接看到查询效果 */
+(function seed(){
+  if (store('nc_orders', null)) return;
+  const now = Date.now();
+  const demo = [
+    { no:'NC-260214-4821', game:'无畏契约', pkg:'特效集锦', mode:'按时长 · 20 元/分钟', duration:2, unit:'分钟',
+      total:20*2+12, contact:CONTACT_POOL[0], note:'卡点 + 击杀集锦，参考某视频的节奏', link:'https://music.163.com/（示例）',
+      up4k:true, rush:false, music:'我自备音乐', material:'素材已准备好', status:'run', ts:now-1000*60*180 },
+    { no:'NC-260213-3310', game:'三角洲行动', pkg:'普通集锦', mode:'按时长 · 15 元/分钟', duration:1, unit:'分钟',
+      total:15, contact:CONTACT_POOL[1], note:'', link:'', up4k:false, rush:false,
+      music:'剪辑师自选', material:'稍后提供素材', status:'wait', ts:now-1000*60*60*26 }
+  ];
+  save('nc_orders', demo);
+})();
+
+/* ============================================================
+   交互杂项
+   ============================================================ */
+$('#burger').addEventListener('click', ()=>$('#nav').classList.toggle('open'));
+$$('#nav a').forEach(a=>a.addEventListener('click', ()=>$('#nav').classList.remove('open')));
+window.addEventListener('scroll', ()=>{
+  $('#top').classList.toggle('stuck', window.scrollY > 8);
+  const y = window.scrollY + 140;
+  let cur = 'home';
+  ['home','price','flow','notice','track'].forEach(id=>{
+    const el = document.getElementById(id);
+    if (el && el.offsetTop <= y) cur = id;
+  });
+  $$('#nav a').forEach(a=>a.classList.toggle('on', a.dataset.nav===cur));
+}, { passive:true });
+
+/* 滚动浮现 */
+function observeReveal(){
+  if (!('IntersectionObserver' in window)){ $$('.rv').forEach(e=>e.classList.add('in')); return; }
+  io = io || new IntersectionObserver(es=>{
+    es.forEach(en=>{ if (en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+  }, { rootMargin:'0px 0px -8% 0px', threshold:.06 });
+  $$('.rv:not(.in)').forEach(e=>io.observe(e));
+}
+observeReveal();
+/* 首屏初始化：任何异常都要显式暴露，避免“静默空渲染” */
+try {
+  renderWizard();
+  setStep(1);
+} catch (err) {
+  console.error('[NeonCut] 初始化失败：', err);
+  const bar = document.createElement('div');
+  bar.style.cssText = 'position:fixed;left:0;right:0;bottom:0;z-index:999;padding:10px 16px;background:#4A0E22;color:#FFD5E3;font-size:12.5px;font-family:monospace';
+  bar.textContent = '初始化异常：' + (err && err.message || err);
+  document.body.appendChild(bar);
+}
+
+/* 兜底：不支持 IntersectionObserver 或元素已在视口内时，确保内容可见 */
+setTimeout(()=>{ $$('.rv').forEach(e=>{ const r = e.getBoundingClientRect(); if (r.top < window.innerHeight) e.classList.add('in'); }); }, 900);
+
+/* ============================================================
+   升级区块 · 价格数字滚动（只增强展示，不改计价口径）
+   ============================================================ */
+/* HTML 结构版本：重写 innerHTML 为 <i>¥</i>N（用于 #qTotal / .bill .total b） */
+function setCountHTML(el, to, dur=420){
+  if (!el) return;
+  el = typeof el === 'string' ? $(el) : el;
+  const from = parseFloat(el.dataset.v) || 0;
+  const t0 = performance.now();
+  const tick = (t)=>{
+    const p = Math.min(1, (t - t0) / dur);
+    const e = 1 - Math.pow(1 - p, 3);            // easeOutCubic
+    el.innerHTML = `<i>¥</i>${yuan(from + (to - from) * e)}`;
+    if (p < 1) requestAnimationFrame(tick);
+    else { el.innerHTML = `<i>¥</i>${yuan(to)}`; el.dataset.v = to; }
+  };
+  el.dataset.v = to;
+  requestAnimationFrame(tick);
+}
+/* 纯文本版本：textContent = prefix + N（用于 #wPayAmount / #wPayAmount2） */
+function setCountText(el, to, prefix='', dur=420){
+  if (!el) return;
+  el = typeof el === 'string' ? $(el) : el;
+  const from = parseFloat(el.dataset.v) || 0;
+  const t0 = performance.now();
+  const tick = (t)=>{
+    const p = Math.min(1, (t - t0) / dur);
+    const e = 1 - Math.pow(1 - p, 3);
+    el.textContent = prefix + yuan(from + (to - from) * e);
+    if (p < 1) requestAnimationFrame(tick);
+    else { el.textContent = prefix + yuan(to); el.dataset.v = to; }
+  };
+  el.dataset.v = to;
+  requestAnimationFrame(tick);
+}
+</script>
+</body>
+</html>

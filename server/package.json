@@ -1,0 +1,23 @@
+{
+  "name": "xicheng-ordering-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "XiCheng 游戏剪辑自助下单平台 · 后端 API",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "seed": "node src/seed.js",
+    "reset": "node src/seed.js --reset",
+    "smoke": "node test/smoke.js"
+  },
+  "dependencies": {
+    "@fastify/multipart": "^10.1.2",
+    "fastify": "^5.2.1",
+    "mysql2": "^3.11.5",
+    "tesseract.js": "^7.0.0"
+  }
+}
