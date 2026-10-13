@@ -219,6 +219,42 @@ body {
   color: #4c525c;
 }
 
+/* —— 统一下拉菜单 ——
+   所有 <select> 加 class="select" 即获得同一套外观：
+   自定义箭头 + 深色选项面板 + 与 .input 一致的边框/焦点光晕 */
+.select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%239BA1AC' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 13px center;
+  background-size: 15px 15px;
+  padding-right: 38px;
+  cursor: pointer;
+  line-height: 1.4;
+}
+.select:hover {
+  border-color: var(--color-line-strong);
+}
+.select::-ms-expand {
+  display: none;
+}
+/* 深色选项面板（Chrome/Edge/Safari 生效；Firefox 跟随系统但文字颜色统一） */
+.select option,
+.select optgroup {
+  background-color: #16181d;
+  color: var(--color-txt);
+  font-size: 14px;
+}
+.select option:disabled {
+  color: var(--color-txt-mute);
+}
+/* 未选中的占位项（value="" 且 required）显示为灰色提示 */
+.select:required:invalid {
+  color: var(--color-txt-mute);
+}
+
 /* —— 滚动浮现 —— */
 .reveal {
   opacity: 0;

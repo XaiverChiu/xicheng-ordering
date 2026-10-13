@@ -261,7 +261,7 @@ onMounted(calc);
           <div class="grid sm:grid-cols-2 gap-5">
             <label class="block">
               <span class="text-sm mb-1.5 block" style="color:var(--color-txt-dim)">配乐</span>
-              <select v-model="music" class="input">
+              <select v-model="music" class="input select">
                 <option value="">由剪辑师自选</option>
                 <option value="指定配乐">指定配乐（请在备注写明歌名）</option>
                 <option value="自备素材带BGM">自备素材带 BGM</option>
@@ -269,7 +269,7 @@ onMounted(calc);
             </label>
             <label class="block">
               <span class="text-sm mb-1.5 block" style="color:var(--color-txt-dim)">素材状态</span>
-              <select v-model="material" class="input">
+              <select v-model="material" class="input select">
                 <option value="自备素材">自备素材（默认）</option>
                 <option value="录屏链接">录屏链接（填下方链接）</option>
                 <option value="平台地址">平台地址（B站/抖音主页）</option>
