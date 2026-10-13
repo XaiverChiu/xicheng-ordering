@@ -35,7 +35,9 @@ const contact = ref('');
 const quote = ref<Quote | null>(null);
 const quoteLoading = ref(false);
 const showQr = ref(false);
-function openQr() {
+const qrTab = ref<'wechat' | 'alipay'>('wechat');
+function openQr(tab: 'wechat' | 'alipay' = 'wechat') {
+  qrTab.value = tab;
   showQr.value = true;
 }
 
@@ -307,10 +309,11 @@ onMounted(calc);
             </div>
           </div>
 
-          <div class="flex items-center gap-4 justify-center mb-6">
-            <button class="btn px-6 py-3" @click="openQr">查看收款码</button>
-            <a class="btn px-6 py-3" target="_blank" rel="noopener" :href="config.payment.wechatQr">微信支付码</a>
-            <a class="btn px-6 py-3" target="_blank" rel="noopener" :href="config.payment.alipayQr">支付宝码</a>
+          <div class="flex items-center justify-center mb-6">
+            <button class="btn btn--primary px-7 py-3" @click="openQr()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM21 14v.01M14 21v.01M18 18h3v3h-3z"/></svg>
+              查看收款码
+            </button>
           </div>
 
           <div class="rounded-xl p-4 text-xs space-y-1" style="background:rgba(255,255,255,0.02);border:1px solid var(--color-line);color:var(--color-txt-mute)">
@@ -318,14 +321,44 @@ onMounted(calc);
             <p class="pt-1" style="color:var(--color-warning)">⚠ {{ config.payment.note }}</p>
           </div>
 
-          <!-- 收款码弹层 -->
+          <!-- 收款码弹层：微信 / 支付宝切换 -->
           <Transition name="qr">
-            <div v-if="showQr" class="fixed inset-0 z-[60] flex items-center justify-center p-4" style="background:rgba(0,0,0,0.7)" @click.self="showQr = false">
-              <div class="glass card p-6 w-full max-w-sm relative">
-                <button class="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center hover:bg-white/10" @click="showQr = false">✕</button>
-                <h4 class="font-bold text-center mb-4">付款码 · 长按识别</h4>
-                <img :src="config.payment.wechatQr" class="w-56 h-56 mx-auto rounded-xl" style="background:#fff" alt="微信收款码" />
-                <p class="text-center text-xs mt-4" style="color:var(--color-txt-dim)">{{ config.payment.wechatName }}</p>
+            <div v-if="showQr" class="fixed inset-0 z-[60] flex items-center justify-center p-4" style="background:rgba(0,0,0,0.72)" @click.self="showQr = false">
+              <div class="glass card p-6 w-full max-w-sm relative" @click.stop>
+                <button class="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center hover:bg-white/10 text-sm" @click="showQr = false" aria-label="关闭">✕</button>
+                <h4 class="font-bold text-center mb-4">扫码付款 · 长按识别</h4>
+
+                <!-- 微信 / 支付宝 切换 -->
+                <div class="grid grid-cols-2 gap-1 p-1 rounded-xl mb-5" style="background:rgba(255,255,255,0.05);border:1px solid var(--color-line)">
+                  <button
+                    class="py-2 rounded-lg text-sm font-semibold transition-all"
+                    :class="qrTab === 'wechat' ? 'bg-[color:var(--color-primary-500)] text-white' : 'text-[color:var(--color-txt-dim)] hover:text-[color:var(--color-txt)]'"
+                    @click="qrTab = 'wechat'"
+                  >微信支付</button>
+                  <button
+                    class="py-2 rounded-lg text-sm font-semibold transition-all"
+                    :class="qrTab === 'alipay' ? 'bg-[color:var(--color-primary-500)] text-white' : 'text-[color:var(--color-txt-dim)] hover:text-[color:var(--color-txt)]'"
+                    @click="qrTab = 'alipay'"
+                  >支付宝</button>
+                </div>
+
+                <Transition name="qrswap" mode="out-in">
+                  <div :key="qrTab" class="text-center">
+                    <img
+                      :src="qrTab === 'wechat' ? config.payment.wechatQr : config.payment.alipayQr"
+                      class="w-52 h-52 mx-auto rounded-xl"
+                      style="background:#fff;padding:6px"
+                      :alt="qrTab === 'wechat' ? '微信收款码' : '支付宝收款码'"
+                    />
+                    <p class="text-center text-xs mt-3" style="color:var(--color-txt-dim)">
+                      {{ qrTab === 'wechat' ? config.payment.wechatName : config.payment.alipayName }}
+                    </p>
+                  </div>
+                </Transition>
+
+                <p class="text-center text-[11px] mt-4" style="color:var(--color-txt-mute)">
+                  支付对应金额后，在「上传截图」步骤填单号并上传截图
+                </p>
               </div>
             </div>
           </Transition>
@@ -391,4 +424,7 @@ onMounted(calc);
 .shadow-glow { box-shadow: var(--shadow-glow); }
 .qr-enter-active, .qr-leave-active { transition: opacity 0.2s ease; }
 .qr-enter-from, .qr-leave-to { opacity: 0; }
+.qrswap-enter-active, .qrswap-leave-active { transition: opacity 0.15s ease, transform 0.15s ease; }
+.qrswap-enter-from { opacity: 0; transform: translateY(4px) scale(0.98); }
+.qrswap-leave-to { opacity: 0; transform: translateY(-4px) scale(0.98); }
 </style>
