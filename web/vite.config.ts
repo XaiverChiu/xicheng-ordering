@@ -18,6 +18,14 @@ export default defineConfig({
         target: process.env.XC_API || 'http://127.0.0.1:4500',
         changeOrigin: true,
       },
+      '/pay-wechat.png': {
+        target: process.env.XC_API || 'http://127.0.0.1:4500',
+        changeOrigin: true,
+      },
+      '/pay-alipay.png': {
+        target: process.env.XC_API || 'http://127.0.0.1:4500',
+        changeOrigin: true,
+      },
     },
   },
   build: {
@@ -29,6 +37,8 @@ export default defineConfig({
     proxy: {
       '/api': { target: process.env.XC_API || 'http://127.0.0.1:4500', changeOrigin: true },
       '/uploads': { target: process.env.XC_API || 'http://127.0.0.1:4500', changeOrigin: true },
+      '/pay-wechat.png': { target: process.env.XC_API || 'http://127.0.0.1:4500', changeOrigin: true },
+      '/pay-alipay.png': { target: process.env.XC_API || 'http://127.0.0.1:4500', changeOrigin: true },
     },
   },
 });
