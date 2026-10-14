@@ -26,8 +26,9 @@ const opts = computed(() => {
 });
 
 // ---------- 第 2 步：需求 ----------
-const music = ref('');
-const material = ref('');
+// 值直接使用后端契约，标签负责展示中文文案
+const music = ref('pro');
+const material = ref('ready');
 const refLink = ref('');
 const requirement = ref('');
 const contact = ref('');
@@ -266,9 +267,8 @@ onMounted(calc);
                 v-model="music"
                 aria-label="选择配乐"
                 :options="[
-                  { label: '由剪辑师自选', value: '' },
-                  { label: '指定配乐（请在备注写明歌名）', value: '指定配乐' },
-                  { label: '自备素材带 BGM', value: '自备素材带BGM' },
+                  { label: '由剪辑师自选', value: 'pro' },
+                  { label: '我自备音乐（下单后附链接）', value: 'self' },
                 ]"
               />
             </label>
@@ -278,9 +278,8 @@ onMounted(calc);
                 v-model="material"
                 aria-label="选择素材状态"
                 :options="[
-                  { label: '自备素材（默认）', value: '自备素材' },
-                  { label: '录屏链接（填下方链接）', value: '录屏链接' },
-                  { label: '平台地址（B站/抖音主页）', value: '平台地址' },
+                  { label: '素材已准备好（默认）', value: 'ready' },
+                  { label: '稍后提供素材（付款后补齐）', value: 'later' },
                 ]"
               />
             </label>

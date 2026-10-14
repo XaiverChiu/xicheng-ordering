@@ -170,6 +170,8 @@ export interface ClaimForm {
   up4k?: boolean;
   rush?: boolean;
   payNo: string;
+  /** 付款备注；当前向导沿用转账单号作为对账备注 */
+  payRef?: string;
   contact: string;
   music?: string;
   material?: string;

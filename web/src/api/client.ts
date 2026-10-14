@@ -56,11 +56,14 @@ export const api = {
     fd.append('up4k', form.up4k ? 'true' : 'false');
     fd.append('rush', form.rush ? 'true' : 'false');
     fd.append('payNo', form.payNo);
+    // 后端对账契约要求付款备注；当前 UI 只有一个转账单号输入框，复用该值即可。
+    fd.append('payRef', form.payRef || form.payNo);
     fd.append('contact', form.contact);
     if (form.music) fd.append('music', form.music);
     if (form.material) fd.append('material', form.material);
-    if (form.refLink) fd.append('refLink', form.refLink);
-    if (form.requirement) fd.append('requirement', form.requirement);
+    // 后端字段名是 link / note，前端表单仍保留更易读的 refLink / requirement。
+    if (form.refLink) fd.append('link', form.refLink);
+    if (form.requirement) fd.append('note', form.requirement);
     fd.append('payShot', shot);
     return request<{ claim: Claim; order?: Order }>('/api/public/payment-claims', {
       method: 'POST',
